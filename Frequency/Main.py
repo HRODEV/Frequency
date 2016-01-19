@@ -1,22 +1,35 @@
-import pygame
+﻿import pygame
 import time
 
 def Main():
 
     pygame.display.init()
     pygame.display.set_caption('Frequency')
-    screen = pygame.display.set_mode([500, 500])
+
+    screen_width = 960
+    screen_height = 540
+    screen = pygame.display.set_mode([screen_width, screen_height])
     
+    # Load images
+    gameBackground = pygame.image.load('images/gameBackground.jpg')
+    gameBackground = pygame.transform.scale(gameBackground, (screen_width, screen_height))
+
+    gameLogo = pygame.image.load('images/gameLogo.png')
+    
+
     white = 255, 255, 255
 
     while True:
         screen.fill(white)
+        screen.blit(gameBackground, (0,0))
+        screen.blit(gameLogo, (250, 250))
+        
+        '''catchKeys(screen, pygame.event.get())
 
-        kPress = pygame.key.get_pressed()
-        quit = pygame.K_ESCAPE
-
-        if kPress[quit]:
-            exit()
+        for event in keyEvents:
+            if( event.type == pygame.KEYDOWN and 
+                event.key == (pygame.K_ESCAPE or pygame.QUIT) ):
+                exit()'''
 
         pygame.display.flip()
         time.sleep(0.2)

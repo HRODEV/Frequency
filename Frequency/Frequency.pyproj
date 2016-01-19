@@ -33,6 +33,17 @@
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+    <Folder Include="images\buttons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\buttons\exitButton.png" />
+    <Content Include="images\gameBackground.jpg" />
+    <Content Include="images\gameLogo.png" />
+    <Content Include="images\buttons\playButton.png" />
+    <Content Include="images\buttons\rulesButton.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
