@@ -1,25 +1,15 @@
 ﻿import pygame
 import time
-from Game_Instructions import *
 
-from Vector2 import *
+from Game import Game
+from Vector2 import Vector2
 from Menu.StartMenu.StartMenu import StartMenu
 from Settings import GameSettings
+
 
 pygame.init()
 
 def Main():
-    game_instructions = GameInstructions.loadInstructions()
-    pygame.display.init()
-    pygame.display.set_caption('Frequency')
-
-    screen_width = 960
-    screen_height = 540
-    screen = pygame.display.set_mode([screen_width, screen_height])
-
-    button_1 = pygame.draw.rect(screen, (0, 0, 255), (200, 150, 100, 50))
-    screen.blit(screen, button_1)
-    
     # Load images
     #gameBackground = pygame.image.load('images/gameBackground.jpg')
     #gameBackground = pygame.transform.scale(gameBackground, (screen_width, screen_height))
@@ -29,43 +19,23 @@ def Main():
 
     white = 255, 255, 255
 
-    while True:
-        screen.fill(white)
-        #screen.blit(gameBackground, (0,0))
-        #screen.blit(gameLogo, (250, 250))
-        
-        '''catchKeys(screen, pygame.event.get())
-
-        for event in keyEvents:
-            if( event.type == pygame.KEYDOWN and 
-                event.key == (pygame.K_ESCAPE or pygame.QUIT) ):
-                exit()'''
-
-    # Initialize the pygame display / set the shown caption
+    settings = GameSettings(Vector2(700, 540))
     pygame.display.init()
     pygame.display.set_caption('Frequency')
 
-    # Basic Startmenu setup
-    settings = GameSettings(Vector2(700, 540))
-    screen = pygame.display.set_mode([settings.Resolution.X, settings.Resolution.Y])
+    screen = settings.GetScreen()
     
-    # Load & Scale background images
-    gBackground = pygame.image.load('images/gameBackground.jpg')
-    gBackground = pygame.transform.scale(gBackground, settings.Resolution.Position)
-    gLogo = pygame.image.load('images/gameLogo.png')
-    gLogo = pygame.transform.scale(gLogo, (230, 230))
 
-    # List with the pygame loaded buttons.
-    menuButtons = [
-            pygame.image.load('images/buttons/playButton.png'),
-            pygame.image.load('images/buttons/rulesButton.png'),
-            pygame.image.load('images/buttons/exitButton.png')
-    ]
 
-    StartScreen = StartMenu(gBackground, gLogo, menuButtons, settings) 
+
+
+
+    game = Game()
+
+    StartScreen = StartMenu()
 
     while True:
-        StartScreen.Draw(screen)
+        StartScreen.Draw(game)
         pygame.display.flip()
         pygame.event.wait()
         time.sleep(0.2)

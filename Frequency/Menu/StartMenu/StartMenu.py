@@ -1,47 +1,44 @@
 ﻿import pygame
 
+import Game
+from Menu.StartMenu.StartMenuItems.ExitGame import ExitGame
+from Menu.StartMenu.StartMenuItems.StartGame import StartGame
+from Vector2 import Vector2
+
+background = pygame.image.load('images/gameBackground.jpg')
+# gBackground = pygame.transform.scale(gBackground, [settings.Resolution.X, settings.Resolution.Y])
+
+logo = pygame.image.load('images/gameLogo.png')
+logo = pygame.transform.scale(logo, (230, 230))
+
+
+
 class StartMenu:
 
-    def __init__(self, background, logo, buttons, settings):
+    def __init__(self, background= background, logo= logo, startMenuItems = None):
         self.Background = background
         self.Logo = logo
-        self.Buttons = buttons
-        self.Settings = settings
+        self.StartMenuItems = startMenuItems if startMenuItems is not None \
+            else [StartGame(Vector2(0, 0)), ExitGame(Vector2(0,140)),]
 
-    def Update(self):
+    def Update(self, game):
         return StartMenu(map((lambda smi: smi.Update()), self.StartMenuItems.map()))
 
-    def Draw(self, screen):
+    def Draw(self, game: Game):
 
         # Extra screen-based properties
-        screen_centerX = int(self.Settings.Resolution.X / 2)
-        screen_centerY = int(self.Settings.Resolution.Y / 2)
-        screen_marginX = int(self.Settings.Resolution.Y / 18)
+        screen_centerX = int(game.Settings.Resolution.X // 2)
+        screen_marginX = int(game.Settings.Resolution.Y / 18)
        
         # Logo position
-        gLogoSize = self.Logo.get_rect()
-        gLogoCenterX = screen_centerX - gLogoSize.centerx
-        gLogoCenter = (gLogoCenterX, screen_marginX)
+        logoSize = self.Logo.get_rect()
+        logoCenterX = screen_centerX - logoSize.centerx
+        logoCenter = (logoCenterX, screen_marginX)
 
-        # Basic margin for buttons
-        topMargin = screen_centerY + 20
-        
          # Basic screen loaded elements
-        screen.fill((255, 255, 255))
-        screen.blit(self.Background, (0,0))
-        screen.blit(self.Logo, gLogoCenter)
-        
-        # Loop through every button and show it on the screen
-        for name, btn in enumerate(self.Buttons):
-            btnSize = btn.get_rect()
-            # If it isn't the first button, the margin-top will be 70
-            if (name != 0):
-                topMargin += 70
-            screen.blit(btn, ((screen_centerX - btnSize.centerx), topMargin))
+        game.Settings.GetScreen().fill((255, 255, 255))
+        game.Settings.GetScreen().blit(self.Background, (0, 0))
+        game.Settings.GetScreen().blit(self.Logo, logoCenter)
 
-            if(btn.get_rect().collidepoint(pygame.mouse.get_pos())):
-                print('Hovered!')
-        
-        #pass
-        #for smi in self.StartMenuItems:
-        #    smi.Draw()
+        for menuItem in self.StartMenuItems:
+            menuItem.Draw(game)
