@@ -1,3 +1,7 @@
+# Custom ingnores
+.idea/
+Frequency/test.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -57,3 +61,5 @@ docs/_build/
 
 # PyBuilder
 target/
+
+Frequency/test.py
