@@ -23,7 +23,14 @@ def Main():
     gLogo = pygame.image.load('images/gameLogo.png')
     gLogo = pygame.transform.scale(gLogo, (230, 230))
 
-    StartScreen = StartMenu(gBackground, gLogo, settings) 
+    # List with the pygame loaded buttons.
+    menuButtons = [
+            pygame.image.load('images/buttons/playButton.png'),
+            pygame.image.load('images/buttons/rulesButton.png'),
+            pygame.image.load('images/buttons/exitButton.png')
+    ]
+
+    StartScreen = StartMenu(gBackground, gLogo, menuButtons, settings) 
 
     while True:
         StartScreen.Draw(screen)
