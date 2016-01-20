@@ -9,8 +9,8 @@ class Game(object):
         self.Settings = settings if settings is not None else GameSettings()
         self.State = state if state is not None else StartMenu(self.Settings.Resolution)
 
-    def Update(self):
-        return Game(self.State.Update(self))
+    def Update(self, events):
+        return Game(self.State.Update(self, events))
 
     def Draw(self):
         self.State.Draw(self)

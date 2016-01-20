@@ -18,9 +18,8 @@ def Main():
     game = Game()
 
     while True:
-        game = game.Update()
+        game = game.Update(pygame.event.get())
         game.Draw()
         pygame.display.flip()
-        pygame.event.wait()
 
 Main()
