@@ -35,6 +35,7 @@ def Main():
     while True:
         StartScreen.Draw(screen)
         pygame.display.flip()
+        pygame.event.wait()
         time.sleep(0.2)
 
 Main()
