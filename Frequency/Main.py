@@ -1,8 +1,9 @@
 ﻿import pygame
 import time
-from GameRules import *
+from Game_Instructions import *
 
 def Main():
+    game_instructions = GameInstructions.loadInstructions()
     pygame.display.init()
     pygame.display.set_caption('Frequency')
 
