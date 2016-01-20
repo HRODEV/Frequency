@@ -1,11 +1,11 @@
-import pygame
+﻿import pygame
 from pygame.surface import Surface
 
+import Vector2
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
-from Vector2 import Vector2
 
 
-class ExitGame(StartMenuItem):
+class Rules(StartMenuItem):
 
     def __init__(self, offset: Vector2, image: Surface = pygame.image.load('images/buttons/rulesButton.png')):
         super().__init__(offset, image)
@@ -15,3 +15,4 @@ class ExitGame(StartMenuItem):
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
+

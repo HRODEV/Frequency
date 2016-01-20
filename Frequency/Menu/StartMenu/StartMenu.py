@@ -2,6 +2,7 @@
 
 import Game
 from Menu.StartMenu.StartMenuItems.ExitGame import ExitGame
+from Menu.StartMenu.StartMenuItems.Rules import Rules
 from Menu.StartMenu.StartMenuItems.StartGame import StartGame
 from Vector2 import Vector2
 
@@ -19,7 +20,7 @@ class StartMenu:
         self.Background = background
         self.Logo = logo
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
-            else [StartGame(Vector2(0, 0)), ExitGame(Vector2(0,140)),]
+            else [StartGame(Vector2(0, 0)), Rules(Vector2(0,70)), ExitGame(Vector2(0,140))]
 
     def Update(self, game):
         return StartMenu(map((lambda smi: smi.Update()), self.StartMenuItems.map()))
