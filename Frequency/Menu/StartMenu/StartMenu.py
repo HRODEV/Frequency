@@ -6,24 +6,22 @@ from Menu.StartMenu.StartMenuItems.Rules import Rules
 from Menu.StartMenu.StartMenuItems.StartGame import StartGame
 from Vector2 import Vector2
 
-background = pygame.image.load('images/gameBackground.jpg')
-# gBackground = pygame.transform.scale(gBackground, [settings.Resolution.X, settings.Resolution.Y])
-
-logo = pygame.image.load('images/gameLogo.png')
-logo = pygame.transform.scale(logo, (230, 230))
-
-
 
 class StartMenu:
 
-    def __init__(self, background= background, logo= logo, startMenuItems = None):
-        self.Background = background
-        self.Logo = logo
+    def __init__(self, resolution, background=None, logo=None, startMenuItems=None):
+        self.Background = background if background is not None \
+            else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [resolution.X, resolution.Y])
+
+        self.Logo = logo if logo is not None \
+            else pygame.transform.scale(pygame.image.load('images/gameLogo.png'), (230, 230))
+
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
             else [StartGame(Vector2(0, 0)), Rules(Vector2(0,70)), ExitGame(Vector2(0,140))]
 
-    def Update(self, game):
-        return StartMenu(map((lambda smi: smi.Update()), self.StartMenuItems.map()))
+    def Update(self, game: Game):
+        newStartMenuItems = [smi.Update() for smi in self.StartMenuItems]
+        return StartMenu(game.Settings.Resolution, self.Background, self.Logo, newStartMenuItems)
 
     def Draw(self, game: Game):
 
