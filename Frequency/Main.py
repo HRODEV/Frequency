@@ -5,6 +5,8 @@ from Vector2 import *
 from Menu.StartMenu.StartMenu import StartMenu
 from Settings import GameSettings
 
+pygame.init()
+
 def Main():
 
     # Initialize the pygame display / set the shown caption
@@ -15,7 +17,7 @@ def Main():
     settings = GameSettings(Vector2(700, 540))
     screen = pygame.display.set_mode([settings.Resolution.X, settings.Resolution.Y])
     
-    # Load images
+    # Load & Scale background images
     gBackground = pygame.image.load('images/gameBackground.jpg')
     gBackground = pygame.transform.scale(gBackground, settings.Resolution.Position)
     gLogo = pygame.image.load('images/gameLogo.png')
