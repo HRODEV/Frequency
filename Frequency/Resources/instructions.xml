@@ -1,0 +1,70 @@
+<instructions>
+	<main_rules>
+		<start>
+			Every player draws a climate card. This will be either the Desert, Swamp, Ice Plains or Forest card.
+			Every player starts with F500.
+		</start>
+		<turns_moves>
+			Every player can make four moves within a turn. You can't rollback a move you have made.
+		</turns_moves>
+		<money>
+			You receive money if you have atleast one unit on a piece of land. If the unit stands on land within your own climate, you'll receive F50 per 
+			piece per land. However, if the unit is on a piece of land of your opponent, you'll receive F100.
+
+			If your unit is on the goldmine, you'll receive F150.
+		</money>
+		<capturing>
+			All areas, except the corners, have a standard value of 0. When you want to capture the land
+you have to leave troops with at least the value of 1. It is of great importance to control land 
+in order to earn frequency’s. You can also take control of land that is in possession of an 
+enemy. When you want to take land that is in possession you have to fight for it. The person 
+with the higher value of troops will win the fight and earn the piece of land. The value that is 
+left is the sum of hitpoints/values of the soldiers. So when team A has 3 hitpoints and attacks 
+team B which has 1 hitpoint, it is 3 vs 1 which results in 3-1=2, so the winner has a remaining 
+value of 2. You can not attack when you are on a boat.
+		</capturing>
+		<how_to_win>
+			Be the first player to own F50000 or take control over 2 enemy bases.
+		</how_to_win>
+	</main_rules>
+	<climates>
+		<desert>
+			Tanks are F150 cheaper.
+		</desert>
+		<swamp>
+			Boats are F200 cheaper.
+		</swamp>
+		<ice_plains>
+			Soldiers are F30 cheaper.
+		</ice_plains>
+		<forest>
+			Robots are F60 cheaper
+		</forest>
+	</climates>
+	<army>
+		<soldiers>
+			ATT: 1, DEF: 1
+			Range: 1
+		</soldiers>
+		<robots>
+			ATT: 2, DEF: 2
+			Range: 1
+		</robots>
+		<tanks>
+			ATT: 2, DEF: 2
+			Range: 2
+		</tanks>
+		<basis>
+			ATT: 0, DEF: 25
+			Has 1 barrack.
+		</basis>
+		<barrack>
+			Effect: You can spawn soldiers from this position
+		</barrack>
+		<boat>
+			Effect: You can travel across the sea.
+			Every player can own 3 boats at maximum.
+			ATT: 0, DEF: 6
+		</boat>
+	</army>
+</instructions>
