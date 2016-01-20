@@ -29,6 +29,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Main.py" />
+    <Compile Include="Menu\StartMenu\StartMenu.py" />
+    <Compile Include="Menu\StartMenu\StartMenuItems\ExitGame.py" />
+    <Compile Include="Menu\StartMenu\StartMenuItems\StartGame.py" />
+    <Compile Include="Menu\StartMenu\StartMenuItems\__init__.py" />
+    <Compile Include="Menu\StartMenu\__init__.py" />
+    <Compile Include="Menu\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
@@ -36,6 +42,9 @@
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="images\buttons\" />
+    <Folder Include="Menu\" />
+    <Folder Include="Menu\StartMenu\" />
+    <Folder Include="Menu\StartMenu\StartMenuItems\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\buttons\exitButton.png" />
