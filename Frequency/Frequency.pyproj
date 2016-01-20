@@ -35,6 +35,12 @@
     <Compile Include="Menu\StartMenu\StartMenuItems\__init__.py" />
     <Compile Include="Menu\StartMenu\__init__.py" />
     <Compile Include="Menu\__init__.py" />
+    <Compile Include="Settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Vector2.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />

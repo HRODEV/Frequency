@@ -1,5 +1,4 @@
-
-class StartGame:
+﻿class StartGame:
 
     def __init__(self):
         self.Text = "Start Game"
