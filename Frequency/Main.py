@@ -10,7 +10,6 @@ from Settings import GameSettings
 pygame.init()
 
 def Main():
-    white = 255, 255, 255
     pygame.display.init()
     pygame.display.set_caption('Frequency')
 

@@ -19,8 +19,8 @@ class StartMenu:
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
             else [StartGame(Vector2(0, 0)), Rules(Vector2(0,70)), ExitGame(Vector2(0,140))]
 
-    def Update(self, game: Game, events):
-        newStartMenuItems = [smi.Update(game, events) for smi in self.StartMenuItems]
+    def Update(self, game: Game):
+        newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
         return StartMenu(game.Settings.Resolution, self.Background, self.Logo, newStartMenuItems)
 
     def Draw(self, game: Game):

@@ -10,7 +10,7 @@ class StartMenuItem:
         self.Offset = offset
         self.Rect = rect
 
-    def Update(self, game, events):
+    def Update(self, game):
         return self
 
     def Draw(self, game):
