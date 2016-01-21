@@ -1,4 +1,5 @@
 import pygame
+import sys
 from pygame.surface import Surface
 
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
@@ -15,3 +16,8 @@ class ExitGame(StartMenuItem):
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
+
+    def GetNewState(self):
+        pygame.quit()
+        sys.exit()
+        return None # will be the new state
