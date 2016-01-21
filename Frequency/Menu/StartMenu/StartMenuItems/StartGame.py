@@ -2,17 +2,24 @@
 from pygame.surface import Surface
 
 import Vector2
+from Board.Board import Board
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 
 class StartGame(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface = pygame.image.load('images/buttons/playButton.png')):
-        super().__init__(offset, image)
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/playButton.png'), rect=None, newState=None):
+        super().__init__(offset, image, rect)
+        self._newState = newState
 
-    def Update(self):
-        return StartMenuItem.Update(self)
+    def Update(self, game):
+        if self.IsClickedByMouse(game):
+            self._newState = Board(game.Settings.Resolution)
+        return StartMenuItem.Update(self, game)
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
+
+    def GetNewState(self):
+        return self._newState
 
