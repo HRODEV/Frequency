@@ -13,6 +13,7 @@ def Main():
     pygame.display.set_caption('Frequency')
 
 
+
     game = Game()
 
     while True:
