@@ -9,8 +9,8 @@ class Tile:
         self.EnemyMoney = enemyMoney
         self.Texture = texture
         self.Units = units
-        self.Width = 75
-        self.Height = 75
+        self.Width = 35
+        self.Height = 35
 
     def Update(self, game):
         return self

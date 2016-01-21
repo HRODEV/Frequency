@@ -18,8 +18,8 @@ class Map:
 
 
     def GenerateTiles(self):
-        maxTilesX = self.Resolution.X // 75
-        maxTilesY = self.Resolution.Y // 75
+        maxTilesX = self.Resolution.X // 35
+        maxTilesY = self.Resolution.Y // 35
         tiles = []
 
         for X in range(0, maxTilesX):
@@ -33,12 +33,14 @@ class Map:
     def DetermineTileType(self, X, Y):
         if X < 7 and Y < 7:
             return ForestTile
-        if X > 11 and X < 18 and Y < 7:
+        if X > 12 and X < 20 and Y < 7:
             return IceTile
-        if X < 7 and Y > 11 and Y < 18:
+        if X < 7 and Y >12 and Y < 20:
             return DesertTile
-        if X > 11 and X < 18 and Y < 18:
+        if X > 12 and X < 20 and Y > 12:
             return SwampTile
+        if X > 7 and X < 12 and Y > 7 and Y < 12:
+            return GoldTile
         else:
             return SeaTile
 
