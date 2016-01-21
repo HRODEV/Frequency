@@ -13,7 +13,7 @@
 		</turns_moves>
 		<money>
 			<text>
-				You receive money if you have atleast one unit on a piece of land. If the unit stands on land within your own climate, you'll receive F50 per 
+				You receive money if you have atleast one unit on a piece of land. If the unit stands on land within your own climate, you'll receive F50 per
 				piece per land. However, if the unit is on a piece of land of your opponent, you'll receive F100.
 
 				If your unit is on the goldmine, you'll receive F150.
@@ -22,19 +22,19 @@
 		<capturing>
 			<text>
 				All areas, except the corners, have a standard value of 0. When you want to capture the land
-you have to leave troops with at least the value of 1. It is of great importance to control land 
-in order to earn frequency’s. You can also take control of land that is in possession of an 
-enemy. When you want to take land that is in possession you have to fight for it. The person 
-with the higher value of troops will win the fight and earn the piece of land. The value that is 
-left is the sum of hitpoints/values of the soldiers. So when team A has 3 hitpoints and attacks 
-team B which has 1 hitpoint, it is 3 vs 1 which results in 3-1=2, so the winner has a remaining 
+you have to leave troops with at least the value of 1. It is of great importance to control land
+in order to earn frequency’s. You can also take control of land that is in possession of an
+enemy. When you want to take land that is in possession you have to fight for it. The person
+with the higher value of troops will win the fight and earn the piece of land. The value that is
+left is the sum of hitpoints/values of the soldiers. So when team A has 3 hitpoints and attacks
+team B which has 1 hitpoint, it is 3 vs 1 which results in 3-1=2, so the winner has a remaining
 value of 2. You can not attack when you are on a boat.
 			</text>
 		</capturing>
 		<how_to_win>
 			<text>
 				Be the first player to own F50000 or take control over 2 enemy bases.
-			</text>	
+			</text>
 		</how_to_win>
 	</main_rules>
 	<climates>
@@ -46,7 +46,7 @@ value of 2. You can not attack when you are on a boat.
 		</swamp>
 		<ice_plains>
 			<text>
-				Soldiers are F30 cheaper.		
+				Soldiers are F30 cheaper.
 			</text>
 		</ice_plains>
 		<forest>

@@ -4,8 +4,7 @@ import time
 from Game import Game
 from Vector2 import Vector2
 from Menu.StartMenu.StartMenu import StartMenu
-from Settings import GameSettings
-
+from Settings import GameSetting
 
 pygame.init()
 
