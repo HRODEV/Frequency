@@ -2,6 +2,7 @@
 from pygame.surface import Surface
 
 import Vector2
+from Helpers.EventHelpers import EventExist
 
 
 class StartMenuItem:
@@ -27,6 +28,9 @@ class StartMenuItem:
     def IsHoverdByMouse(self):
         return self.Rect is not None and self.Rect.collidepoint(pygame.mouse.get_pos())
 
-    '''def IsClickedByMouse(self):
-        return self.IsHoverdByMouse() and #check events'''
+    def IsClickedByMouse(self, game):
+        return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
+
+    def GetNewState(self):
+        return None
 

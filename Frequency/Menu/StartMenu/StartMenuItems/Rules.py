@@ -16,3 +16,5 @@ class Rules(StartMenuItem):
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
 
+    def GetNewState(self):
+        return None # will be the new state

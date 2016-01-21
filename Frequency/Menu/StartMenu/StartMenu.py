@@ -1,4 +1,6 @@
-﻿import pygame
+﻿from functools import reduce
+
+import pygame
 
 import Game
 from Menu.StartMenu.StartMenuItems.ExitGame import ExitGame
@@ -21,7 +23,11 @@ class StartMenu:
 
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
-        return StartMenu(game.Settings.Resolution, self.Background, self.Logo, newStartMenuItems)
+
+        newstate = reduce(lambda state, smi: smi.GetNewState() if smi.IsClickedByMouse(game) else state, newStartMenuItems, None)
+
+        return newstate if newstate is not None \
+            else StartMenu(game.Settings.Resolution, self.Background, self.Logo, newStartMenuItems)
 
     def Draw(self, game: Game):
 
