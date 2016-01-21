@@ -1,6 +1,11 @@
 import pygame
 
+from Board.Map.ForestTile import ForestTile
+from Board.Map.IceTile import IceTile
 from Board.Map.DesertTile import DesertTile
+from Board.Map.SwampTile import SwampTile
+from Board.Map.GoldTile import GoldTile
+from Board.Map.SeaTile import SeaTile
 from Board.Map.Tile import *
 from Vector2 import Vector2
 
@@ -19,9 +24,25 @@ class Map:
 
         for X in range(0, maxTilesX):
             for Y in range(0, maxTilesY):
-                tiles.append(DesertTile(Vector2(X, Y)))
+                TileType = self.DetermineTileType(X, Y)
+                tiles.append(TileType(Vector2(X, Y)))
 
         return tiles
+
+
+    def DetermineTileType(self, X, Y):
+        if X < 7 and Y < 7:
+            return ForestTile
+        if X > 11 and X < 18 and Y < 7:
+            return IceTile
+        if X < 7 and Y > 11 and Y < 18:
+            return DesertTile
+        if X > 11 and X < 18 and Y < 18:
+            return SwampTile
+        else:
+            return SeaTile
+
+
 
 
     def Update(self, game):
