@@ -15,6 +15,5 @@ class Board:
 
 
     def Draw(self, game: Game):
-        game.Settings.GetScreen().fill((255, 0, 0))
         self.Map.Draw(game)
 
