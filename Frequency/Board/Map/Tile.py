@@ -3,15 +3,17 @@ import pygame
 
 class Tile:
 
-    def __init__(self, type, position, defaultMoney, enemyMoney, texture, units=None):
-        self.Type = type
+    def __init__(self, position, defaultMoney, enemyMoney, texture, units=None):
         self.Position = position
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
-        self.Texture = pygame.image.load(texture).convert()
+        self.Texture = texture
         self.Units = units
         self.Width = 75
         self.Height = 75
+
+    def Update(self, game):
+        return self
 
 
     def Draw(self, game):

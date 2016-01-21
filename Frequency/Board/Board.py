@@ -11,7 +11,7 @@ class Board:
 
 
     def Update(self, game: Game):
-        return Board(game.Settings.Resolution, self.Map.Update())
+        return Board(game.Settings.Resolution, self.Map.Update(game))
 
 
     def Draw(self, game: Game):

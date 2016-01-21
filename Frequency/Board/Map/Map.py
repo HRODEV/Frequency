@@ -1,35 +1,31 @@
 import pygame
+
+from Board.Map.DesertTile import DesertTile
 from Board.Map.Tile import *
 from Vector2 import Vector2
 
+
 class Map:
 
-    def __init__(self, resolution):
+    def __init__(self, resolution, tiles=None):
         self.Resolution = resolution
-        self.Tiles = None
-        self.maxTilesX = None
-        self.maxTilesY = None
-
-        self.GenerateTiles()
+        self.Tiles = tiles if tiles is not None else self.GenerateTiles()
 
 
     def GenerateTiles(self):
-        tileForProperties = Tile(0, Vector2(0, 0), 100, 150, "images/tiles/Desert.jpg")
-        self.maxTilesX = self.Resolution.X // tileForProperties.Width
-        self.maxTilesY = self.Resolution.Y // tileForProperties.Height
+        maxTilesX = self.Resolution.X // 75
+        maxTilesY = self.Resolution.Y // 75
         tiles = []
-        X = 0
-        Y = 0
 
-        for Y in range(0, self.maxTilesX):
-            for X in range(0, self.maxTilesY):
-                tiles.append(Tile(0, Vector2(X, Y), 100, 150, "images/tiles/Desert.jpg"))
+        for X in range(0, maxTilesX):
+            for Y in range(0, maxTilesY):
+                tiles.append(DesertTile(Vector2(X, Y)))
 
-        self.Tiles = tiles
+        return tiles
 
 
-    def Update(self):
-        return self
+    def Update(self, game):
+        return Map(self.Resolution, [tile.Update(game) for tile in self.Tiles])
 
 
     def Draw(self, game):
