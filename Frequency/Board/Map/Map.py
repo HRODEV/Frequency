@@ -23,9 +23,11 @@ class Map:
         tiles = []
 
         for X in range(0, maxTiles.X):
+            row = []
             for Y in range(0, maxTiles.Y):
                 TileType = self.DetermineTileType(X, Y)
-                tiles.append(TileType(Vector2(X, Y), Vector2(maxTileSize.X, maxTileSize.Y)))
+                row.append(TileType(Vector2(X, Y), Vector2(maxTileSize.X, maxTileSize.Y)))
+            tiles.append(row)
 
         return tiles
 
@@ -45,12 +47,13 @@ class Map:
             return SeaTile
 
 
-
-
     def Update(self, game):
-        return Map(self.Resolution, [tile.Update(game) for tile in self.Tiles])
+        for row in self.Tiles:
+            for tile in row:
+                return Map(self.Resolution, tile.Update(game))
 
 
     def Draw(self, game):
-        for tile in self.Tiles:
-            tile.Draw(game)
+        for row in self.Tiles:
+            for tile in row:
+                tile.Draw(game)

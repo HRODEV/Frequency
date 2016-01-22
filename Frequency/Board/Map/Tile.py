@@ -1,18 +1,23 @@
 import pygame
+from Helpers.EventHelpers import EventExist
 
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None):
+    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None):
         self.Position = position
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
         self.Size = size
         self.Texture = texture
         self.Units = units
+        self.Rectangle = rectangle
 
     def Update(self, game):
-        return self
+        if self.IsClickedByMouse(game):
+            print(self.Position.X, self.Position.Y)
+
+        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Size, self.Texture, self.Units, self.Rectangle)
 
 
     def Draw(self, game):
@@ -20,15 +25,12 @@ class Tile:
         marginX = self.Position.X * self.Size.X
         marginY = self.Position.Y * self.Size.Y
 
-        screen.blit(self.Texture, (marginX, marginY))
+        self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
 
 
-        #pygame.draw.rect(screen, (255,0,0), (marginY, marginX, tile.Width, tile.Height))
+    def IsHoverdByMouse(self):
+        return self.Rectangle is not None and self.Rectangle.collidepoint(pygame.mouse.get_pos())
 
-        #font = pygame.font.Font(None, 40)
-        #text = font.render("%s" %self.Map.index(tile), True, (255, 255, 255))
-        #textRect = text.get_rect()
-        #textRect.centerx = tile.Position.X * tile.Width + tile.Width / 2
-        #textRect.centery = tile.Position.Y * tile.Height + tile.Height / 2
 
-        #screen.blit(text, textRect)
+    def IsClickedByMouse(self, game):
+        return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
