@@ -7,7 +7,7 @@ from Vector2 import Vector2
 class DesertTile(Tile):
 
     def __init__(self, position: Vector2, size: Vector2=None, texture=None, rectangle=None):
-        texture = texture if texture is not None else pygame.image.load("images/tiles/Desert.jpg")
+        texture = texture if texture is not None else pygame.transform.scale(pygame.image.load('images/tiles/Desert.jpg'), [size.X, size.Y])
         size = size if size is not None else Vector2(35, 35)
 
         super().__init__(position, 50, 100, texture, size, rectangle)

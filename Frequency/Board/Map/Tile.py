@@ -24,7 +24,6 @@ class Tile:
         screen = game.Settings.GetScreen()
         marginX = self.Position.X * self.Size.X
         marginY = self.Position.Y * self.Size.Y
-
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
 
 
