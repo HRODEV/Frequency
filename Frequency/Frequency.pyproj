@@ -25,16 +25,34 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Board\Board.py" />
+    <Compile Include="Board\Map\DesertTile.py" />
+    <Compile Include="Board\Map\ForestTile.py" />
+    <Compile Include="Board\Map\GoldTile.py" />
+    <Compile Include="Board\Map\IceTile.py" />
+    <Compile Include="Board\Map\Map.py" />
+    <Compile Include="Board\Map\SeaTile.py" />
+    <Compile Include="Board\Map\SwampTile.py" />
+    <Compile Include="Board\Map\Tile.py" />
     <Compile Include="Game.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Main.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Menu\StartMenu\StartMenu.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\ExitGame.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\StartGame.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\__init__.py" />
     <Compile Include="Menu\StartMenu\__init__.py" />
     <Compile Include="Menu\__init__.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\FourPlayers.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\PlayerSelection.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\SelectPlayers.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\ThreePlayers.py" />
+    <Compile Include="Menu\PlayerMenu\PlayerMenuItems\TwoPlayers.py" />
+    <Compile Include="Menu\PlayerMenu\__init__.py" />
     <Compile Include="Settings.py">
       <SubType>Code</SubType>
     </Compile>
@@ -46,13 +64,31 @@
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Board\" />
+    <Folder Include="Board\Map\" />
+    <Folder Include="Board\Map\__pycache__\" />
+    <Folder Include="Board\__pycache__\" />
     <Folder Include="images\" />
     <Folder Include="images\buttons\" />
     <Folder Include="Menu\" />
     <Folder Include="Menu\StartMenu\" />
     <Folder Include="Menu\StartMenu\StartMenuItems\" />
+    <Folder Include="Menu\PlayerMenu\" />
+    <Folder Include="Menu\PlayerMenu\PlayerMenuItems\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Board\Map\__pycache__\DesertTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\ForestTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\GoldTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\IceTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\Map.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\SeaTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\SwampTile.cpython-34.pyc" />
+    <Content Include="Board\Map\__pycache__\Tile.cpython-34.pyc" />
+    <Content Include="Board\__pycache__\Board.cpython-34.pyc" />
+    <Content Include="images\buttons\2pButton.png" />
+    <Content Include="images\buttons\3pButton.png" />
+    <Content Include="images\buttons\4pButton.png" />
     <Content Include="images\buttons\exitButton.png" />
     <Content Include="images\gameBackground.jpg" />
     <Content Include="images\gameLogo.png" />
