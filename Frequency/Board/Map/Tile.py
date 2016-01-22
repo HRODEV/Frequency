@@ -5,12 +5,12 @@ class Tile:
 
     def __init__(self, position, defaultMoney, enemyMoney, texture, units=None):
         self.Position = position
+        self.Width = 35
+        self.Height = 35
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
         self.Texture = texture
         self.Units = units
-        self.Width = 35
-        self.Height = 35
 
     def Update(self, game):
         return self

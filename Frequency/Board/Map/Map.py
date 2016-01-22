@@ -18,14 +18,13 @@ class Map:
 
 
     def GenerateTiles(self):
-        maxTilesX = self.Resolution.X // 35
-        maxTilesY = self.Resolution.Y // 35
+        maxTiles = Vector2(self.Resolution.X // 35, self.Resolution.Y // 35)
         tiles = []
 
-        for X in range(0, maxTilesX):
-            for Y in range(0, maxTilesY):
+        for X in range(0, maxTiles.X):
+            for Y in range(0, maxTiles.Y):
                 TileType = self.DetermineTileType(X, Y)
-                tiles.append(TileType(Vector2(X, Y)))
+                tiles.append(TileType(Vector2(X, Y), Vector2(50, 50)))
 
         return tiles
 
