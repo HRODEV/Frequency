@@ -6,7 +6,7 @@ from Vector2 import Vector2
 
 class GameSettings:
 
-    def __init__(self, resolution: Vector2 = Vector2(499, 499), screen: Surface = None):
+    def __init__(self, resolution: Vector2 = Vector2(500, 500), screen: Surface = None):
         self.Resolution = resolution
 
         self.screen = screen if screen is not None \

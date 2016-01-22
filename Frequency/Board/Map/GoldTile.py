@@ -6,6 +6,8 @@ from Vector2 import Vector2
 
 class GoldTile(Tile):
 
-    def __init__(self, position: Vector2, texture=None):
+    def __init__(self, position: Vector2, size: Vector2=None, texture=None):
         texture = texture if texture is not None else pygame.image.load("images/tiles/Gold.jpg")
-        super().__init__(position, 0, 150, texture)
+        size = size if size is not None else Vector2(35, 35)
+
+        super().__init__(position, 0, 150, texture, size)

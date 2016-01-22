@@ -3,12 +3,11 @@ import pygame
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, units=None):
+    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None):
         self.Position = position
-        self.Width = 35
-        self.Height = 35
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
+        self.Size = size
         self.Texture = texture
         self.Units = units
 
@@ -18,8 +17,8 @@ class Tile:
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
-        marginX = self.Position.X * self.Width
-        marginY = self.Position.Y * self.Height
+        marginX = self.Position.X * self.Size.X
+        marginY = self.Position.Y * self.Size.Y
 
         screen.blit(self.Texture, (marginX, marginY))
 
