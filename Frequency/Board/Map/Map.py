@@ -48,9 +48,15 @@ class Map:
 
 
     def Update(self, game):
+        nList = []
         for row in self.Tiles:
+            nRow = []
             for tile in row:
-                return Map(self.Resolution, tile.Update(game))
+                tile.Update(game)
+                TileType = self.DetermineTileType(tile.Position.X, tile.Position.Y)
+                nRow.append(TileType(Vector2(row, tile), Vector2(tile.Size.X, tile.Size.Y)))
+            nList.append(nRow)
+        return nList
 
 
     def Draw(self, game):
