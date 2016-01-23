@@ -7,7 +7,7 @@ from Board.Map.Map import *
 class Board:
 
     def __init__(self, resolution, map=None):
-        self.Map = Map(resolution)
+        self.Map = map if map is not None else Map(resolution)
 
 
     def Update(self, game: Game):
@@ -16,4 +16,3 @@ class Board:
 
     def Draw(self, game: Game):
         self.Map.Draw(game)
-
