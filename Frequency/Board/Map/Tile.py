@@ -1,35 +1,45 @@
 import pygame
+from Helpers.EventHelpers import EventExist
+from Board.Units.Soldier import *
 
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, units=None):
+    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None):
         self.Position = position
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
+        self.Size = size
         self.Texture = texture
-        self.Units = units
-        self.Width = 35
-        self.Height = 35
+        self.Rectangle = rectangle
+        if units is None:
+           self.Units = []
+        else:
+            self.Units = units
+
 
     def Update(self, game):
-        return self
+        if self.IsClickedByMouse(game):
+            print(self.Position.X, self.Position.Y)
+            self.Units.append(Soldier('Player1', self))
+
+        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
 
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
-        marginX = self.Position.X * self.Width
-        marginY = self.Position.Y * self.Height
+        marginX = self.Position.X * self.Size.X
+        marginY = self.Position.Y * self.Size.Y
+        self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
 
-        screen.blit(self.Texture, (marginX, marginY))
+        if len(self.Units) > 0:
+            for unit in self.Units:
+                unit.Draw(game)
 
 
-        #pygame.draw.rect(screen, (255,0,0), (marginY, marginX, tile.Width, tile.Height))
+    def IsHoverdByMouse(self):
+        return self.Rectangle is not None and self.Rectangle.collidepoint(pygame.mouse.get_pos())
 
-        #font = pygame.font.Font(None, 40)
-        #text = font.render("%s" %self.Map.index(tile), True, (255, 255, 255))
-        #textRect = text.get_rect()
-        #textRect.centerx = tile.Position.X * tile.Width + tile.Width / 2
-        #textRect.centery = tile.Position.Y * tile.Height + tile.Height / 2
 
-        #screen.blit(text, textRect)
+    def IsClickedByMouse(self, game):
+        return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
