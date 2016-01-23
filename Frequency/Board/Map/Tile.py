@@ -1,5 +1,6 @@
 import pygame
 from Helpers.EventHelpers import EventExist
+from Board.Units.Soldier import *
 
 
 class Tile:
@@ -10,14 +11,19 @@ class Tile:
         self.EnemyMoney = enemyMoney
         self.Size = size
         self.Texture = texture
-        self.Units = units
         self.Rectangle = rectangle
+        if units is None:
+           self.Units = []
+        else:
+            self.Units = units
+
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
             print(self.Position.X, self.Position.Y)
+            self.Units.append(Soldier('Player1', self))
 
-        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Size, self.Texture, self.Units, self.Rectangle)
+        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
 
 
     def Draw(self, game):
@@ -25,6 +31,10 @@ class Tile:
         marginX = self.Position.X * self.Size.X
         marginY = self.Position.Y * self.Size.Y
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
+
+        if len(self.Units) > 0:
+            for unit in self.Units:
+                unit.Draw(game)
 
 
     def IsHoverdByMouse(self):

@@ -6,14 +6,14 @@ from Vector2 import Vector2
 
 class GoldTile(Tile):
 
-    def __init__(self, position: Vector2, size: Vector2=None, texture=None, rectangle=None):
+    def __init__(self, position: Vector2, size: Vector2=None, units=None, texture=None, rectangle=None):
         texture = texture if texture is not None else pygame.transform.scale(pygame.image.load('images/tiles/Gold.jpg'), [size.X, size.Y])
         size = size if size is not None else Vector2(35, 35)
 
-        super().__init__(position, 0, 150, texture, size, rectangle)
+        super().__init__(position, 50, 100, texture, size, units, rectangle)
 
 
     def Update(self, game):
         nself = super().Update(game)
 
-        return GoldTile(nself.Position, nself.Size, nself.Texture, nself.Rectangle)
+        return GoldTile(nself.Position, nself.Size, nself.Units, nself.Texture, nself.Rectangle)

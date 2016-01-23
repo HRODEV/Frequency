@@ -17,6 +17,7 @@ class Map:
         self.Tiles = tiles if tiles is not None else self.GenerateTiles()
 
 
+
     def GenerateTiles(self):
         maxTiles = Vector2(18, 18)
         maxLength = min(self.Resolution.X // maxTiles.X, self.Resolution.Y // maxTiles.Y)
