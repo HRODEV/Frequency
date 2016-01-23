@@ -37,8 +37,6 @@ class Tile:
                 unit.Draw(game)
 
 
-
-
     def IsHoverdByMouse(self):
         return self.Rectangle is not None and self.Rectangle.collidepoint(pygame.mouse.get_pos())
 
