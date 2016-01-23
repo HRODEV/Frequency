@@ -18,7 +18,9 @@ class Tile:
     def Update(self, game):
         if self.IsClickedByMouse(game):
             print(self.Position.X, self.Position.Y)
-            self.Units= 1
+            self.Units += 1
+
+        if self.Units != 0:
             print(self.Units)
 
         return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
@@ -32,7 +34,6 @@ class Tile:
 
         if self.Units == 1:
             print(self.Units)
-
 
 
     def IsHoverdByMouse(self):

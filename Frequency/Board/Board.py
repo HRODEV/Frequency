@@ -1,17 +1,22 @@
 import pygame
 
 import Game
-import Vector2
 from Board.Map.Map import *
 
 
 class Board:
 
     def __init__(self, resolution, map=None):
-        self.Map = Map(resolution)
+        self.Map = map if map is not None else Map(resolution)
 
 
     def Update(self, game: Game):
+        nMap = self.Map.Update(game)
+
+        for row in nMap.Tiles:
+            for tiles in row:
+                if tiles.Units == 1:
+                    print("test")
         return Board(game.Settings.Resolution, self.Map.Update(game))
 
 
