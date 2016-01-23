@@ -5,23 +5,23 @@ from Board.Units.Soldier import *
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units, rectangle=None):
+    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None):
         self.Position = position
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
         self.Size = size
         self.Texture = texture
         self.Rectangle = rectangle
-        self.Units = 0
+        if units is None:
+           self.Units = []
+        else:
+            self.Units = units
 
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
             print(self.Position.X, self.Position.Y)
-            self.Units += 1
-
-        if self.Units != 0:
-            print(self.Units)
+            self.Units.append(Soldier('Player1', self))
 
         return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
 
@@ -32,8 +32,11 @@ class Tile:
         marginY = self.Position.Y * self.Size.Y
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
 
-        if self.Units == 1:
-            print(self.Units)
+        if len(self.Units) > 0:
+            for unit in self.Units:
+                unit.Draw(game)
+
+
 
 
     def IsHoverdByMouse(self):

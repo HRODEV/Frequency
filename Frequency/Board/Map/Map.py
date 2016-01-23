@@ -12,13 +12,9 @@ from Vector2 import Vector2
 
 class Map:
 
-    def __init__(self, resolution, tiles=None, units=None):
+    def __init__(self, resolution, tiles=None):
         self.Resolution = resolution
         self.Tiles = tiles if tiles is not None else self.GenerateTiles()
-        for row in self.Tiles:
-            for tile in row:
-                if tile.Units != 0:
-                    print("een uit")
 
 
 
@@ -59,8 +55,6 @@ class Map:
             nRow = []
             for tile in row:
                 newTile = tile.Update(game)
-                if newTile.Units != 0:
-                    print("Deze tile heeft 1 unit")
                 nRow.append(newTile)
             nList.append(nRow)
         return Map(self.Resolution, nList)

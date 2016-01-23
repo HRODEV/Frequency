@@ -11,12 +11,6 @@ class Board:
 
 
     def Update(self, game: Game):
-        nMap = self.Map.Update(game)
-
-        for row in nMap.Tiles:
-            for tiles in row:
-                if tiles.Units == 1:
-                    print("test")
         return Board(game.Settings.Resolution, self.Map.Update(game))
 
 
