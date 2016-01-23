@@ -2,7 +2,6 @@
 
 from Game import Game
 
-
 pygame.init()
 
 def Main():

@@ -17,15 +17,19 @@ class Map:
         self.Tiles = tiles if tiles is not None else self.GenerateTiles()
 
 
+
     def GenerateTiles(self):
-        maxTilesX = self.Resolution.X // 35
-        maxTilesY = self.Resolution.Y // 35
+        maxTiles = Vector2(18, 18)
+        maxLength = min(self.Resolution.X // maxTiles.X, self.Resolution.Y // maxTiles.Y)
+        maxTileSize = Vector2(maxLength, maxLength)
         tiles = []
 
-        for X in range(0, maxTilesX):
-            for Y in range(0, maxTilesY):
+        for X in range(0, maxTiles.X):
+            row = []
+            for Y in range(0, maxTiles.Y):
                 TileType = self.DetermineTileType(X, Y)
-                tiles.append(TileType(Vector2(X, Y)))
+                row.append(TileType(Vector2(X, Y), maxTileSize))
+            tiles.append(row)
 
         return tiles
 
@@ -33,24 +37,30 @@ class Map:
     def DetermineTileType(self, X, Y):
         if X < 7 and Y < 7:
             return ForestTile
-        if X > 12 and X < 20 and Y < 7:
+        if X > 10 and X < 18 and Y < 7:
             return IceTile
-        if X < 7 and Y >12 and Y < 20:
+        if X < 7 and Y >10 and Y < 18:
             return DesertTile
-        if X > 12 and X < 20 and Y > 12:
+        if X > 10 and X < 18 and Y > 10:
             return SwampTile
-        if X > 7 and X < 12 and Y > 7 and Y < 12:
+        if X > 6 and X < 11 and Y > 6 and Y < 11:
             return GoldTile
         else:
             return SeaTile
 
 
-
-
     def Update(self, game):
-        return Map(self.Resolution, [tile.Update(game) for tile in self.Tiles])
+        nList = []
+        for row in self.Tiles:
+            nRow = []
+            for tile in row:
+                newTile = tile.Update(game)
+                nRow.append(newTile)
+            nList.append(nRow)
+        return Map(self.Resolution, nList)
 
 
     def Draw(self, game):
-        for tile in self.Tiles:
-            tile.Draw(game)
+        for row in self.Tiles:
+            for tile in row:
+                tile.Draw(game)
