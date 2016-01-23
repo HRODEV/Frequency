@@ -12,7 +12,7 @@ from Vector2 import Vector2
 
 class Map:
 
-    def __init__(self, resolution, tiles=None):
+    def __init__(self, resolution, tiles=None, units=None):
         self.Resolution = resolution
         self.Tiles = tiles if tiles is not None else self.GenerateTiles()
 
@@ -52,9 +52,9 @@ class Map:
         for row in self.Tiles:
             nRow = []
             for tile in row:
-                tile.Update(game)
+                tile = tile.Update(game)
                 TileType = self.DetermineTileType(tile.Position.X, tile.Position.Y)
-                nRow.append(TileType(Vector2(row, tile), Vector2(tile.Size.X, tile.Size.Y)))
+                nRow.append(TileType(Vector2(row, tile), Vector2(tile.Size.X, tile.Size.Y), tile.Units))
             nList.append(nRow)
         return nList
 

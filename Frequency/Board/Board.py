@@ -1,6 +1,7 @@
 import pygame
 
 import Game
+import Vector2
 from Board.Map.Map import *
 
 
@@ -16,4 +17,3 @@ class Board:
 
     def Draw(self, game: Game):
         self.Map.Draw(game)
-
