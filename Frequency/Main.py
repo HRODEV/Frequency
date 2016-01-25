@@ -1,6 +1,8 @@
 ﻿import pygame
+from sys import exit
 
 from Game import Game
+import Helpers
 
 pygame.init()
 
@@ -11,8 +13,14 @@ def Main():
     game = Game()
 
     while True:
-        game = game.Update(pygame.event.get())
+        events = pygame.event.get()
+        if Helpers.EventHelpers.EventExist(events, pygame.QUIT):
+            pygame.quit()
+            exit()
+        game = game.Update(events)
         game.Draw()
         pygame.display.flip()
+    
+    
 
 Main()
