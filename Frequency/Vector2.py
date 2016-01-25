@@ -4,3 +4,6 @@
         self.X = x
         self.Y = y
         self.Position = (x, y)
+
+    def __str__(self):
+        return str(self.X) + " x " + str(self.Y)

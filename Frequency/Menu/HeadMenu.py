@@ -5,7 +5,7 @@ import Game
 
 class HeadMenu:
 
-    def __init__(self, resolution, background=None, logo=None, startMenuItems=None):
+    def __init__(self, resolution, background=None, logo=None):
         self.Background = background if background is not None \
             else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [resolution.X, resolution.Y])
 
