@@ -1,6 +1,7 @@
 ﻿import pygame
 from pygame.surface import Surface
 
+from Settings import GameSettings
 from Board.Board import Board
 import Vector2
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
@@ -14,6 +15,7 @@ class TwoPlayers(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
+            GameSettings.UpdatePlayers(game.Settings, 2)
             self.NewState = Board(game.Settings.Resolution)
 
         return StartMenuItem.Update(self, game)
