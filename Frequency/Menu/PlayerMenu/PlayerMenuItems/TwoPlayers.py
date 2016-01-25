@@ -14,7 +14,7 @@ class TwoPlayers(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            self.NewState = Board(game.Settings.Resolution)
+            self.NewState = Board(game)
 
         return StartMenuItem.Update(self, game)
 

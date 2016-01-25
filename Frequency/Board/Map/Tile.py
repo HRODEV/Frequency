@@ -26,9 +26,9 @@ class Tile:
         return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
 
 
-    def Draw(self, game):
+    def Draw(self, game, menuLeft):
         screen = game.Settings.GetScreen()
-        marginX = self.Position.X * self.Size.X
+        marginX = self.Position.X * self.Size.X + menuLeft.Size.X
         marginY = self.Position.Y * self.Size.Y
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
 

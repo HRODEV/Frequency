@@ -15,7 +15,7 @@ class StartGame(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            self._newState = PlayerSelection(game.Settings.Resolution)
+            self._newState = PlayerSelection(game)
         return StartMenuItem.Update(self, game)
 
     def Draw(self, game):
