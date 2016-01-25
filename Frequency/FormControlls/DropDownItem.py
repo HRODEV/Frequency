@@ -21,13 +21,10 @@ class DropDownItem:
 
         # Create a font
         font = pygame.font.Font(None, 15)
-
         # Render the text
         text = font.render(str(self.Item), True, Colors.WHITE)
-
         # Create a rectangle
         textRect = text.get_rect()
-
         # Blit the text
         game.Settings.GetScreen().blit(text, [position.X+10, position.Y+15])
 
