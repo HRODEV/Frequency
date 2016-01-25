@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 
 class Popup:
 
@@ -9,7 +9,7 @@ class Popup:
                 y=0,
                 backgroundColor=(0,0,0),
                 textColor=(255,255,255),
-                fontsize=32
+                fontsize=24
                 ):
 
         self.Screen = screen
@@ -39,16 +39,24 @@ class Popup:
 
     def Draw(self):
         # Create a font
-        font = pygame.font.Font(None, self.Fontsize)
+        textFont = pygame.font.Font(None, self.Fontsize)
+        # Render the font
+        textRender = textFont.render('', True, self.TextColor, self.BackgroundColor)
 
-        # Render the text
-        text = font.render(self.Content, True, self.TextColor)
+        # Get the text lines from the file
+        instructionsFile = open('Resources/Instructions.txt')
+        self.Content = instructionsFile.readlines()
+        instructionsFile.close()
 
         # Create a rectangle
-        textRect = text.get_rect()
+        textRect = textRender.get_rect()
 
         # Get X and Y position
         drawPosition = self.DrawPosition()
+
+        # Center the rectangle
+        textRect.centerx = 0 #drawPosition['X'] + self.Width//2
+        textRect.centery = 0 #drawPosition['Y'] + self.Height//2
 
         # Draw background
         pygame.draw.rect(self.Screen, self.BackgroundColor, (drawPosition['X'], drawPosition['Y'], self.Width, self.Height))
@@ -56,12 +64,17 @@ class Popup:
         # Draw the close popup button
         self.CloseButton = pygame.draw.rect(self.Screen, (255, 0, 0), (drawPosition['X'] + self.Width -20, drawPosition['Y'], 20, 20))
 
-        # Center the rectangle
-        textRect.centerx = drawPosition['X'] + self.Width//2
-        textRect.centery = drawPosition['Y'] + self.Height//2
+        # Place the text on the screen
+        for index in self.Content:
 
-        # Blit the text
-        self.Screen.blit(text, textRect)
+            # We render the text on the screen.
+            # Each index has a newline character.
+            content = textFont.render(index[:-1], True, self.TextColor, self.BackgroundColor)
+            # 50 margin bottom
+            textRect.centery += 25
+            # Blit the text
+            self.Screen.blit(content, textRect)
+
         pygame.display.update()
 
 
