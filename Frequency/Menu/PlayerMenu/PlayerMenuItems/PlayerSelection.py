@@ -12,8 +12,8 @@ from Vector2 import Vector2
 
 class PlayerSelection(StartMenuItem):
 
-    def __init__(self, resolution, background=None, logo=None, playerMenuItems=None):
-        self.Resolution = resolution
+    def __init__(self, game, background=None, logo=None, playerMenuItems=None):
+        self.Resolution = game.Settings.Resolution
 
         self.Background = background if background is not None \
             else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [self.Resolution.X, self.Resolution.Y])
@@ -30,7 +30,7 @@ class PlayerSelection(StartMenuItem):
         newstate = reduce(lambda state, pmi: pmi.GetNewState() if pmi.IsClickedByMouse(game) else state, newPlayerMenuItems, None)
 
         return newstate if newstate is not None \
-            else PlayerSelection(game.Settings.Resolution, self.Background, self.Logo, newPlayerMenuItems)
+            else PlayerSelection(game, self.Background, self.Logo, newPlayerMenuItems)
 
     def Draw(self, game):
 

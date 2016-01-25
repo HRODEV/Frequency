@@ -12,9 +12,9 @@ from Vector2 import Vector2
 
 class StartMenu:
 
-    def __init__(self, resolution, background=None, logo=None, startMenuItems=None):
+    def __init__(self, game, background=None, logo=None, startMenuItems=None):
         self.Background = background if background is not None \
-            else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [resolution.X, resolution.Y])
+            else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [game.Settings.Resolution.X, game.Settings.Resolution.Y])
 
         self.Logo = logo if logo is not None \
             else pygame.transform.scale(pygame.image.load('images/gameLogo.png'), (230, 230))
@@ -28,7 +28,7 @@ class StartMenu:
         newstate = reduce(lambda state, smi: smi.GetNewState() if smi.IsClickedByMouse(game) else state, newStartMenuItems, None)
 
         return newstate if newstate is not None \
-            else StartMenu(game.Settings.Resolution, self.Background, self.Logo, newStartMenuItems)
+            else StartMenu(game, self.Background, self.Logo, newStartMenuItems)
 
     def Draw(self, game: Game):
 
