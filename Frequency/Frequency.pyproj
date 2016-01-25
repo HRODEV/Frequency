@@ -37,6 +37,9 @@
     <Compile Include="Game.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helpers\EventHelpers.py" />
+    <Compile Include="Helpers\popup.py" />
+    <Compile Include="Helpers\__init__.py" />
     <Compile Include="Main.py" />
     <Compile Include="Menu\PlayerMenu\PlayerMenuItems\__init__.py">
       <SubType>Code</SubType>
@@ -68,6 +71,8 @@
     <Folder Include="Board\Map\" />
     <Folder Include="Board\Map\__pycache__\" />
     <Folder Include="Board\__pycache__\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Helpers\__pycache__\" />
     <Folder Include="images\" />
     <Folder Include="images\buttons\" />
     <Folder Include="Menu\" />
@@ -86,6 +91,8 @@
     <Content Include="Board\Map\__pycache__\SwampTile.cpython-34.pyc" />
     <Content Include="Board\Map\__pycache__\Tile.cpython-34.pyc" />
     <Content Include="Board\__pycache__\Board.cpython-34.pyc" />
+    <Content Include="Helpers\__pycache__\EventHelpers.cpython-34.pyc" />
+    <Content Include="Helpers\__pycache__\__init__.cpython-34.pyc" />
     <Content Include="images\buttons\2pButton.png" />
     <Content Include="images\buttons\3pButton.png" />
     <Content Include="images\buttons\4pButton.png" />
