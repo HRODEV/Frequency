@@ -11,17 +11,16 @@ def Main():
     pygame.display.set_caption('Frequency')
 
     game = Game()
-    done = False
 
-    while not done:
+    while True:
         events = pygame.event.get()
         if Helpers.EventHelpers.EventExist(events, pygame.QUIT):
-            done = True
+            pygame.quit()
+            exit()
         game = game.Update(events)
         game.Draw()
         pygame.display.flip()
-    pygame.quit()
-    exit()
+    
     
 
 Main()
