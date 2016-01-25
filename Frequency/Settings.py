@@ -9,11 +9,14 @@ class GameSettings:
     def __init__(self, resolution: Vector2 = Vector2(1280, 800),
                     screen: Surface = None,
                     tileSize = None,
-                    mapSize = None):
+                    mapSize = None,
+                    menuLeftSize = None
+                 ):
 
         self.Resolution = resolution
         self.TileSize = tileSize
         self.MapSize = mapSize
+        self.MenuLeftSize = menuLeftSize
 
         self.screen = screen if screen is not None \
             else pygame.display.set_mode([resolution.X, resolution.Y])
@@ -37,3 +40,9 @@ class GameSettings:
 
     def GetMapSize(self):
         return self.MapSize
+
+    def SetMenuLeftSize(self, menuSize):
+            self.MenuLeftSize = menuSize
+
+    def GetMenuLeftSize(self):
+        return self.MenuLeftSize

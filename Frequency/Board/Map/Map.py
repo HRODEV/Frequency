@@ -21,7 +21,7 @@ class Map:
         maxLength = min(self.Resolution.X // maxTiles.X, self.Resolution.Y // maxTiles.Y)
         maxTileSize = Vector2(maxLength, maxLength)
         tiles = []
-        game.Settings.SetMapSize(Vector2(1000, 1000))
+        game.Settings.SetMapSize(Vector2(maxTiles.X * maxLength, maxTiles.X * maxLength))
 
 
         for X in range(0, maxTiles.X):
@@ -60,7 +60,7 @@ class Map:
         return Map(game, nList)
 
 
-    def Draw(self, game, menuLeft):
+    def Draw(self, game):
         for row in self.Tiles:
             for tile in row:
-                tile.Draw(game, menuLeft)
+                tile.Draw(game)
