@@ -15,8 +15,9 @@ class ThreePlayers(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
+            self.NewState = Board(game)
             GameSettings.UpdatePlayers(game.Settings, 3)
-            self.NewState = Board(game.Settings.Resolution)
+
 
         return StartMenuItem.Update(self, game)
 

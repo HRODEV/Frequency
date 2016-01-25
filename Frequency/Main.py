@@ -5,10 +5,10 @@ from Game import Game
 import Helpers
 
 pygame.init()
+clock = pygame.time.Clock()
 
 def Main():
     pygame.display.init()
-    pygame.display.set_caption('Frequency')
 
     game = Game()
 
@@ -19,6 +19,9 @@ def Main():
             exit()
         game = game.Update(events)
         game.Draw()
+
+        clock.tick()
+        pygame.display.set_caption('Frequency | FPS: %i' % int(clock.get_fps()+100))
         pygame.display.flip()
     
     
