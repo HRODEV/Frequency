@@ -1,6 +1,7 @@
 ﻿import pygame
 from pygame.surface import Surface
 
+from Settings import GameSettings
 from Board.Board import Board
 import Vector2
 from GameLogic.GameLogic import GameLogic
@@ -17,6 +18,8 @@ class TwoPlayers(StartMenuItem):
     def Update(self, game):
         if self.IsClickedByMouse(game):
             self.NewState = Board(game)
+            GameSettings.UpdatePlayers(game.Settings, 2)
+
 
         return StartMenuItem.Update(self, game)
 
