@@ -17,6 +17,7 @@ class GameSettings:
         self.TileSize = tileSize
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
+        self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
             else pygame.display.set_mode([resolution.X, resolution.Y])
@@ -40,6 +41,12 @@ class GameSettings:
 
     def GetMapSize(self):
         return self.MapSize
+
+    def getFont(self):
+        return self.Font
+
+    def setFont(self, newFont):
+        self.Font = newFont
 
     def SetMenuLeftSize(self, menuSize):
             self.MenuLeftSize = menuSize
