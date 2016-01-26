@@ -27,7 +27,6 @@ class StartMenuItem:
         else:
             self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
 
-
     def IsHoverdByMouse(self):
         return self.Rect is not None and self.Rect.collidepoint(pygame.mouse.get_pos())
 
