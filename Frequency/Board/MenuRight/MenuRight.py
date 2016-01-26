@@ -5,6 +5,10 @@ from Vector2 import Vector2
 class MenuRight:
 
     def __init__(self, game, size=None, position=None):
+        self.Money = 0
+        self.TurnIncome = 0
+        self.NextTurnIncome = 0
+        self.RemainingMoves = 4
         self.Options = ["Buy units", "Your money", "Lands", "Turn income", "Next turn income", "Remaining moves"]
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
         self.Position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 0)
@@ -20,8 +24,32 @@ class MenuRight:
         self.Font = game.Settings.getFont()
 
         for rightMenuItem in self.Options:
-            self.Screen.blit(self.Font.render('Hallo', True, (255, 255, 255)), (0, 0))
+            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (0, 0))
+            print(rightMenuItem)
 
         pygame.draw.rect(self.Screen,
                          (0, 0, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
+
+    # Setters and getters
+    def getMoney(self):
+        return self.Money
+
+    def setMoney(self, newMoney):
+        self.Money = newMoney
+
+    def getTurnIncome(self):
+        return self.TurnIncome
+
+    def setTurnIncome(self, newTurnIncome):
+        self.TurnIncome = newTurnIncome
+
+    def getNextTurnIncome(self):
+        return self.NextTurnIncome
+
+    def setNextTurnIncome(self, newTurnIncome):
+        self.NextTurnIncome = newTurnIncome
+
+    def getRemainingMoves(self):
+        return self.RemainingMoves
+
