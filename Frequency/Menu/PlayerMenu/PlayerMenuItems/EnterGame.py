@@ -22,7 +22,6 @@ class EnterGame(StartMenuItem):
     def CreatePlayers(self, game: Game):
         for i in range(game.Settings.GetTotalPlayers()):
             game.Logic.AddNewPlayer("Player%i" %i)
-            print("test")
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)

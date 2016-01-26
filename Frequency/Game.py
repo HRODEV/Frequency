@@ -13,7 +13,7 @@ class Game(object):
 
 
     def Update(self, events):
-        return Game(self.State.Update(self), self.Settings, events)
+        return Game(self.State.Update(self), self.Settings, events, self.Logic.Update(self.Logic))
 
 
     def Draw(self):
