@@ -53,3 +53,6 @@ class GameSettings:
 
     def UpdatePlayers(self, newPlayers):
         self.Players = newPlayers
+
+    def GetTotalPlayers(self):
+        return self.Players

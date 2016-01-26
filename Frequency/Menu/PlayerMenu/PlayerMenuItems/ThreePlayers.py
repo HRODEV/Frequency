@@ -1,10 +1,9 @@
 ﻿import pygame
 from pygame.surface import Surface
 
-from Settings import GameSettings
-from Board.Board import Board
 import Vector2
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
+from Menu.PlayerMenu.PlayerMenuItems.PlayerNames import PlayerNames
 
 
 class ThreePlayers(StartMenuItem):
@@ -15,8 +14,8 @@ class ThreePlayers(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            self.NewState = Board(game)
-            GameSettings.UpdatePlayers(game.Settings, 3)
+            self.NewState = PlayerNames(game)
+            game.Settings.UpdatePlayers(3)
 
 
         return StartMenuItem.Update(self, game)
