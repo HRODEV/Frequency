@@ -75,6 +75,8 @@
     <Folder Include="Helpers\__pycache__\" />
     <Folder Include="images\" />
     <Folder Include="images\buttons\" />
+    <Folder Include="images\tiles\" />
+    <Folder Include="images\units\" />
     <Folder Include="Menu\" />
     <Folder Include="Menu\StartMenu\" />
     <Folder Include="Menu\StartMenu\StartMenuItems\" />
@@ -101,6 +103,13 @@
     <Content Include="images\gameLogo.png" />
     <Content Include="images\buttons\playButton.png" />
     <Content Include="images\buttons\rulesButton.png" />
+    <Content Include="images\tiles\DesertSeamless.png" />
+    <Content Include="images\tiles\ForestSeamless.png" />
+    <Content Include="images\tiles\GoldSeamless.png" />
+    <Content Include="images\tiles\IceSeamless.png" />
+    <Content Include="images\tiles\SwampSeamless.png" />
+    <Content Include="images\tiles\SeaSeamless.png" />
+    <Content Include="images\units\soldierGreen.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
