@@ -3,17 +3,47 @@ import Game
 from Vector2 import Vector2
 from Helpers.popup import *
 from Helpers.EventHelpers import *
+from GameLogic.Player import import *
 
 class playerInfoLabels:
     def __init__(self):
         pass
 
-class PlayerMoney:
+class PlayerMoney(playerInfoLabels):
     def __init__(self, player):
         self.Player = player
 
-    def Draw(self):
-        return self.Player.Money
+    def GetValue(self):
+        return 'Money: ' + str(self.Player.Money)
+
+class PlayerLands(playerInfoLabels):
+    def __init__(self, player):
+        self.Player = player
+
+    def getValue(self):
+        return 'Units: ' # TODO: Needs logic
+
+class PlayerTurnIncome(playerInfoLabels):
+    def __init__(self, player):
+        self.Player = player
+
+    def getValue(self):
+        return 'Income this turn: ' + str(0) # TODO: Needs logic
+
+class PlayerNextTurnIncome(playerInfoLabels):
+    def __init__(self, player):
+        self.Player = player
+
+    def getValue(self):
+        return 'Income this turn: ' + str(0) # TODO: Needs logic
+
+class PlayerRemainingMoves(playerInfoLabels):
+    def __init__(self, player):
+        self.Player = player
+
+    def getValue(self):
+        return 'Remaining moves: ' + str(0) # TODO: Needs logic
+
 
 class MenuRight:
 
