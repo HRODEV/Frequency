@@ -10,7 +10,7 @@ class GameLogic:
             self.Players = players
 
 
-    def addNewPlayer(self, Name):
+    def AddNewPlayer(self, Name):
         if not self.Players:
             characterIndex = 0
         else:

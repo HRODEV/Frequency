@@ -1,21 +1,28 @@
-﻿import pygame
+import pygame
 from pygame.surface import Surface
 
 import Vector2
-from Menu.PlayerMenu.PlayerMenuItems.PlayerSelection import PlayerSelection
+import Game
+from Board.Board import Board
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 
-class StartGame(StartMenuItem):
+class EnterGame(StartMenuItem):
 
     def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/playButton.png'), rect=None, newState=None):
         super().__init__(offset, image, rect)
         self._newState = newState
 
-    def Update(self, game):
+    def Update(self, game: Game):
         if self.IsClickedByMouse(game):
-            self._newState = PlayerSelection(game)
+            self.CreatePlayers(game)
+            self._newState = Board(game)
         return StartMenuItem.Update(self, game)
+
+    def CreatePlayers(self, game: Game):
+        for i in range(game.Settings.GetTotalPlayers()):
+            game.Logic.AddNewPlayer("Player%i" %i)
+            print("test")
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
