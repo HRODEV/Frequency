@@ -9,7 +9,7 @@ class Popup:
                 y=0,
                 backgroundColor=(0,0,0),
                 textColor=(255,255,255),
-                fontsize=24
+                fontsize=24,
                 ):
 
         self.Screen = screen
@@ -37,14 +37,15 @@ class Popup:
         return self
 
 
-    def Draw(self):
+    def Draw(self, file):
         # Create a font
         textFont = pygame.font.Font(None, self.Fontsize)
-        # Render the font
+
+        # Render the basic font so we can use this for the rectangle
         textRender = textFont.render('', True, self.TextColor, self.BackgroundColor)
 
         # Get the text lines from the file
-        instructionsFile = open('Resources/Instructions.txt')
+        instructionsFile = open(file)
         self.Content = instructionsFile.readlines()
         instructionsFile.close()
 
@@ -55,22 +56,22 @@ class Popup:
         drawPosition = self.DrawPosition()
 
         # Center the rectangle
-        textRect.centerx = 0 #drawPosition['X'] + self.Width//2
-        textRect.centery = 0 #drawPosition['Y'] + self.Height//2
+        textRect.centerx = self.Width//4
+        textRect.centery = self.Height//20
 
         # Draw background
         pygame.draw.rect(self.Screen, self.BackgroundColor, (drawPosition['X'], drawPosition['Y'], self.Width, self.Height))
-
-        # Draw the close popup button
-        self.CloseButton = pygame.draw.rect(self.Screen, (255, 0, 0), (drawPosition['X'] + self.Width -20, drawPosition['Y'], 20, 20))
+        # Load the image
+        btn = pygame.image.load('images/buttons/closeButton.png')
+        # Blit the close button
+        self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Width-20, textRect.centery))
 
         # Place the text on the screen
         for index in self.Content:
-
             # We render the text on the screen.
-            # Each index has a newline character.
-            content = textFont.render(index[:-1], True, self.TextColor, self.BackgroundColor)
-            # 50 margin bottom
+            # [:-1] = Starts at 0, ends at 1 before the last element
+            content = textFont.render(index[:-1], True, self.TextColor)
+            # 25 margin bottom
             textRect.centery += 25
             # Blit the text
             self.Screen.blit(content, textRect)

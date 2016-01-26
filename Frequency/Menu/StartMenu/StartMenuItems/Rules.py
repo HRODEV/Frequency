@@ -10,9 +10,8 @@ from Rules.GameInstructions import GameInstructions
 
 class Rules(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/rulesButton.png'), rect=None, newState=None):
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/rulesButton.png'), rect=None):
         super().__init__(offset, image, rect)
-        self._newState = newState
 
     def Update(self, game):
         self.Show(game)
@@ -21,16 +20,17 @@ class Rules(StartMenuItem):
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
 
-    def GetNewState(self):
-        return self._newState
-
     def Show(self, game):
 
         if self.IsClickedByMouse(game):
+            # Popup instance
             popup = Popup(GameSettings().GetScreen(), '')
+            # Define open as true for the while, we turn this into false if the close button is clicked
             open = True
             while(open):
-                popup.Draw()
-
+                # Draw the popup
+                popup.Draw('Resources/Instructions.txt')
+                # If the update returns none (which is after you click on the exit button)
                 if(popup.Update(pygame.event.get()) == None):
+                    # Define open as false to stop showing the popup
                     open = False
