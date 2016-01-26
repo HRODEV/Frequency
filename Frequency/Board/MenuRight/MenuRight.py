@@ -1,6 +1,8 @@
 import pygame
 import Game
 from Vector2 import Vector2
+from Helpers.popup import *
+from Helpers.EventHelpers import *
 
 class MenuRight:
 
@@ -27,6 +29,13 @@ class MenuRight:
                          (0, 0, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
 
+        self.drawRightMenu()
+
+    # Display the sidemenu
+    def drawRightMenu(self):
+
+        popup = Popup(self.Screen, "Message")
+
         # Loop through the given menu-items
         for rightMenuItem in self.Options:
 
@@ -45,7 +54,8 @@ class MenuRight:
             if rightMenuItem == 'Turn income':
                 rightMenuItem += str(self.getTurnIncome())
 
-            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (self.Position.X + 30, self.Position.Y + (self.Count * 50)))
+            rectangle = self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (self.Position.X + 30, self.Position.Y + (self.Count * 50)))
+
     # Setters and getters
     def getMoney(self):
         return self.Money
