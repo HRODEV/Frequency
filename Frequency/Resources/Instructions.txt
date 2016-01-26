@@ -1,0 +1,28 @@
+START: Every player draws a climate card and starts with F500.
+TURNS: Every player can make four moves within a turn. You can't rollback a move you have made.
+
+MONEY
+If your unit stands on land within your own climate, you'll receive F50 per piece per land. 
+However, if the unit is on a piece of land of your opponent, you'll receive F100. 
+If your unit is on the goldmine, you'll receive F150.
+
+CAPTURING
+When you want to capture the land you have to leave troops with at least the value of 1. 
+Control land to keep gaining frequency.
+If you want to take over land of an opponent, you have to fight for it.
+The fighter with the highest attack value wins.
+Example: Tank(3/3) vs Soldier (1/2) = Tank wins and becomes (3/2)
+You can not attack when you are on a boat.
+HOW TO WIN: Be the first player to own F50000 or take control over 2 enemy bases.
+
+CLIMATES
+Desert: Tanks are F150 cheaper. Swamp: Boats are F200 cheaper.
+Ice plains: Soldiers are F30 cheaper. Forest: Robots are F60 cheaper.
+
+Units (Attack / Defense / Range) : Effect
+SOLDIER (1/2/1)
+ROBOT   (2/2/1)
+TANKS   (2/2/2)
+Base    (0/25) : You can spawn 1 barrack here.
+Barrack : You can spawn soldiers here.
+Boat(MAX. 3) (0/6) : You can travel across the sea.

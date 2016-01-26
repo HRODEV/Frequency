@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="Menu\StartMenu\StartMenu.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\ExitGame.py" />
+    <Compile Include="Menu\StartMenu\StartMenuItems\Rules.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\StartGame.py" />
     <Compile Include="Menu\StartMenu\StartMenuItems\__init__.py" />
     <Compile Include="Menu\StartMenu\__init__.py" />
@@ -56,6 +57,7 @@
     <Compile Include="Menu\PlayerMenu\PlayerMenuItems\ThreePlayers.py" />
     <Compile Include="Menu\PlayerMenu\PlayerMenuItems\TwoPlayers.py" />
     <Compile Include="Menu\PlayerMenu\__init__.py" />
+    <Compile Include="Rules\GameInstructions.py" />
     <Compile Include="Settings.py">
       <SubType>Code</SubType>
     </Compile>
@@ -75,11 +77,15 @@
     <Folder Include="Helpers\__pycache__\" />
     <Folder Include="images\" />
     <Folder Include="images\buttons\" />
+    <Folder Include="images\tiles\" />
+    <Folder Include="images\units\" />
     <Folder Include="Menu\" />
     <Folder Include="Menu\StartMenu\" />
     <Folder Include="Menu\StartMenu\StartMenuItems\" />
     <Folder Include="Menu\PlayerMenu\" />
     <Folder Include="Menu\PlayerMenu\PlayerMenuItems\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Rules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Board\Map\__pycache__\DesertTile.cpython-34.pyc" />
@@ -92,7 +98,6 @@
     <Content Include="Board\Map\__pycache__\Tile.cpython-34.pyc" />
     <Content Include="Board\__pycache__\Board.cpython-34.pyc" />
     <Content Include="Helpers\__pycache__\EventHelpers.cpython-34.pyc" />
-    <Content Include="Helpers\__pycache__\__init__.cpython-34.pyc" />
     <Content Include="images\buttons\2pButton.png" />
     <Content Include="images\buttons\3pButton.png" />
     <Content Include="images\buttons\4pButton.png" />
@@ -101,7 +106,16 @@
     <Content Include="images\gameLogo.png" />
     <Content Include="images\buttons\playButton.png" />
     <Content Include="images\buttons\rulesButton.png" />
-  </ItemGroup>
+    <Content Include="images\tiles\DesertSeamless.png" />
+    <Content Include="images\tiles\ForestSeamless.png" />
+    <Content Include="images\tiles\GoldSeamless.png" />
+    <Content Include="images\tiles\IceSeamless.png" />
+    <Content Include="images\tiles\SwampSeamless.png" />
+    <Content Include="images\tiles\SeaSeamless.png" />
+    <Content Include="images\units\soldierGreen.png" />
+    <Content Include="Resources\Instructions.txt" />
+    <Content Include="Resources\instructions.xml" />
+</ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>

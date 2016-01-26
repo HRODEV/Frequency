@@ -6,23 +6,23 @@ from Board.Map.DesertTile import DesertTile
 from Board.Map.SwampTile import SwampTile
 from Board.Map.GoldTile import GoldTile
 from Board.Map.SeaTile import SeaTile
-from Board.Map.Tile import *
 from Vector2 import Vector2
 
 
 class Map:
 
-    def __init__(self, resolution, tiles=None):
-        self.Resolution = resolution
-        self.Tiles = tiles if tiles is not None else self.GenerateTiles()
+    def __init__(self, game, tiles=None):
+        self.Resolution = game.Settings.Resolution
+        self.Tiles = tiles if tiles is not None else self.GenerateTiles(game)
 
 
-
-    def GenerateTiles(self):
+    def GenerateTiles(self, game):
         maxTiles = Vector2(18, 18)
         maxLength = min(self.Resolution.X // maxTiles.X, self.Resolution.Y // maxTiles.Y)
         maxTileSize = Vector2(maxLength, maxLength)
         tiles = []
+        game.Settings.SetMapSize(Vector2(maxTiles.X * maxLength, maxTiles.X * maxLength))
+
 
         for X in range(0, maxTiles.X):
             row = []
@@ -57,7 +57,7 @@ class Map:
                 newTile = tile.Update(game)
                 nRow.append(newTile)
             nList.append(nRow)
-        return Map(self.Resolution, nList)
+        return Map(game, nList)
 
 
     def Draw(self, game):
