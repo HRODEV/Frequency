@@ -40,7 +40,7 @@ class StartMenu:
         logoCenterX = screen_centerX - logoSize.centerx
         logoCenter = (logoCenterX, screen_marginX)
 
-         # Basic screen loaded elements
+        # Basic screen loaded elements
         game.Settings.GetScreen().fill((255, 255, 255))
         game.Settings.GetScreen().blit(self.Background, (0, 0))
         game.Settings.GetScreen().blit(self.Logo, logoCenter)

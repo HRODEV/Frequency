@@ -4,10 +4,10 @@ from pygame.surface import Surface
 import Vector2
 from Helpers.EventHelpers import EventExist
 
-
 class StartMenuItem:
-    def __init__(self, offset: Vector2, image: Surface, rect):
+    def __init__(self, offset: Vector2, image: Surface, hover: Surface, rect):
         self.Image = image
+        self.Hover = hover
         self.Offset = offset
         self.Rect = rect
 
@@ -22,7 +22,10 @@ class StartMenuItem:
         x = screen_centerX - self.Image.get_rect().centerx + self.Offset.X
         y = screen_centerY + 20 + self.Offset.Y
 
-        self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
+        if self.IsHoverdByMouse():
+            self.Rect = game.Settings.GetScreen().blit(self.Hover, (x, y))
+        else:
+            self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
 
 
     def IsHoverdByMouse(self):

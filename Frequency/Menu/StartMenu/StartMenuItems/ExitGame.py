@@ -8,8 +8,8 @@ from Vector2 import Vector2
 
 class ExitGame(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/exitButton.png'), rect=None):
-        super().__init__(offset, image, rect)
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/exitButton.png'), hover: Surface=pygame.image.load('images/buttons/exitButtonHover.png'), rect=None):
+        super().__init__(offset, image, hover, rect)
 
     def Update(self, game):
         return StartMenuItem.Update(self, game)
