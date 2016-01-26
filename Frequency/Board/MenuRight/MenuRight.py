@@ -27,11 +27,25 @@ class MenuRight:
                          (0, 0, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
 
+        # Loop through the given menu-items
         for rightMenuItem in self.Options:
-            self.Count += 1
-            print(self.Count)
-            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (self.Position.X + 30, self.Position.Y + (self.Count * 50)))
 
+            # Needed to append the items below each other (Y-axis)
+            self.Count += 1
+
+            if rightMenuItem == 'Your money':
+                rightMenuItem += str(self.getMoney())
+
+            if rightMenuItem == 'Turn income':
+                rightMenuItem += str(self.getTurnIncome())
+
+            if rightMenuItem == 'Remaining moves':
+                rightMenuItem += str(self.getRemainingMoves())
+
+            if rightMenuItem == 'Turn income':
+                rightMenuItem += str(self.getTurnIncome())
+
+            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (self.Position.X + 30, self.Position.Y + (self.Count * 50)))
     # Setters and getters
     def getMoney(self):
         return self.Money
