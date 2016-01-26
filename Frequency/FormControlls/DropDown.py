@@ -4,12 +4,13 @@ import Game
 from FormControlls.DropDownItem import DropDownItem
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
+from Menu.SettingsMenu import SaveButton
 from Vector2 import Vector2
 
 
 class DropDown:
 
-    def __init__(self, items, position:Vector2, dropDownButtonRect = None, selcted:object="", active=False):
+    def __init__(self, items, position:Vector2, selcted:object="", dropDownButtonRect = None,  active=False):
         self.DropDownItems = [item if isinstance(item, DropDownItem) else DropDownItem(item) for item in items]
         self.Position = position
         self.DropDownButtonRect = dropDownButtonRect
@@ -18,9 +19,9 @@ class DropDown:
 
     def Update(self, game:Game):
         if len([ddi for ddi in self.DropDownItems if ddi.IsClickedByMouse(game)]) == 1:
-            return DropDown(self.DropDownItems, self.Position, self.DropDownButtonRect, [ddi for ddi in self.DropDownItems if ddi.IsClickedByMouse(game)][0].Item, False)
+            return DropDown(self.DropDownItems, self.Position, [ddi for ddi in self.DropDownItems if ddi.IsClickedByMouse(game)][0].Item, self.DropDownButtonRect, False)
         if self.IsdropDownButtonRectClickedByMouse(game):
-            return DropDown(self.DropDownItems, self.Position, self.DropDownButtonRect, self.Selected, not self.Active)
+            return DropDown(self.DropDownItems, self.Position, self.Selected, self.DropDownButtonRect, not self.Active)
         else:
             return self
 
