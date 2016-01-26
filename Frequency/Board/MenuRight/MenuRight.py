@@ -20,16 +20,17 @@ class MenuRight:
         return MenuRight(game, self.Size, self.Position)
 
     def Draw(self, game : Game):
-
-        self.Font = game.Settings.getFont()
-
-        for rightMenuItem in self.Options:
-            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (0, 0))
-            print(rightMenuItem)
+        self.Count = 0
+        self.Font = pygame.font.SysFont("Arial", 18)
 
         pygame.draw.rect(self.Screen,
                          (0, 0, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
+
+        for rightMenuItem in self.Options:
+            self.Count += 1
+            print(self.Count)
+            self.Screen.blit(self.Font.render(rightMenuItem, True, (255, 255, 255)), (self.Position.X + 30, self.Position.Y + (self.Count * 50)))
 
     # Setters and getters
     def getMoney(self):
