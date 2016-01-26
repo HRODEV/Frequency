@@ -26,7 +26,7 @@ class GameSettings:
         self.SetMaxTiles(Vector2(18, 18))
         self.Players = newPlayers
 
-    def SetResolution(self, newResolution:Vector2):
+    def SetResolution(self, newResolution: Vector2):
         self.Resolution = newResolution
         self.screen = pygame.display.set_mode(newResolution.Position)
 

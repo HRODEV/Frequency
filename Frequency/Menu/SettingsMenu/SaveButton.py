@@ -1,14 +1,12 @@
 import pygame
 from pygame.surface import Surface
 
-import Vector2
 from Helpers.EventHelpers import EventExist
 
 
 class SaveButton:
     def __init__(self, image: Surface=None, rect=None):
         self.Image = image if image is not None else pygame.image.load('images/buttons/saveButton.png')
-
         self.Rect = rect
 
     def Update(self, game):

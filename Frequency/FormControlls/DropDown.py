@@ -10,11 +10,11 @@ from Vector2 import Vector2
 
 class DropDown:
 
-    def __init__(self, items, position:Vector2, selcted:object="", dropDownButtonRect = None,  active=False):
+    def __init__(self, items, position:Vector2, selected:object= "", dropDownButtonRect = None, active=False):
         self.DropDownItems = [item if isinstance(item, DropDownItem) else DropDownItem(item) for item in items]
         self.Position = position
         self.DropDownButtonRect = dropDownButtonRect
-        self.Selected = selcted
+        self.Selected = selected
         self.Active = active
 
     def Update(self, game:Game):

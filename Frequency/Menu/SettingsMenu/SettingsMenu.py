@@ -4,7 +4,6 @@ from FormControlls.DropDown import DropDown
 from Helpers import Colors
 from Menu.HeadMenu import HeadMenu
 from Menu.SettingsMenu.SaveButton import SaveButton
-#from Menu.StartMenu.StartMenu import StartMenu
 from Vector2 import Vector2
 
 
