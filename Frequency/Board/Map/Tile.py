@@ -1,11 +1,10 @@
-import pygame
 from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
-
+from Board.Buildings.Barrack import Barracks
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None):
+    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None, building=None):
         self.Position = position
         self.DefaultMoney = defaultMoney
         self.EnemyMoney = enemyMoney
@@ -16,14 +15,20 @@ class Tile:
            self.Units = []
         else:
             self.Units = units
+        self.Building = building
 
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            print(self.Position.X, self.Position.Y)
-            self.Units.append(Soldier('Player1', self))
+            if game.Settings.GetSelectedUnitBuilding() == "Soldier":
+                if game.Logic.CanAddUnitBuildingToTile(game):
+                    self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+            elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
+                 if game.Logic.CanAddUnitBuildingToTile(game):
+                    self.Building = Barracks(game.Logic.PlayingPlayer, self)
+                    print("place building")
 
-        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
+        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle, self.Building)
 
 
     def Draw(self, game):
@@ -31,10 +36,11 @@ class Tile:
         marginX = self.Position.X * self.Size.X + game.Settings.MenuLeftSize.X
         marginY = self.Position.Y * self.Size.Y
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
-
         if len(self.Units) > 0:
             for unit in self.Units:
                 unit.Draw(game)
+        if self.Building is not None:
+            self.Building.Draw(game)
 
 
     def IsHoverdByMouse(self):
