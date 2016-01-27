@@ -10,9 +10,8 @@ from Rules.GameInstructions import GameInstructions
 
 class Rules(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/rulesButton.png'), hover: Surface=pygame.image.load('images/buttons/rulesButtonHover.png'), rect=None, newState=None):
-        super().__init__(offset, image, hover, rect)
-        self._newState = newState
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/rulesButton.png'), rect=None):
+        super().__init__(offset, image, rect)
 
     def Update(self, game):
         self.Show(game)
@@ -25,7 +24,7 @@ class Rules(StartMenuItem):
 
         if self.IsClickedByMouse(game):
             # Popup instance
-            popup = Popup(GameSettings().GetScreen(), '')
+            popup = Popup(game.Settings.GetScreen())
             # Define open as true for the while, we turn this into false if the close button is clicked
             open = True
             while(open):
