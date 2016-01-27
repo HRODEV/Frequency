@@ -12,4 +12,4 @@ class Unit:
 
     def Draw(self, game, tile):
         tileSize = min(self.Tile.Size.X, self.Tile.Size.Y)
-        game.Settings.GetScreen().blit(self.Textures[self.Player.Character], ((tile.Position.X * tileSize) + game.Settings.GetMenuLeftSize().X, tile.Position.Y * tileSize))
+        game.Settings.GetScreen().blit(self.Textures[self.Player.Character.Id], ((tile.Position.X * tileSize) + game.Settings.GetMenuLeftSize().X, tile.Position.Y * tileSize))

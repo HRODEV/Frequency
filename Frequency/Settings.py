@@ -60,12 +60,6 @@ class GameSettings:
     def GetMenuLeftSize(self):
         return self.MenuLeftSize
 
-    def UpdatePlayers(self, newPlayers):
-        self.Players = newPlayers
-
-    def GetTotalPlayers(self):
-        return self.Players
-
     def SetSelectedUnitBuilding(self, selectedUnitBuilding):
         self.SelectedUnitBuilding = selectedUnitBuilding
 

@@ -16,11 +16,12 @@ class StartGame(StartMenuItem):
     def Update(self, game):
         if self.IsClickedByMouse(game):
             self._newState = PlayerSelection(game.Settings.Resolution)
-        return StartMenuItem.Update(self, game)
+        nself = super().Update(game)
+        return StartGame(nself.Offset, nself.Image, nself.Hover, nself.Rect, self._newState)
 
 
     def Draw(self, game):
-        StartMenuItem.Draw(self, game)
+        super().Draw(game)
 
     def GetNewState(self):
         return self._newState

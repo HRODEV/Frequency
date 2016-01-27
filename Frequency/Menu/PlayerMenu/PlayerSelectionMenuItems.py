@@ -1,67 +1,59 @@
 import pygame
 from pygame.surface import Surface
 
-from GameLogic.GameLogic import GameLogic
-from Menu.PlayerMenu.PlayerMenuItems.PlayerNames import PlayerNames
 import Vector2
+from GameLogic.GameLogic import GameLogic
+from GameLogic.Player import Player
+from Menu.PlayerMenu.PlayerNamesMenu import PlayerNamesMenu
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 
-class FourPlayers(StartMenuItem):
+def emptyPlayerGeneratorN(n: int):
+    return [Player("Player%i" % i, i) for i in range(0, n)]
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/4pButton.png'), hover: Surface=pygame.image.load('images/buttons/4pButtonHover.png'), rect=None, newState=None):
+class NPlayersMenuItem(StartMenuItem):
+    def __init__(self, offset: Vector2, image: Surface, hover: Surface, rect=None, newState=None):
         super().__init__(offset, image, hover, rect)
-        self.NewState = newState
+        self._newState = newState
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            self.NewState = PlayerNames(game)
-            game.Settings.UpdatePlayers(4)
+            game.Logic = self._getLogic()
+            self._newState = PlayerNamesMenu(game.Settings.Resolution)
 
-        return StartMenuItem.Update(self, game)
+        nself = super().Update(game)
+        return type(self)(nself.Offset, nself.Image, nself.Hover, nself.Rect, self._newState)
 
-    def Draw(self, game):
-        StartMenuItem.Draw(self, game)
+    def _getLogic(self) -> GameLogic:
+        return None
 
     def GetNewState(self):
-        return self.NewState
+        return self._newState
 
-class ThreePlayers(StartMenuItem):
+
+class FourPlayers(NPlayersMenuItem):
+
+    def __init__(self, offset: Vector2, image: Surface = pygame.image.load('images/buttons/4pButton.png'),
+                 hover: Surface = pygame.image.load('images/buttons/4pButtonHover.png'), rect=None, newState=None):
+        super().__init__(offset, image, hover, rect, newState)
+
+    def _getLogic(self):
+        return GameLogic(emptyPlayerGeneratorN(4))
+
+
+class ThreePlayers(NPlayersMenuItem):
 
     def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/3pButton.png'), hover: Surface=pygame.image.load('images/buttons/3pButtonHover.png'), rect=None, newState = None):
-        super().__init__(offset, image, hover, rect)
-        self.NewState = newState
+        super().__init__(offset, image, hover, rect, newState)
 
-    def Update(self, game):
-        if self.IsClickedByMouse(game):
-            self.NewState = PlayerNames(game)
-            game.Settings.UpdatePlayers(3)
+    def _getLogic(self):
+        return GameLogic(emptyPlayerGeneratorN(3))
 
 
-        return StartMenuItem.Update(self, game)
-
-    def Draw(self, game):
-        StartMenuItem.Draw(self, game)
-
-    def GetNewState(self):
-        return self.NewState
-
-class TwoPlayers(StartMenuItem):
+class TwoPlayers(NPlayersMenuItem):
 
     def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/2pButton.png'), hover: Surface=pygame.image.load('images/buttons/2pButtonHover.png'), rect=None, newState=None):
-        super().__init__(offset, image, hover, rect)
-        self.NewState = newState
+        super().__init__(offset, image, hover, rect, newState)
 
-    def Update(self, game):
-        if self.IsClickedByMouse(game):
-            game.Logic = GameLogic()
-            self.NewState = PlayerNames(game.Settings.Resolution)
-            game.Settings.UpdatePlayers(2)
-
-        return StartMenuItem.Update(self, game)
-
-    def Draw(self, game):
-        StartMenuItem.Draw(self, game)
-
-    def GetNewState(self):
-        return self.NewState
+    def _getLogic(self):
+        return GameLogic(emptyPlayerGeneratorN(2))

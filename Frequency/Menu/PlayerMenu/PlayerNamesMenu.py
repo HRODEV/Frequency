@@ -8,7 +8,7 @@ from Menu.PlayerMenu.PlayerMenuItems.EnterGame import EnterGame
 from Vector2 import Vector2
 
 
-class PlayerNames(HeadMenu):
+class PlayerNamesMenu(HeadMenu):
 
     def __init__(self, resolution:Vector2, background=None, logo=None, startMenuItems=None):
         super().__init__(resolution, background, logo)
@@ -22,7 +22,7 @@ class PlayerNames(HeadMenu):
         newstate = reduce(lambda state, smi: smi.GetNewState() if smi.IsClickedByMouse(game) else state, newStartMenuItems, None)
 
         return newstate if newstate is not None \
-            else PlayerNames(game, self.Background, self.Logo, newStartMenuItems)
+            else PlayerNamesMenu(game, self.Background, self.Logo, newStartMenuItems)
 
     def Draw(self, game: Game):
         super().Draw(game)

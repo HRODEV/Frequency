@@ -15,13 +15,12 @@ class EnterGame(StartMenuItem):
 
     def Update(self, game: Game):
         if self.IsClickedByMouse(game):
-            self.CreatePlayers(game)
             self._newState = Board(game)
-        return StartMenuItem.Update(self, game)
+        return super().Update(game)
 
     def CreatePlayers(self, game: Game):
-        for i in range(game.Settings.GetTotalPlayers()):
-            game.Logic.AddNewPlayer("Player%i" %i)
+        # TODO change the names of the already existing players in the gamelogic
+        pass
 
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
