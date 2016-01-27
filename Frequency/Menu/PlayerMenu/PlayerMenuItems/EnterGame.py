@@ -16,6 +16,7 @@ class EnterGame(StartMenuItem):
     def Update(self, game: Game):
         if self.IsClickedByMouse(game):
             self._newState = Board(game)
+            game.Logic.StartGame()
         return super().Update(game)
 
     def CreatePlayers(self, game: Game):

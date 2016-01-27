@@ -1,4 +1,4 @@
-from Board.Map.SeaTile import SeaTile
+from Board.Map.Tile import SeaTile
 from GameLogic.Map import Map
 from GameLogic.Player import Player
 

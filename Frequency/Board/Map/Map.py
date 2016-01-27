@@ -1,11 +1,6 @@
 import pygame
 
-from Board.Map.ForestTile import ForestTile
-from Board.Map.IceTile import IceTile
-from Board.Map.DesertTile import DesertTile
-from Board.Map.SwampTile import SwampTile
-from Board.Map.GoldTile import GoldTile
-from Board.Map.SeaTile import SeaTile
+from Board.Map.Tile import *
 from Vector2 import Vector2
 
 
@@ -27,8 +22,9 @@ class Map:
         for X in range(0, maxTiles.X):
             row = []
             for Y in range(0, maxTiles.Y):
-                TileType = self.DetermineTileType(game.Logic.Map.GetTile(Vector2(X, Y)))
-                row.append(TileType(Vector2(X, Y), maxTileSize))
+                logicTile = game.Logic.Map.GetTile(Vector2(X, Y))
+                TileType = self.DetermineTileType(logicTile)
+                row.append(TileType(Vector2(X, Y), maxTileSize, logicTile))
             tiles.append(row)
 
         return tiles
