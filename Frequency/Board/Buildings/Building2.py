@@ -1,4 +1,4 @@
-class Unit:
+class Building:
 
     def __init__(self, player, tile, texture):
         self.Player = player

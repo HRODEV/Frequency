@@ -12,13 +12,16 @@ class GameSettings:
                  tileSize = None,
                  newPlayers = 0,
                  mapSize = None,
-                 menuLeftSize = None):
+                 menuLeftSize = None,
+                 selectedUnitBuilding = "Barracks"):
 
         self.Resolution = resolution
         self.TileSize = tileSize
         self.newPlayer = newPlayers
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
+        self.SelectedUnitBuilding = selectedUnitBuilding
+        self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
             else pygame.display.set_mode([resolution.X, resolution.Y])
@@ -45,6 +48,12 @@ class GameSettings:
     def GetMapSize(self):
         return self.MapSize
 
+    def getFont(self):
+        return self.Font
+
+    def setFont(self, newFont):
+        self.Font = newFont
+
     def SetMenuLeftSize(self, menuSize):
             self.MenuLeftSize = menuSize
 
@@ -56,3 +65,9 @@ class GameSettings:
 
     def GetTotalPlayers(self):
         return self.Players
+
+    def SetSelectedUnitBuilding(self, selectedUnitBuilding):
+        self.SelectedUnitBuilding = selectedUnitBuilding
+
+    def GetSelectedUnitBuilding(self):
+        return self.SelectedUnitBuilding
