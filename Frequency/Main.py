@@ -1,6 +1,8 @@
 ﻿import pygame
+from sys import exit
 
 from Game import Game
+import Helpers
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -11,11 +13,17 @@ def Main():
     game = Game()
 
     while True:
-        game = game.Update(pygame.event.get())
+        events = pygame.event.get()
+        if Helpers.EventHelpers.EventExist(events, pygame.QUIT):
+            pygame.quit()
+            exit()
+        game = game.Update(events)
         game.Draw()
 
         clock.tick()
         pygame.display.set_caption('Frequency | FPS: %i' % int(clock.get_fps()+100))
         pygame.display.flip()
+    
+    
 
 Main()
