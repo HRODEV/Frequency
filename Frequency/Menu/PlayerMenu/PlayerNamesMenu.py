@@ -1,7 +1,3 @@
-from functools import reduce
-
-import pygame
-
 import Game
 from Menu.HeadMenu import HeadMenu
 from Menu.PlayerMenu.PlayerMenuItems.EnterGame import EnterGame
@@ -19,7 +15,7 @@ class PlayerNamesMenu(HeadMenu):
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
 
-        newstate = reduce(lambda state, smi: smi.GetNewState() if smi.IsClickedByMouse(game) else state, newStartMenuItems, None)
+        newstate = next((smi.GetNewState() for smi in newStartMenuItems if smi.IsClickedByMouse()), None)
 
         return newstate if newstate is not None \
             else PlayerNamesMenu(game, self.Background, self.Logo, newStartMenuItems)

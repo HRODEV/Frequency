@@ -1,6 +1,4 @@
-﻿from functools import reduce
-
-import Game
+﻿import Game
 from Menu.HeadMenu import HeadMenu
 from Menu.PlayerMenu.PlayerSelectionMenuItems import *
 from Vector2 import Vector2
@@ -16,7 +14,7 @@ class PlayerSelection(HeadMenu):
     def Update(self, game: Game):
         newPlayerMenuItems = [pmi.Update(game) for pmi in self.PlayerMenuItems]
 
-        newstate = reduce(lambda state, pmi: pmi.GetNewState() if pmi.IsClickedByMouse(game) else state, newPlayerMenuItems, None)
+        newstate = next((smi.GetNewState() for smi in newPlayerMenuItems if smi.IsClickedByMouse()), None)
 
         return newstate if newstate is not None \
             else PlayerSelection(game, self.Background, self.Logo, newPlayerMenuItems)
