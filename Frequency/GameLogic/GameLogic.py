@@ -4,31 +4,51 @@ from GameLogic.Player import Player
 
 class GameLogic:
 
-    def __init__(self, players, playingPlayer=None):
+    def __init__(self, players, _turn=0):
         self.Players = players
-        self.PlayingPlayer = playingPlayer if playingPlayer is not None else self.Players[0]
+        self._turn = _turn
 
-    def GetTotalPlayers(self):
+    @property
+    def Turns(self) -> int:
+        return self._turn
+
+    @property
+    def Round(self) -> int:
+        return self._turn / self.TotalPlayers
+
+    @property
+    def TotalPlayers(self) -> int:
         return len(self.Players)
 
-    def Update(self, game):
-        return GameLogic(self.Players, self.PlayingPlayer)
+    @property
+    def PlayingPlayer(self) -> Player:
+        return self.Players[self._turn % self.TotalPlayers]
 
-    def AddNewPlayer(self, Name):
-        if not self.Players:
-            characterIndex = 0
-            player = Player(Name, characterIndex)
-            self.PlayingPlayer = player
-            self.Players.append(player)
+    def Update(self, game):
+        return self
+
+    _gamestarted = False
+    def StartGame(self):
+        if self._gamestarted:
+            raise Exception("game already started")
         else:
+            self._gamestarted = True
+            self.PlayingPlayer.Moves = 4
+
+    def AddNewPlayer(self, Name) -> Player:
+        if not self._gamestarted:
             characterIndex = self.Players[-1].Character + 1
-            self.Players.append(Player(Name, characterIndex, 0, 0))
+            player = Player(Name, characterIndex, 0, 0)
+            self.Players.append(player)
+            return player
+        else:
+            raise Exception("game already started")
+
 
     def EndTurn(self, game):
         self.PlayingPlayer.Moves = 0
-        newPlayingPlayer = self.Players[(self.PlayingPlayer.Character.Id + 1) % self.GetTotalPlayers()]
-        newPlayingPlayer.Moves = 4
-        self.PlayingPlayer = newPlayingPlayer
+        self._turn += 1
+        self.PlayingPlayer.Moves = 4
 
     def CanAddUnitBuildingToTile(self, game, tile):
         # TODO rest of implementation

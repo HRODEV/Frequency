@@ -4,7 +4,7 @@ from GameLogic.Character import *
 
 class Player:
 
-    def __init__(self, name, character, money=500, moves=4):
+    def __init__(self, name, character, money=500, moves=0):
         self.Name = name
         self.Character = character if type(character) is not int else Character(character)
         self.Money = money
