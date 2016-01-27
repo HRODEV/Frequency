@@ -5,7 +5,7 @@ from GameLogic.GameLogic import GameLogic
 class Game(object):
     Events = None
 
-    def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic: GameLogic=GameLogic()):
+    def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic: GameLogic=None):
         """
 
         :type gameLogic: GameLogic
@@ -17,7 +17,9 @@ class Game(object):
 
 
     def Update(self, events):
-        return Game(self.State.Update(self), self.Settings, events, self.Logic.Update(self))
+        state = self.State.Update(self)
+        logic = self.Logic.Update(self) if self.Logic is not None else None
+        return Game(state, self.Settings, events, logic)
 
 
     def Draw(self):

@@ -2,8 +2,6 @@
 from pygame.surface import Surface
 
 import Vector2
-from Board.Board import Board
-from Menu.PlayerMenu.PlayerMenuItems.PlayerSelection import PlayerSelection
 from Menu.SettingsMenu.SettingsMenu import SettingsMenu
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
