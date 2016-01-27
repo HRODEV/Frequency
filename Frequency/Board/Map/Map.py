@@ -29,6 +29,10 @@ class Map:
 
         return tiles
 
+    @property
+    def ActiveTile(self):
+        return  # TODO implement for the highlighted tile
+
 
     def DetermineTileType(self, logicTile):
         import GameLogic.Map
