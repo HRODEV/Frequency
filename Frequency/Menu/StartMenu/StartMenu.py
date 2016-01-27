@@ -5,6 +5,7 @@ import pygame
 import Game
 from Menu.StartMenu.StartMenuItems.ExitGame import ExitGame
 from Menu.StartMenu.StartMenuItems.Rules import Rules
+from Menu.StartMenu.StartMenuItems.Settings import Settings
 from Menu.StartMenu.StartMenuItems.StartGame import StartGame
 from Vector2 import Vector2
 
@@ -19,7 +20,7 @@ class StartMenu:
             else pygame.transform.scale(pygame.image.load('images/gameLogo.png'), (230, 230))
 
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
-            else [StartGame(Vector2(0, 0)), Rules(Vector2(0,70)), ExitGame(Vector2(0,140))]
+            else [StartGame(Vector2(0, 0)), Settings(Vector2(0,70)), Rules(Vector2(0,140)), ExitGame(Vector2(0,210))]
 
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
@@ -40,7 +41,7 @@ class StartMenu:
         logoCenterX = screen_centerX - logoSize.centerx
         logoCenter = (logoCenterX, screen_marginX)
 
-         # Basic screen loaded elements
+        # Basic screen loaded elements
         game.Settings.GetScreen().fill((255, 255, 255))
         game.Settings.GetScreen().blit(self.Background, (0, 0))
         game.Settings.GetScreen().blit(self.Logo, logoCenter)

@@ -21,6 +21,7 @@ class GameSettings:
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
         self.SelectedUnitBuilding = selectedUnitBuilding
+        self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
             else pygame.display.set_mode([resolution.X, resolution.Y])
@@ -28,8 +29,9 @@ class GameSettings:
         self.SetMaxTiles(Vector2(18, 18))
         self.Players = newPlayers
 
-    def updateResolution(self, newResolution):
+    def SetResolution(self, newResolution: Vector2):
         self.Resolution = newResolution
+        self.screen = pygame.display.set_mode(newResolution.Position)
 
     def GetScreen(self):
         return self.screen
@@ -45,6 +47,12 @@ class GameSettings:
 
     def GetMapSize(self):
         return self.MapSize
+
+    def getFont(self):
+        return self.Font
+
+    def setFont(self, newFont):
+        self.Font = newFont
 
     def SetMenuLeftSize(self, menuSize):
             self.MenuLeftSize = menuSize
