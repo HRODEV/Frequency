@@ -21,12 +21,11 @@ class Tile:
     def Update(self, game):
         if self.IsClickedByMouse(game):
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                if game.Logic.CanAddUnitBuildingToTile(game):
+                if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
-                 if game.Logic.CanAddUnitBuildingToTile(game):
+                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
-                    print("place building")
 
         return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle, self.Building)
 

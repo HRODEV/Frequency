@@ -1,3 +1,4 @@
+from Board.Map.SeaTile import SeaTile
 from GameLogic.Player import Player
 
 
@@ -31,9 +32,11 @@ class GameLogic():
         newPlayingPlayer.Moves = 4
         self.PlayingPlayer = newPlayingPlayer
 
-    def CanAddUnitBuildingToTile(self, game):
-          if self.PlayingPlayer.Moves != 0:
-            self.PlayingPlayer.Moves -= 1
-            return True
+    def CanAddUnitBuildingToTile(self, game, tile):
+        if type(tile) is not SeaTile:
+            if self.PlayingPlayer.Moves != 0:
+                self.PlayingPlayer.Moves -= 1
+                return True
+        return False
 
 
