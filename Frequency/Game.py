@@ -5,11 +5,15 @@ from GameLogic.GameLogic import GameLogic
 class Game(object):
     Events = None
 
-    def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic=None):
+    def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic: GameLogic=GameLogic()):
+        """
+
+        :type gameLogic: GameLogic
+        """
         self.Settings = settings if settings is not None else GameSettings()
         self.State = state if state is not None else StartMenu(self)
         self.Events = events
-        self.Logic = gameLogic if gameLogic is not None else GameLogic()
+        self.Logic = gameLogic
 
 
     def Update(self, events):
