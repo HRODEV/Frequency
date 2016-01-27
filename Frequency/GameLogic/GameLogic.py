@@ -31,7 +31,7 @@ class GameLogic():
         newPlayingPlayer.Moves = 4
         self.PlayingPlayer = newPlayingPlayer
 
-    def CanAddUnitToTile(self, game):
+    def CanAddUnitBuildingToTile(self, game):
           if self.PlayingPlayer.Moves != 0:
             self.PlayingPlayer.Moves -= 1
             return True
