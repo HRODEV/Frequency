@@ -13,11 +13,11 @@ class Player:
     def Update(self):
         return Player(self.Name, self.Character, self.Money)
 
-    def Draw(self, game, font, marginBottom):
+    def Draw(self, game, font, marginBottom, marginLeft):
         screen = game.Settings.GetScreen()
 
         name = font.render(self.Name, True, (0, 0, 0))
-        screen.blit(name, (10, marginBottom))
+        screen.blit(name, (marginLeft + 10, marginBottom))
 
         moves = font.render("%i" % self.Moves, True, (0, 0, 0))
-        screen.blit(moves, (100, marginBottom))
+        screen.blit(moves, (marginLeft + 100, marginBottom))

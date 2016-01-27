@@ -10,4 +10,5 @@ class Soldier(Unit):
                         pygame.transform.scale(pygame.image.load('images/units/soldierYellow.png'), [35, 35]),
                         pygame.transform.scale(pygame.image.load('images/units/soldierRed.png'), [35, 35])
                         ]
+        self.Cost = 100
         super().__init__(player, tile, self.Textures)

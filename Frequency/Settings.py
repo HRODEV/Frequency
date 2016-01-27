@@ -13,7 +13,7 @@ class GameSettings:
                  newPlayers = 0,
                  mapSize = None,
                  menuLeftSize = None,
-                 selectedUnitBuilding = "Barracks"):
+                 selectedUnitBuilding = "Soldier"):
 
         self.Resolution = resolution
         self.TileSize = tileSize

@@ -19,20 +19,12 @@ class MenuLeft:
         return MenuLeft(game, self.Size, self.Position)
 
     def Draw(self, game : Game):
-        font = pygame.font.Font(None, 30)
-        marginBottom = 10
-
         # Draw the background
         pygame.draw.rect(game.Settings.GetScreen(),(255, 255, 255), (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
 
-        # Draw the PlayerNames
-        for playerName in game.Logic.Players:
-            playerName.Draw(game, font, marginBottom)
-            marginBottom += 40
-
         # Draw end turn button
         endTurnButton = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
-        self.EndturnButtonRect = game.Settings.GetScreen().blit(endTurnButton, (10, 200))
+        self.EndturnButtonRect = game.Settings.GetScreen().blit(endTurnButton, (10, 100))
 
 
     def EndturnButtonIsHoverdByMouse(self):

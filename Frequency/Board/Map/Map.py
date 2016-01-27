@@ -50,6 +50,9 @@ class Map:
 
 
     def Update(self, game):
+        key = pygame.key.get_pressed()
+        if key[pygame.K_r]:
+            self.MoveUnit(self.Tiles[0][17])
         nList = []
         for row in self.Tiles:
             nRow = []
@@ -58,7 +61,6 @@ class Map:
                 nRow.append(newTile)
             nList.append(nRow)
         return Map(game, nList)
-
 
     def Draw(self, game):
         for row in self.Tiles:

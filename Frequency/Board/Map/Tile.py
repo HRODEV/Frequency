@@ -23,6 +23,7 @@ class Tile:
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+                    game.Logic.PlayingPlayer.Money -= 100
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
                  if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
@@ -37,7 +38,7 @@ class Tile:
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
         if len(self.Units) > 0:
             for unit in self.Units:
-                unit.Draw(game)
+                unit.Draw(game, self)
         if self.Building is not None:
             self.Building.Draw(game)
 

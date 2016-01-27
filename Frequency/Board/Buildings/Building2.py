@@ -3,7 +3,7 @@ class Building:
     def __init__(self, player, tile, textures):
         self.Player = player
         self.Tile = tile
-        self.Textures
+        self.Textures = textures
 
 
     def Update(self, game):

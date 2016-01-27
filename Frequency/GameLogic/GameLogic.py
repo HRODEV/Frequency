@@ -19,7 +19,7 @@ class GameLogic():
     def AddNewPlayer(self, Name):
         if not self.Players:
             characterIndex = 0
-            player = Player(Name, characterIndex, 0, 4)
+            player = Player(Name, characterIndex, 500, 4)
             self.PlayingPlayer = player
             self.Players.append(player)
         else:
