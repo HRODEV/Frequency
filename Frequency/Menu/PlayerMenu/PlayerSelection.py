@@ -14,7 +14,7 @@ class PlayerSelection(HeadMenu):
     def Update(self, game: Game):
         newPlayerMenuItems = [pmi.Update(game) for pmi in self.PlayerMenuItems]
 
-        newstate = next((smi.GetNewState() for smi in newPlayerMenuItems if smi.IsClickedByMouse()), None)
+        newstate = next((smi.GetNewState() for smi in newPlayerMenuItems if smi.IsClickedByMouse(game)), None)
 
         return newstate if newstate is not None \
             else PlayerSelection(game, self.Background, self.Logo, newPlayerMenuItems)

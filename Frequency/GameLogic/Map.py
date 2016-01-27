@@ -13,7 +13,7 @@ class Tile:
     def Building(self): # TODO make buildings
         return self._building
 
-    @property.setter
+    @Building.setter
     def Building(self, value):
         if self._building is None:
             raise Exception("there is already a building on this Tile")
@@ -23,7 +23,7 @@ class Tile:
     def Units(self) -> list:
         return self._units
 
-    @property.setter
+    @Units.setter
     def Units(self, value: list):
         if len(value) > 4:
             raise Exception("no more than 4 units accepted on a Tile")

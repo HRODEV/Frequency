@@ -1,4 +1,5 @@
 from Board.Map.SeaTile import SeaTile
+from GameLogic.Map import Map
 from GameLogic.Player import Player
 
 
@@ -7,6 +8,11 @@ class GameLogic:
     def __init__(self, players, _turn=0):
         self.Players = players
         self._turn = _turn
+        self._map = Map()
+
+    @property
+    def Map(self) -> Map:
+        return self._map
 
     @property
     def Turns(self) -> int:
@@ -43,7 +49,6 @@ class GameLogic:
             return player
         else:
             raise Exception("game already started")
-
 
     def EndTurn(self, game):
         self.PlayingPlayer.Moves = 0

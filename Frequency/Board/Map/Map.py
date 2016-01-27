@@ -27,26 +27,29 @@ class Map:
         for X in range(0, maxTiles.X):
             row = []
             for Y in range(0, maxTiles.Y):
-                TileType = self.DetermineTileType(X, Y)
+                TileType = self.DetermineTileType(game.Logic.Map.GetTile(Vector2(X, Y)))
                 row.append(TileType(Vector2(X, Y), maxTileSize))
             tiles.append(row)
 
         return tiles
 
 
-    def DetermineTileType(self, X, Y):
-        if X < 7 and Y < 7:
-            return ForestTile
-        if X > 10 and X < 18 and Y < 7:
-            return IceTile
-        if X < 7 and Y >10 and Y < 18:
+    def DetermineTileType(self, logicTile):
+        import GameLogic.Map
+        if type(logicTile) is GameLogic.Map.DesertTile:
             return DesertTile
-        if X > 10 and X < 18 and Y > 10:
-            return SwampTile
-        if X > 6 and X < 11 and Y > 6 and Y < 11:
+        elif type(logicTile) is GameLogic.Map.ForestTile:
+            return ForestTile
+        elif type(logicTile) is GameLogic.Map.GoldTile:
             return GoldTile
-        else:
+        elif type(logicTile) is GameLogic.Map.IceTile:
+            return IceTile
+        elif type(logicTile) is GameLogic.Map.SeaTile:
             return SeaTile
+        elif type(logicTile) is GameLogic.Map.SwampTile:
+            return SwampTile
+        else:
+            raise Exception("%s type is not sported" % str(type(logicTile)))
 
 
     def Update(self, game):

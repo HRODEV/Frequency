@@ -15,7 +15,7 @@ class PlayerNamesMenu(HeadMenu):
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
 
-        newstate = next((smi.GetNewState() for smi in newStartMenuItems if smi.IsClickedByMouse()), None)
+        newstate = next((smi.GetNewState() for smi in newStartMenuItems if smi.IsClickedByMouse(game)), None)
 
         return newstate if newstate is not None \
             else PlayerNamesMenu(game, self.Background, self.Logo, newStartMenuItems)
