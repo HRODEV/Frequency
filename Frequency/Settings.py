@@ -33,7 +33,7 @@ class GameSettings:
         self.Resolution = newResolution
         self.screen = pygame.display.set_mode(newResolution.Position)
 
-    def GetScreen(self):
+    def GetScreen(self) -> Surface:
         return self.screen
 
     def SetMaxTiles(self, maxTiles):
