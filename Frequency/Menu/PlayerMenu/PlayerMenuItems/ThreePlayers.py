@@ -1,22 +1,21 @@
 ﻿import pygame
 from pygame.surface import Surface
 
-from Settings import GameSettings
-from Board.Board import Board
 import Vector2
 from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
+from Menu.PlayerMenu.PlayerMenuItems.PlayerNames import PlayerNames
 
 
 class ThreePlayers(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/3pButton.png'), rect=None, newState = None):
-        super().__init__(offset, image, rect)
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/3pButton.png'), hover: Surface=pygame.image.load('images/buttons/3pButtonHover.png'), rect=None, newState = None):
+        super().__init__(offset, image, hover, rect)
         self.NewState = newState
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            self.NewState = Board(game)
-            GameSettings.UpdatePlayers(game.Settings, 3)
+            self.NewState = PlayerNames(game)
+            game.Settings.UpdatePlayers(3)
 
 
         return StartMenuItem.Update(self, game)

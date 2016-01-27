@@ -26,7 +26,7 @@ class SettingsMenu(HeadMenu):
         else:
             newDropDown = self.ResolutionDropDown.Update(game)
             saveButton = self.SaveButton.Update(game)
-            return SettingsMenu(game.Settings.Resolution, self.Background, self.Logo, newDropDown)
+            return SettingsMenu(game.Settings.Resolution, self.Background, self.Logo, newDropDown, saveButton)
 
     def Draw(self, game):
         super().Draw(game)

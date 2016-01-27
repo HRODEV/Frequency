@@ -22,7 +22,7 @@ class PlayerSelection(StartMenuItem):
             else pygame.transform.scale(pygame.image.load('images/gameLogo.png'), (230, 230))
 
         self.PlayerMenuItems = playerMenuItems if playerMenuItems is not None \
-            else [TwoPlayers(Vector2(0,0)), ThreePlayers(Vector2(0,70)), FourPlayers(Vector2(0, 140))]
+            else [TwoPlayers(Vector2(0 ,0)), ThreePlayers(Vector2(0, 70)), FourPlayers(Vector2(0, 140))]
  
     def Update(self, game: Game):
         newPlayerMenuItems = [pmi.Update(game) for pmi in self.PlayerMenuItems]
@@ -33,7 +33,6 @@ class PlayerSelection(StartMenuItem):
             else PlayerSelection(game, self.Background, self.Logo, newPlayerMenuItems)
 
     def Draw(self, game):
-
         # Extra screen-based properties
         screen_centerX = int(game.Settings.Resolution.X // 2)
         screen_marginX = int(game.Settings.Resolution.Y / 18)
