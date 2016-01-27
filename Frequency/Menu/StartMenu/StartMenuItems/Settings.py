@@ -10,7 +10,7 @@ from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 class Settings(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/settingsButton.png'), hover: Surface=pygame.image.load('images/buttons/settingsButton.png'), rect=None, newState=None):
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/settingsButton.png'), hover: Surface=pygame.image.load('images/buttons/settingsButtonHover.png'), rect=None, newState=None):
         super().__init__(offset, image, hover, rect)
         self._newState = newState
 
