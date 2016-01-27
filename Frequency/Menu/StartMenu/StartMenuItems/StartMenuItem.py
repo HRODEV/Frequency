@@ -23,12 +23,9 @@ class StartMenuItem:
         y = screen_centerY + 20 + self.Offset.Y
 
         if self.Hover is not None and self.IsHoverdByMouse():
-            image = self.Hover
+            self.Rect = game.Settings.GetScreen().blit(self.Hover, (x, y))
         else:
-            image = self.Image
-
-        self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
-
+            self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
 
     def IsHoverdByMouse(self):
         return self.Rect is not None and self.Rect.collidepoint(pygame.mouse.get_pos())

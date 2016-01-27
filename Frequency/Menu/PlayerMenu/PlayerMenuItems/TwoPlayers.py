@@ -8,8 +8,8 @@ from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 class TwoPlayers(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/2pButton.png'), rect=None, newState=None):
-        super().__init__(offset, image, rect)
+    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/2pButton.png'), hover: Surface=pygame.image.load('images/buttons/2pButtonHover.png'), rect=None, newState=None):
+        super().__init__(offset, image, hover, rect)
         self.NewState = newState
 
     def Update(self, game):

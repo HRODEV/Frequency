@@ -63,8 +63,12 @@ class Popup:
         pygame.draw.rect(self.Screen, self.BackgroundColor, (drawPosition['X'], drawPosition['Y'], self.Width, self.Height))
         # Load the image
         btn = pygame.image.load('images/buttons/closeButton.png')
+        btnHover = pygame.image.load('images/buttons/closeButtonHover.png')
         # Blit the close button
-        self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Width-20, textRect.centery))
+        if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):
+            self.CloseButton = self.Screen.blit(btnHover, (drawPosition['X'] + self.Width-20, textRect.centery))
+        else:
+            self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Width-20, textRect.centery))
 
         # Place the text on the screen
         for index in self.Content:
