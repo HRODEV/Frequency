@@ -15,7 +15,6 @@ class MenuLeft:
 
     def Update(self, game: Game):
         if self.EndturnButtonIsClickedByMouse(game):
-
             game.Logic.EndTurn(game)
         return MenuLeft(game, self.Size, self.Position)
 
@@ -33,7 +32,7 @@ class MenuLeft:
 
         # Draw end turn button
         endTurnButton = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
-        self.EndturnButtonRect = game.Settings.GetScreen().blit(endTurnButton, (10, 100))
+        self.EndturnButtonRect = game.Settings.GetScreen().blit(endTurnButton, (10, 200))
 
 
     def EndturnButtonIsHoverdByMouse(self):

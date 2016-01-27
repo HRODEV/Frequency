@@ -20,8 +20,8 @@ class Tile:
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            print(self.Position.X, self.Position.Y)
-            self.Units.append(Soldier('Player1', self))
+            if game.Logic.CanAddUnitToTile(game):
+                self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
 
         return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle)
 

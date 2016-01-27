@@ -1,6 +1,7 @@
 from GameLogic.Player import Player
 
-class GameLogic:
+
+class GameLogic():
 
     def __init__(self, players=None, playingPlayer=None):
         if players is None:
@@ -10,8 +11,8 @@ class GameLogic:
         self.PlayingPlayer = playingPlayer if playingPlayer is not None else []
 
 
-    def Update(self, logic):
-        return GameLogic(logic.Players, logic.PlayingPlayer)
+    def Update(self, game):
+        return GameLogic(self.Players, self.PlayingPlayer)
 
 
     def AddNewPlayer(self, Name):
@@ -26,6 +27,13 @@ class GameLogic:
 
     def EndTurn(self, game):
         self.PlayingPlayer.Moves = 0
-        newPlayingPlayer = self.Players[(self.PlayingPlayer.Character + 1) % 2]
+        newPlayingPlayer = self.Players[(self.PlayingPlayer.Character + 1) % game.Settings.GetTotalPlayers()]
         newPlayingPlayer.Moves = 4
         self.PlayingPlayer = newPlayingPlayer
+
+    def CanAddUnitToTile(self, game):
+          if self.PlayingPlayer.Moves != 0:
+            self.PlayingPlayer.Moves -= 1
+            return True
+
+
