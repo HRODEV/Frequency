@@ -41,7 +41,6 @@ class PlayerRemainingMoves(PlayerInfoLabel):
     def GetValue(self, player:Player):
         return 'Remaining moves: ' + str(0) # TODO: Needs logic
 
-
 class MenuRight:
 
     def __init__(self, game, size=None, position=None, playerInfoLabels = None):
@@ -51,8 +50,6 @@ class MenuRight:
 
         self.PlayerInfoLabels = playerInfoLabels if playerInfoLabels is not None \
             else [PlayerMoney(), PlayerLands(), PlayerNextTurnIncome(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
-
-
 
     def Update(self, game: Game):
         return MenuRight(game, self.Size, self.Position)
