@@ -7,7 +7,7 @@ from Helpers.EventHelpers import EventExist
 class ArrowItem:
     def __init__(self, offset: Vector2, image: Surface, hover: Surface=None, rect=None):
         self.Offset = offset
-        self.Image = image
+        self.Image = image if image is not None else self._getTexture()
         self.Hover = hover
         self.Rect = rect
 
@@ -33,5 +33,55 @@ class ArrowItem:
     def IsClickedByMouse(self, game):
         return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
 
-    def GetNewState(self):
+    def _getTexture(self, size: Vector2):
         return None
+
+class ArrowButtonUp(ArrowItem):
+
+    def _getTexture():
+        return pygame.image.load('images/arrows/ArrowDarkUp.png')
+
+    def _getHoverTexture():
+        return pygame.image.load('images/arrows/ArrowLightUp.png')
+
+
+class ArrowButtonUpRight(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkUpRight.png'), [size.X, size.Y])
+
+
+class ArrowButtonRight(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkRight.png'), [size.X, size.Y])
+
+
+class ArrowButtonDownRight(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkDownRight.png'), [size.X, size.Y])
+
+
+class ArrowButtonDown(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkDown.png'), [size.X, size.Y])
+
+
+class ArrowButtonDownLeft(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkDownLeft.png'), [size.X, size.Y])
+
+
+class ArrowButtonLeft(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkLeft.png'), [size.X, size.Y])
+
+
+class ArrowButtonUpLeft(ArrowItem):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/arrows/ArrowDarkUpLeft.png'), [size.X, size.Y])
