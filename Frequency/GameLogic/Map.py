@@ -1,4 +1,5 @@
 import GameLogic.Unit
+from GameLogic.Barrack import BaseBarrack
 from Vector2 import Vector2
 
 
@@ -16,7 +17,7 @@ class Tile:
 
     @Building.setter
     def Building(self, value):
-        if self._building is None:
+        if self._building is not None:
             raise Exception("there is already a building on this Tile")
         self._building = value
 
@@ -26,7 +27,10 @@ class Tile:
 
     @Unit.setter
     def Unit(self, value: GameLogic.Unit.Unit):
-        self._unit = value
+        if self._unit is None:
+            self._unit = value
+        else:
+            raise Exception("there is already a unit on the tile")
 
     @property
     def Position(self) -> Vector2:
@@ -79,23 +83,32 @@ class SwampTile(Tile):
 
 class Map:
 
-    def DetermineTileType(self, X, Y):
+    def DetermineTileType(self, X, Y, logic: GameLogic):
         if X < 7 and Y < 7:
-            return ForestTile(Vector2(X, Y))
-        if 10 < X < 18 and Y < 7:
-            return IceTile(Vector2(X, Y))
-        if X < 7 and 10 < Y < 18:
-            return DesertTile(Vector2(X, Y))
-        if 10 < X < 18 and Y > 10:
-            return SwampTile(Vector2(X, Y))
-        if 6 < X < 11 and 6 < Y < 11:
-            return GoldTile(Vector2(X, Y))
+            tile = ForestTile(Vector2(X, Y))
+        elif 10 < X < 18 and Y < 7:
+            tile = IceTile(Vector2(X, Y))
+        elif X < 7 and 10 < Y < 18:
+            tile = DesertTile(Vector2(X, Y))
+        elif 10 < X < 18 and Y > 10:
+            tile = SwampTile(Vector2(X, Y))
+        elif 6 < X < 11 and 6 < Y < 11:
+            tile = GoldTile(Vector2(X, Y))
         else:
-            return SeaTile(Vector2(X, Y))
+            tile = SeaTile(Vector2(X, Y))
 
-    def __init__(self):
+        if X % 17 == 0 and Y % 17 == 0:
+            # (x + y) in (0, 1, 2, 3)
+            x = 0 if X == 0 else 1
+            y = 0 if Y == 0 else 2
+            if logic.TotalPlayers > x + y:
+                player = logic.Players[x + y]
+                tile.Building = BaseBarrack(tile, player)
+        return tile
+
+    def __init__(self, logic):
         self._tiles = [
-                [self.DetermineTileType(x, y) for y in range(0, 18)] 
+                [self.DetermineTileType(x, y, logic) for y in range(0, 18)]
                 for x in range(0, 18)
             ]
         

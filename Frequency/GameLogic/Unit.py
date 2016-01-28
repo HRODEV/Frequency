@@ -7,6 +7,8 @@ class Unit:
     def __init__(self, tile, owner: Player):
         self._tile = tile
         self._owner = owner
+        owner.AddUnit(self)
+        tile.Unit = self
 
     @property
     def Tile(self): return self._tile
@@ -49,7 +51,7 @@ class UnitGroup(Unit):
     _units = []
 
     def AddUnit(self, unit: Unit):
-        if type(unit) is UnitGroup:
+        if type(unit) is UnitGroup or type(unit) is Boat:
             raise Exception("A UnitGroup can only hold normal units, not UnitGroups")
         elif len(self._units) > 2:
             raise Exception("A unitGroup can not hold more than 4 units")
@@ -74,13 +76,12 @@ class UnitGroup(Unit):
     def DefencePoints(self):
         return reduce((lambda aPoints, unit: aPoints + unit.DefencePoints), self._units)
 
+    @property
+    def CountUnits(self):
+        return len(self._units)
 
-class Boat:
-    def __init__(self, tile, owner: Player):
-        self._tile = tile
-        self._owner = owner
-        self._units = []
 
+class Boat(Unit):
     @property
     def Tile(self): return self._tile
     @property
@@ -89,20 +90,4 @@ class Boat:
     def DefencePoints(self):
         return 6
 
-    def AddUnit(self, unit: Unit):
-        if type(unit) is UnitGroup:
-            raise Exception("A UnitGroup can only hold normal units, not UnitGroups")
-        elif len(self._units) > 2:
-            raise Exception("A unitGroup can not hold more than 4 units")
-        else:
-            self._units.append(unit)
 
-    def RemoveUnit(self, unit: Unit):
-        self._units = [_unit for _unit in self._units if _unit != unit]
-
-    @property
-    def Units(self):
-        """
-        :return: it returns a copy
-        """
-        return self._units.copy()

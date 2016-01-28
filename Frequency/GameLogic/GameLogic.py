@@ -8,7 +8,7 @@ class GameLogic:
     def __init__(self, players, _turn=0):
         self.Players = players
         self._turn = _turn
-        self._map = Map()
+        self._map = Map(self)
 
     @property
     def Map(self) -> Map:
