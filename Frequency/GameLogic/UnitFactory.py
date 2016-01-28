@@ -1,4 +1,6 @@
 from GameLogic.Character import *
+from GameLogic.Map import SeaTile
+from GameLogic.MapHelpers import getAroundingTiles
 from GameLogic.Unit import *
 
 
@@ -29,9 +31,39 @@ def getUnitPrice(unitType, character):
 
 def SellUnit(gameLogic, unitType, tile, player: Player):
     price = getUnitPrice(unitType, player.Character)
-    if player.Money >= price:
-        player.Money -= price
-        unit = unitType(tile, player)
-        return unit
+    if player.Money < price:
+        return None
+    # check if there is a building
+    if next((True for tile in getAroundingTiles(tile, gameLogic.Map) if tile.Building is not None), False):
+        return None
+
+    if type(tile) is not SeaTile:
+        if tile.Unit is None:
+            player.Money -= price
+            unit = unitType(tile, player)
+            return unit
+        elif type(tile.Unit) is UnitGroup:
+            if tile.Unit.CountUnits > 3:
+                return None
+            else:
+                player.Money -= price
+                unit = unitType(tile, player)
+                tile.Unit.AddUnit(unit)
+                return unit
+        elif isinstance(tile.Unit, Unit):
+            group = UnitGroup(tile, player)
+            group.AddUnit(tile.Unit)
+            player.Money -= price
+            unit = unitType(tile, player)
+            group.AddUnit(unit)
+            return unit
+    elif unitType is Boat:
+        if tile.Unit is None:
+            player.Money -= price
+            unit = unitType(tile, player)
+            return unit
+
+
+
 
 
