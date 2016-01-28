@@ -63,4 +63,12 @@ class GameLogic:
                 return True
         return False
 
+    def GetIncome(self, player: Player=None):
+        player = player if player is not None else self.PlayingPlayer
+
+        tilesWithUnit = list(set([unit.Tile for unit in player.Units]))
+
+        return sum([tile.GetMoney(player) for tile in tilesWithUnit])
+
+
 

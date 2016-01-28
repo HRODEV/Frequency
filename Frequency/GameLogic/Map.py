@@ -44,11 +44,21 @@ class Tile:
     def EnemyMoney(self) -> int:
         return self._enemyMoney
 
+    def GetMoney(self, player):
+        return 0
+
 
 class DesertTile(Tile):
 
     def __init__(self, _position):
         super().__init__(_position, 50, 100)
+
+    def GetMoney(self, player):
+        import Frequency.GameLogic.Character
+        if type(player.Character) is Frequency.GameLogic.Character.DesertCharacter:
+            return self.BasicMoney
+        else:
+            return self.EnemyMoney
 
 
 class ForestTile(Tile):
@@ -56,11 +66,21 @@ class ForestTile(Tile):
     def __init__(self, _position):
         super().__init__(_position, 50, 100)
 
+    def GetMoney(self, player):
+        import Frequency.GameLogic.Character
+        if type(player.Character) is Frequency.GameLogic.Character.ForestCharacter:
+            return self.BasicMoney
+        else:
+            return self.EnemyMoney
+
 
 class GoldTile(Tile):
 
     def __init__(self, _position):
         super().__init__(_position, 150, 150)
+
+    def GetMoney(self, player):
+        return 150
 
 
 class IceTile(Tile):
@@ -68,17 +88,31 @@ class IceTile(Tile):
     def __init__(self, _position):
         super().__init__(_position, 50, 100)
 
+    def GetMoney(self, player):
+        import Frequency.GameLogic.Character
+        if type(player.Character) is Frequency.GameLogic.Character.IceCharacter:
+            return self.BasicMoney
+        else:
+            return self.EnemyMoney
+
 
 class SeaTile(Tile):
 
     def __init__(self, _position):
-        super().__init__(_position, 50, 100)
+        super().__init__(_position, 0, 0)
 
 
 class SwampTile(Tile):
 
     def __init__(self, _position):
         super().__init__(_position, 50, 100)
+
+    def GetMoney(self, player):
+        import Frequency.GameLogic.Character
+        if type(player.Character) is Frequency.GameLogic.Character.SwampCharacter:
+            return self.BasicMoney
+        else:
+            return self.EnemyMoney
 
 
 class Map:
