@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 from functools import reduce
 
 from Board.Buildings.Base import Base
@@ -103,10 +103,6 @@ class Map:
         for row in self.Tiles:
             for tile in row:
                 tile.Draw(game)
-
-            tile.Draw(game)
-
-
 
     def MoveUnit(self, movement, game):
         tile = self.SelectedTile
