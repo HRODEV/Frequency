@@ -28,7 +28,6 @@ class Tile:
     def Unit(self, value: GameLogic.Unit.Unit):
         self._unit = value
 
-
     @property
     def Position(self) -> Vector2:
         return self._position

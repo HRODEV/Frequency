@@ -7,7 +7,7 @@ from Vector2 import Vector2
 
 class Tile:
 
-    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, building=None):
+    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, building=None, selected=False):
         self.Position = position
         self.Size = size
         self.Texture = texture if texture is not None else self._getTexture(size)
@@ -18,6 +18,7 @@ class Tile:
             self.Units = units
         self.Building = building
         self._logicTile = logicTile
+        self.Selected = selected
 
     @property
     def LogicTile(self) -> GameLogic.Map.Tile:
@@ -28,18 +29,24 @@ class Tile:
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+                    game.Logic.Map.GetTile(self.Position).Unit = Soldier(game.Logic.PlayingPlayer, self)
                     game.Logic.PlayingPlayer.Money -= 100
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
+            self.Selected = True
 
-        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Building)
+        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Building, self.Selected)
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
         marginX = self.Position.X * self.Size.X + game.Settings.MenuLeftSize.X
         marginY = self.Position.Y * self.Size.Y
-        self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
+        if self.Selected:
+            testTexture = pygame.transform.scale(pygame.image.load('images/tiles/selected.png'), [self.Size.X, self.Size.Y])
+        else:
+            testTexture = self.Texture
+        self.Rectangle = screen.blit(testTexture, (marginX, marginY))
         if len(self.Units) > 0:
             for unit in self.Units:
                 unit.Draw(game, self)
