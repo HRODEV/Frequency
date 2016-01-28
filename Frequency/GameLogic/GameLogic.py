@@ -1,4 +1,5 @@
 from Board.Map.Tile import SeaTile
+from GameLogic import UnitFactory
 from GameLogic.Map import Map
 from GameLogic.Player import Player
 
@@ -55,7 +56,7 @@ class GameLogic:
         self._turn += 1
         self.PlayingPlayer.Moves = 4
 
-    def CanAddUnitBuildingToTile(self, game, tile):
+    def CanAddUnitToTile(self, game, tile):
         # TODO rest of implementation
         if type(tile) is not SeaTile:
             if self.PlayingPlayer.Moves != 0 and self.PlayingPlayer.Money >= 100:
@@ -69,3 +70,12 @@ class GameLogic:
         tilesWithUnit = list(set([unit.Tile for unit in player.Units]))
 
         return sum([tile.GetMoney(player) for tile in tilesWithUnit])
+
+    def BuyUnit(self, unitType, tile):
+        if self.PlayingPlayer.Moves > 0:
+            unit = UnitFactory.BuyUnit(self, unitType, tile, self.PlayingPlayer)
+
+            if unit is not None:
+                self.PlayingPlayer.Moves -= 1
+
+            return unit

@@ -29,12 +29,9 @@ class Tile:
     def Update(self, game):
         if self.IsClickedByMouse(game):
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                logicSoldier = BuyUnit(game.Logic, GameLogic.Unit.Soldier, self.LogicTile, game.Logic.PlayingPlayer)
-                self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
-                #if game.Logic.CanAddUnitBuildingToTile(game, self):
-                    #self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
-                    #game.Logic.Map.GetTile(self.Position).Unit = Soldier(game.Logic.PlayingPlayer, self)
-                    #game.Logic.PlayingPlayer.Money -= 100
+                logicSoldier = game.Logic.BuyUnit(GameLogic.Unit.Soldier, self.LogicTile)
+                if logicSoldier is not None:
+                    self.Units.append(Soldier(game.Logic.PlayingPlayer, self, logicSoldier))
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
