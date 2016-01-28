@@ -23,5 +23,12 @@ class Player:
         self.Money = money
         self.Moves = moves
 
-    def Update(self):
-        return Player(self.Name, self.Character, self.Money, self.Moves)
+        self._units = []
+
+    @property
+    def Units(self):
+        return self._units
+
+    def AddUnit(self, unit):
+        self._units.append(unit)
+

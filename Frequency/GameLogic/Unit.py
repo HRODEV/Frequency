@@ -9,6 +9,8 @@ class Unit:
     def __init__(self, tile, owner: Player):
         self._tile = tile
         self._owner = owner
+        owner.AddUnit(self)
+        tile.Unit = self
 
     @property
     def Tile(self): return self._tile

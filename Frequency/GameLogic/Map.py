@@ -27,7 +27,10 @@ class Tile:
 
     @Unit.setter
     def Unit(self, value: GameLogic.Unit.Unit):
-        self._unit = value
+        if self._unit is None:
+            self._unit = value
+        else:
+            raise Exception("there is already a unit on the tile")
 
 
     @property
@@ -81,7 +84,7 @@ class SwampTile(Tile):
 
 class Map:
 
-    def DetermineTileType(self, X, Y, logic:GameLogic):
+    def DetermineTileType(self, X, Y, logic: GameLogic):
         if X < 7 and Y < 7:
             tile = ForestTile(Vector2(X, Y))
         elif 10 < X < 18 and Y < 7:

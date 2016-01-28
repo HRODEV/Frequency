@@ -27,7 +27,11 @@ def getUnitPrice(unitType, character):
         raise Exception("This is not a valid unit type")
 
 
-def SellUnit(gameLogic, unitType, tile, player):
+def SellUnit(gameLogic, unitType, tile, player: Player):
     price = getUnitPrice(unitType, player.Character)
+    if player.Money >= price:
+        player.Money -= price
+        unit = unitType(tile, player)
+        return unit
 
 
