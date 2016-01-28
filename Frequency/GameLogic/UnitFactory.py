@@ -34,7 +34,9 @@ def SellUnit(gameLogic, unitType, tile, player: Player):
     if player.Money < price:
         return None
     # check if there is a building
-    if next((True for tile in getAroundingTiles(tile, gameLogic.Map) if tile.Building is not None), False):
+    if next((True for tile in getAroundingTiles(tile, gameLogic.Map) if
+             tile.Building is not None and
+             tile.Building.Owner == player), False):  # check if it is his own building
         return None
 
     if type(tile) is not SeaTile:
