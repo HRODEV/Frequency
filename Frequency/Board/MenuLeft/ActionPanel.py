@@ -6,14 +6,18 @@ from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
+from Board.MenuLeft.ArrowItems.ArrowUp import ArrowUp
+
 
 class ActionPanel:
-    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None):
+    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None, arrowButtons=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
         self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
+        self.ArrowButtons = arrowButtons if arrowButtons is not None \
+            else [ArrowUp(Vector2(0, 0))]
 
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
@@ -60,7 +64,7 @@ class UnitActionPanel(ActionPanel):
 
     def Update(self, game: Game):
         nself = super().Update(game)
-        UnitActionPanel(game, self.Tile, nself.EndturnButtonRect)
+        UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.ArrowButtons)
 
     def Draw(self, game : Game):
         super().Draw(game)
@@ -70,6 +74,10 @@ class UnitActionPanel(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
+
+        # Draw the Arrow Buttons
+        for arrowButton in self.ArrowButtons:
+            arrowButton.Draw(game)
 
 class BarrakActionPanel(ActionPanel):
 
