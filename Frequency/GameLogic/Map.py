@@ -1,3 +1,4 @@
+import GameLogic.Unit
 from Vector2 import Vector2
 
 
@@ -7,7 +8,7 @@ class Tile:
         self._basicMoney = _basicMoney
         self._enemyMoney = _enemyMoney
         self._building = None
-        self._units = []
+        self._unit = None
 
     @property
     def Building(self): # TODO make buildings
@@ -20,14 +21,12 @@ class Tile:
         self._building = value
 
     @property
-    def Units(self) -> list:
-        return self._units
+    def Unit(self) -> GameLogic.Unit.Unit:
+        return self._unit
 
-    @Units.setter
-    def Units(self, value: list):
-        if len(value) > 4:
-            raise Exception("no more than 4 units accepted on a Tile")
-        self._units = value
+    @Unit.setter
+    def Unit(self, value: GameLogic.Unit.Unit):
+        self._unit = value
 
 
     @property
