@@ -3,13 +3,16 @@ import Game
 from Vector2 import Vector2
 from Helpers.EventHelpers import EventExist
 
+from Board.MenuLeft.ArrowItems.ArrowUp import ArrowUp
 
 class MenuLeft:
 
-    def __init__(self, game, size=None, position=None, endturnButtonRect=None):
+    def __init__(self, game, size=None, position=None, endturnButtonRect=None, arrowButtons=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.EndturnButtonRect = endturnButtonRect
+        self.ArrowButtons = arrowButtons if arrowButtons is not None \
+            else [ArrowUp(Vector2(0, 0))]
 
         game.Settings.SetMenuLeftSize(self.Size)
 
@@ -33,6 +36,11 @@ class MenuLeft:
         # Draw end turn button
         endTurnButton = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
         self.EndturnButtonRect = game.Settings.GetScreen().blit(endTurnButton, (10, 200))
+
+        # Draw the Arrow Buttons
+        for arrowButton in self.ArrowButtons:
+            arrowButton.Draw(game)
+
 
 
     def EndturnButtonIsHoverdByMouse(self):
