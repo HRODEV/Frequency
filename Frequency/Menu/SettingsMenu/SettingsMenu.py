@@ -12,7 +12,7 @@ class SettingsMenu(HeadMenu):
     def __init__(self, resolution, background=None, logo=None, dropDown=None, saveButton=None):
         super().__init__(resolution, background, logo)
 
-        resolutions = [Vector2(1000,640), Vector2(1280,800),Vector2(1440,900), Vector2(1800,1000)]
+        resolutions = [Vector2(1000, 640), Vector2(1280, 800), Vector2(1440, 900), Vector2(1800, 1000)]
 
         self.ResolutionDropDown = dropDown if dropDown is not None else DropDown(resolutions, Vector2(resolution.X // 2, 400), resolution)
 
@@ -22,7 +22,7 @@ class SettingsMenu(HeadMenu):
         if self.SaveButton.IsClickedByMouse(game):
             game.Settings.SetResolution(self.ResolutionDropDown.Selected)
             from Menu.StartMenu.StartMenu import StartMenu
-            return StartMenu(game)
+            return StartMenu(game.Settings.Resolution)
         else:
             newDropDown = self.ResolutionDropDown.Update(game)
             saveButton = self.SaveButton.Update(game)

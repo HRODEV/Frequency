@@ -1,39 +1,82 @@
+from Board.Map.Tile import SeaTile
+from GameLogic import UnitFactory
+from GameLogic.Map import Map
 from GameLogic.Player import Player
 
 
-class GameLogic():
+class GameLogic:
 
-    def __init__(self, players=None, playingPlayer=None):
-        if players is None:
-            self.Players = []
-        else:
-            self.Players = players
-        self.PlayingPlayer = playingPlayer if playingPlayer is not None else []
+    def __init__(self, players, _turn=0):
+        self.Players = players
+        self._turn = _turn
+        self._map = Map(self)
 
+    @property
+    def Map(self) -> Map:
+        return self._map
+
+    @property
+    def Turns(self) -> int:
+        return self._turn
+
+    @property
+    def Round(self) -> int:
+        return self._turn / self.TotalPlayers
+
+    @property
+    def TotalPlayers(self) -> int:
+        return len(self.Players)
+
+    @property
+    def PlayingPlayer(self) -> Player:
+        return self.Players[self._turn % self.TotalPlayers]
 
     def Update(self, game):
-        return GameLogic(self.Players, self.PlayingPlayer)
+        return self
 
-
-    def AddNewPlayer(self, Name):
-        if not self.Players:
-            characterIndex = 0
-            player = Player(Name, characterIndex, 0, 4)
-            self.PlayingPlayer = player
-            self.Players.append(player)
+    _gamestarted = False
+    def StartGame(self):
+        if self._gamestarted:
+            raise Exception("game already started")
         else:
-            characterIndex = self.Players[-1].Character +1
-            self.Players.append(Player(Name, characterIndex, 0, 0))
+            self._gamestarted = True
+            self.PlayingPlayer.Moves = 4
+
+    def AddNewPlayer(self, Name) -> Player:
+        if not self._gamestarted:
+            characterIndex = self.Players[-1].Character + 1
+            player = Player(Name, characterIndex, 0, 0)
+            self.Players.append(player)
+            return player
+        else:
+            raise Exception("game already started")
 
     def EndTurn(self, game):
         self.PlayingPlayer.Moves = 0
-        newPlayingPlayer = self.Players[(self.PlayingPlayer.Character + 1) % game.Settings.GetTotalPlayers()]
-        newPlayingPlayer.Moves = 4
-        self.PlayingPlayer = newPlayingPlayer
+        self._turn += 1
+        self.PlayingPlayer.Moves = 4
+        self.PlayingPlayer.Money += self.GetIncome()
 
-    def CanAddUnitBuildingToTile(self, game):
-          if self.PlayingPlayer.Moves != 0:
-            self.PlayingPlayer.Moves -= 1
-            return True
+    def CanAddUnitToTile(self, game, tile):
+        # TODO rest of implementation
+        if type(tile) is not SeaTile:
+            if self.PlayingPlayer.Moves != 0 and self.PlayingPlayer.Money >= 100:
+                self.PlayingPlayer.Moves -= 1
+                return True
+        return False
 
+    def GetIncome(self, player: Player=None):
+        player = player if player is not None else self.PlayingPlayer
 
+        tilesWithUnit = list(set([unit.Tile for unit in player.Units]))
+
+        return sum([tile.GetMoney(player) for tile in tilesWithUnit])
+
+    def BuyUnit(self, unitType, tile):
+        if self.PlayingPlayer.Moves > 0:
+            unit = UnitFactory.BuyUnit(self, unitType, tile, self.PlayingPlayer)
+
+            if unit is not None:
+                self.PlayingPlayer.Moves -= 1
+
+            return unit

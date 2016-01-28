@@ -1,45 +1,46 @@
-import pygame
 import Game
 from Helpers import Colors
-from Vector2 import Vector2
-from Helpers.popup import *
-from Helpers.EventHelpers import *
 from GameLogic.Player import *
 
 class PlayerInfoLabel:
 
-    def GetValue(self, player:Player):
+    def GetValue(self, game:Game):
         return ""
 
-    def Draw(self, game: Game, positionInRow, player=None):
+    def Draw(self, game: Game, positionInRow):
         font = pygame.font.SysFont("Arial", 18)
         position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
-        game.Settings.GetScreen().blit(font.render(self.GetValue(player), True, Colors.WHITE), (position.X + 30, position.Y + (positionInRow * 50)))
+        game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.WHITE), (position.X + 30, position.Y + (positionInRow * 50)))
+
+class PlayerName(PlayerInfoLabel):
+
+    def GetValue(self, game:Game):
+        return 'Playername: ' + str(game.Logic.PlayingPlayer.Name)
 
 class PlayerMoney(PlayerInfoLabel):
 
-    def GetValue(self, player:Player):
-        return 'Money: ' + str(0)
+    def GetValue(self, game:Game):
+        return 'Money: ' + str(game.Logic.PlayingPlayer.Money)
 
 class PlayerLands(PlayerInfoLabel):
 
-    def GetValue(self, player:Player):
+    def GetValue(self, game:Game):
         return 'Units: ' # TODO: Needs logic
 
 class PlayerTurnIncome(PlayerInfoLabel):
 
-    def GetValue(self, player:Player):
+    def GetValue(self, game:Game):
         return 'Income this turn: ' + str(0) # TODO: Needs logic
 
 class PlayerNextTurnIncome(PlayerInfoLabel):
 
-    def GetValue(self, player:Player):
-        return 'Income next turn: ' + str(0) # TODO: Needs logic
+    def GetValue(self, game: Game):
+        return 'Income next turn: ' + str(game.Logic.GetIncome())
 
 class PlayerRemainingMoves(PlayerInfoLabel):
 
-    def GetValue(self, player:Player):
-        return 'Remaining moves: ' + str(0) # TODO: Needs logic
+    def GetValue(self, game:Game):
+        return 'Remaining moves: ' + str(game.Logic.PlayingPlayer.Moves) # TODO: Needs logic
 
 class MenuRight:
 
@@ -49,7 +50,7 @@ class MenuRight:
         self.Position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 0)
 
         self.PlayerInfoLabels = playerInfoLabels if playerInfoLabels is not None \
-            else [PlayerMoney(), PlayerLands(), PlayerNextTurnIncome(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
+            else [PlayerName(), PlayerMoney(), PlayerLands(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
 
     def Update(self, game: Game):
         return MenuRight(game, self.Size, self.Position)

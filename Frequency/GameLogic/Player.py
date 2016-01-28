@@ -4,20 +4,31 @@ from GameLogic.Character import *
 
 class Player:
 
-    def __init__(self, name=None, character=None, money=None, moves=None):
+    def __init__(self, name, character, money=500, moves=0):
         self.Name = name
-        self.Character = character if character is not None else Character(character)
-        self.Money = money if money is not None else 0
-        self.Moves = moves if moves is not None else 0
+        if type(character) is int:
+            if character == 0:
+                self.Character = ForestCharacter()
+            elif character == 1:
+                self.Character = IceCharacter()
+            elif character == 2:
+                self.Character = DesertCharacter()
+            elif character == 3:
+                self.Character = SwampCharacter()
+            else:
+                raise Exception("%i is not a valid id for a character" % character)
+        else:
+            self.Character = character
 
-    def Update(self):
-        return Player(self.Name, self.Character, self.Money)
+        self.Money = money
+        self.Moves = moves
 
-    def Draw(self, game, font, marginBottom):
-        screen = game.Settings.GetScreen()
+        self._units = []
 
-        name = font.render(self.Name, True, (0, 0, 0))
-        screen.blit(name, (10, marginBottom))
+    @property
+    def Units(self):
+        return self._units
 
-        moves = font.render("%i" % self.Moves, True, (0, 0, 0))
-        screen.blit(moves, (100, marginBottom))
+    def AddUnit(self, unit):
+        self._units.append(unit)
+

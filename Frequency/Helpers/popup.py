@@ -2,9 +2,10 @@
 
 class Popup:
 
-    def __init__(self, screen, content,
-                width=960,
-                height=540,
+    def __init__(self, screen, 
+                content='',
+                width=1000,
+                height=640,
                 x=0,
                 y=0,
                 backgroundColor=(0,0,0),
@@ -38,6 +39,14 @@ class Popup:
 
 
     def Draw(self, file):
+        
+        # Standard Value
+        calcMargin = 25
+
+        if(self.Screen.get_height() < 1080):
+            self.Fontsize = 20
+            calcMargin = 20
+        
         # Create a font
         textFont = pygame.font.Font(None, self.Fontsize)
 
@@ -56,19 +65,21 @@ class Popup:
         drawPosition = self.DrawPosition()
 
         # Center the rectangle
-        textRect.centerx = self.Width//4
+        textRect.centerx = self.Width//5
         textRect.centery = self.Height//20
 
         # Draw background
-        pygame.draw.rect(self.Screen, self.BackgroundColor, (drawPosition['X'], drawPosition['Y'], self.Width, self.Height))
+        pygame.draw.rect(self.Screen, self.BackgroundColor, (0,0, self.Screen.get_width(), self.Screen.get_height()))
         # Load the image
         btn = pygame.image.load('images/buttons/closeButton.png')
+        # Load the hover
         btnHover = pygame.image.load('images/buttons/closeButtonHover.png')
         # Blit the close button
-        if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):
-            self.CloseButton = self.Screen.blit(btnHover, (drawPosition['X'] + self.Width-20, textRect.centery))
-        else:
-            self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Width-20, textRect.centery))
+        if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):  
+            self.CloseButton = self.Screen.blit(btnHover, (drawPosition['X'] + self.Screen.get_width()/1.3, textRect.centery-20))  
+        else:  
+            self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Screen.get_width()/1.3, textRect.centery-20))  
+
 
         # Place the text on the screen
         for index in self.Content:
@@ -76,7 +87,7 @@ class Popup:
             # [:-1] = Starts at 0, ends at 1 before the last element
             content = textFont.render(index[:-1], True, self.TextColor)
             # 25 margin bottom
-            textRect.centery += 25
+            textRect.centery += calcMargin
             # Blit the text
             self.Screen.blit(content, textRect)
 
