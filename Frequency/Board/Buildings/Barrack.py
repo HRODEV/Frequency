@@ -1,6 +1,6 @@
 import pygame
 
-from Board.Buildings.Building2 import Building
+from Board.Buildings.Building import Building
 
 
 class Barracks(Building):

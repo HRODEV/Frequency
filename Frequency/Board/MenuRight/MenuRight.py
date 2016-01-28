@@ -35,7 +35,11 @@ class PlayerTurnIncome(PlayerInfoLabel):
 class PlayerNextTurnIncome(PlayerInfoLabel):
 
     def GetValue(self, game:Game):
-        return 'Income next turn: ' + str(0) # TODO: Needs logic
+        total = 0
+        for tile in game.Logic.Map.TilesIterator:
+            if tile.Unit is not None:
+                total += tile.BasicMoney
+        return 'Income next turn: ' + str(total) # TODO: Needs logic
 
 class PlayerRemainingMoves(PlayerInfoLabel):
 

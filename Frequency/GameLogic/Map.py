@@ -32,7 +32,6 @@ class Tile:
         else:
             raise Exception("there is already a unit on the tile")
 
-
     @property
     def Position(self) -> Vector2:
         return self._position

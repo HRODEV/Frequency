@@ -58,7 +58,7 @@ class GameLogic:
     def CanAddUnitBuildingToTile(self, game, tile):
         # TODO rest of implementation
         if type(tile) is not SeaTile:
-            if self.PlayingPlayer.Moves != 0:
+            if self.PlayingPlayer.Moves != 0 and self.PlayingPlayer.Money >= 100:
                 self.PlayingPlayer.Moves -= 1
                 return True
         return False
