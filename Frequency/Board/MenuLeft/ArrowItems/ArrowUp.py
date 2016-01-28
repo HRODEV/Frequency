@@ -18,7 +18,6 @@ class ArrowUp(ArrowItem):
 
     def Draw(self, game):
         ArrowItem.Draw(self, game)
-        print("image")
 
     def GetNewState(self):
         return self._newState

@@ -41,8 +41,6 @@ class MenuLeft:
         for arrowButton in self.ArrowButtons:
             arrowButton.Draw(game)
 
-
-
     def EndturnButtonIsHoverdByMouse(self):
         return self.EndturnButtonRect is not None and self.EndturnButtonRect.collidepoint(pygame.mouse.get_pos())
 

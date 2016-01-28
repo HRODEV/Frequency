@@ -16,8 +16,11 @@ class ArrowItem:
 
     def Draw(self, game):
         # Extra screen-based properties
-        x = self.Offset.X
-        y = self.Offset.Y
+        menuLeft_centerX = game.Settings.MenuLeftSize.X // 2
+        menuLeft_centerY = game.Settings.MenuLeftSize.Y // 2
+
+        x = menuLeft_centerX - self.Image.get_rect().centerx + self.Offset.X
+        y = menuLeft_centerY - self.Image.get_rect().centery + self.Offset.Y
 
         if self.Hover is not None and self.IsHoverdByMouse():
             self.Rect = game.Settings.GetScreen().blit(self.Hover, (x, y))
