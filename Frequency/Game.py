@@ -7,7 +7,7 @@ class Game(object):
 
     def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic: GameLogic=None):
         self.Settings = settings if settings is not None else GameSettings()
-        self.State = state if state is not None else StartMenu(self)
+        self.State = state if state is not None else StartMenu(self.Settings.Resolution)
         self.Events = events
         self._logic = gameLogic
 
