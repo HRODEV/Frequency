@@ -62,5 +62,3 @@ class GameLogic:
                 self.PlayingPlayer.Moves -= 1
                 return True
         return False
-
-
