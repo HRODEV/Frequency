@@ -1,4 +1,5 @@
 import pygame
+from functools import reduce
 
 from Board.Map.Tile import *
 from Vector2 import Vector2
@@ -6,9 +7,10 @@ from Vector2 import Vector2
 
 class Map:
 
-    def __init__(self, game, tiles=None):
+    def __init__(self, game, tiles=None, selectedTile=None):
         self.Resolution = game.Settings.Resolution
         self.Tiles = tiles if tiles is not None else self.GenerateTiles(game)
+        self.SelectedTile = selectedTile
 
 
     def GenerateTiles(self, game):
@@ -51,21 +53,66 @@ class Map:
         else:
             raise Exception("%s type is not sported" % str(type(logicTile)))
 
+    @property
+    def TilesIterator(self):
+        for row in self.Tiles:
+            for tile in row:
+                yield tile
 
     def Update(self, game):
-        key = pygame.key.get_pressed()
-        if key[pygame.K_r]:
-            self.MoveUnit(self.Tiles[0][17])
+        isClicked = next((True for tile in self.TilesIterator if tile.IsClickedByMouse(game)), False)
+
+        if(game.Events):
+            for event in game.Events:
+                if event.type == pygame.KEYDOWN:
+                    self.MoveUnit(event.key)
         nList = []
         for row in self.Tiles:
             nRow = []
             for tile in row:
                 newTile = tile.Update(game)
+                if isClicked:
+                    if newTile.IsClickedByMouse(game):
+                        self.SelectedTile = newTile
+                    else:
+                        newTile.Selected = False
+                elif tile == self.SelectedTile:
+                    self.SelectedTile = newTile
                 nRow.append(newTile)
             nList.append(nRow)
-        return Map(game, nList)
+        return Map(game, nList, self.SelectedTile)
 
     def Draw(self, game):
         for row in self.Tiles:
             for tile in row:
                 tile.Draw(game)
+
+            tile.Draw(game)
+
+
+
+    def MoveUnit(self, movement):
+        tile = self.SelectedTile
+        newTile = None
+        # If the tile has units and the movement is one of the key.events that we want
+        if tile is not None:
+            # Update map with new tile based on the key event we received
+            if(movement == pygame.K_UP):
+                self.Tiles[tile.Position.X][tile.Position.Y-1].Units = tile.Units
+                newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
+            if(movement == pygame.K_RIGHT):
+                self.Tiles[tile.Position.X+1][tile.Position.Y].Units = tile.Units
+                newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+            if(movement == pygame.K_DOWN):
+                self.Tiles[tile.Position.X][tile.Position.Y+1].Units = tile.Units
+                newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+            if(movement == pygame.K_LEFT):
+                self.Tiles[tile.Position.X-1][tile.Position.Y].Units = tile.Units
+                newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
+
+            newTile.Selected = True
+            self.SelectedTile = newTile
+
+        if(newTile is not None):
+            self.Tiles[tile.Position.X][tile.Position.Y].Units = []
+            self.Tiles[tile.Position.X][tile.Position.Y].Selected = False

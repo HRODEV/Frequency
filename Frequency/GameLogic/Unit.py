@@ -1,7 +1,5 @@
 from functools import reduce
-
 from GameLogic import Player
-
 
 
 class Unit:
