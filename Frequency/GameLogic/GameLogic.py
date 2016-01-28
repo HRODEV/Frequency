@@ -55,6 +55,7 @@ class GameLogic:
         self.PlayingPlayer.Moves = 0
         self._turn += 1
         self.PlayingPlayer.Moves = 4
+        self.PlayingPlayer.Money += self.GetIncome()
 
     def CanAddUnitToTile(self, game, tile):
         # TODO rest of implementation

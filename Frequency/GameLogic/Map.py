@@ -1,6 +1,6 @@
 import GameLogic.Unit
 from GameLogic.Barrack import BaseBarrack
-from Vector2 import Vector2
+from GameLogic.Character import *
 
 
 class Tile:
@@ -54,8 +54,7 @@ class DesertTile(Tile):
         super().__init__(_position, 50, 100)
 
     def GetMoney(self, player):
-        import Frequency.GameLogic.Character
-        if type(player.Character) is Frequency.GameLogic.Character.DesertCharacter:
+        if type(player.Character) is DesertCharacter:
             return self.BasicMoney
         else:
             return self.EnemyMoney
@@ -67,8 +66,7 @@ class ForestTile(Tile):
         super().__init__(_position, 50, 100)
 
     def GetMoney(self, player):
-        import Frequency.GameLogic.Character
-        if type(player.Character) is Frequency.GameLogic.Character.ForestCharacter:
+        if type(player.Character) is ForestCharacter:
             return self.BasicMoney
         else:
             return self.EnemyMoney
@@ -89,8 +87,7 @@ class IceTile(Tile):
         super().__init__(_position, 50, 100)
 
     def GetMoney(self, player):
-        import Frequency.GameLogic.Character
-        if type(player.Character) is Frequency.GameLogic.Character.IceCharacter:
+        if type(player.Character) is IceCharacter:
             return self.BasicMoney
         else:
             return self.EnemyMoney
@@ -108,8 +105,7 @@ class SwampTile(Tile):
         super().__init__(_position, 50, 100)
 
     def GetMoney(self, player):
-        import Frequency.GameLogic.Character
-        if type(player.Character) is Frequency.GameLogic.Character.SwampCharacter:
+        if type(player.Character) is SwampCharacter:
             return self.BasicMoney
         else:
             return self.EnemyMoney
