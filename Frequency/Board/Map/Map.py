@@ -21,7 +21,6 @@ class Map:
         tiles = []
         game.Settings.SetMapSize(Vector2(maxTiles.X * maxLength, maxTiles.X * maxLength))
 
-
         for X in range(0, maxTiles.X):
             row = []
             for Y in range(0, maxTiles.Y):

@@ -1,8 +1,10 @@
 import GameLogic.Map
+import GameLogic.Unit
 from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
+from Frequency.GameLogic.UnitFactory import BuyUnit
 
 
 class Tile:
@@ -27,10 +29,12 @@ class Tile:
     def Update(self, game):
         if self.IsClickedByMouse(game):
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                if game.Logic.CanAddUnitBuildingToTile(game, self):
-                    self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
-                    game.Logic.Map.GetTile(self.Position).Unit = Soldier(game.Logic.PlayingPlayer, self)
-                    game.Logic.PlayingPlayer.Money -= 100
+                logicSoldier = BuyUnit(game.Logic, GameLogic.Unit.Soldier, self.LogicTile, game.Logic.PlayingPlayer)
+                self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+                #if game.Logic.CanAddUnitBuildingToTile(game, self):
+                    #self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+                    #game.Logic.Map.GetTile(self.Position).Unit = Soldier(game.Logic.PlayingPlayer, self)
+                    #game.Logic.PlayingPlayer.Money -= 100
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)

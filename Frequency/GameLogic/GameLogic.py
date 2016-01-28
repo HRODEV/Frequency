@@ -69,6 +69,3 @@ class GameLogic:
         tilesWithUnit = list(set([unit.Tile for unit in player.Units]))
 
         return sum([tile.GetMoney(player) for tile in tilesWithUnit])
-
-
-
