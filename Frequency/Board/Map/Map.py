@@ -1,6 +1,7 @@
 import pygame
 from functools import reduce
 
+from Board.Buildings.Base import Base
 from Board.Map.Tile import *
 from Vector2 import Vector2
 
@@ -26,14 +27,30 @@ class Map:
             for Y in range(0, maxTiles.Y):
                 logicTile = game.Logic.Map.GetTile(Vector2(X, Y))
                 TileType = self.DetermineTileType(logicTile)
-                row.append(TileType(Vector2(X, Y), maxTileSize, logicTile))
+                newTile = TileType(Vector2(X, Y), maxTileSize, logicTile)
+                newTile.Building = self.CreateBase(game, newTile, X, Y)
+                row.append(newTile)
             tiles.append(row)
 
         return tiles
 
+    def CreateBase(self, game, tile,  X, Y):
+        if X == 0 and Y == 0:
+            return Base(game.Logic.Players[0], tile)
+        if X == 17 and Y == 0:
+            return Base(game.Logic.Players[1], tile)
+        if game.Logic.TotalPlayers >=3:
+            if X == 0 and Y == 17:
+                return Base(game.Logic.Players[2], tile)
+        if game.Logic.TotalPlayers >=4:
+            if X == 17 and Y == 17:
+                return Base(game.Logic.Players[3], tile)
+        return None
+
+
     @property
     def ActiveTile(self):
-        return  # TODO implement for the highlighted tile
+        return self.SelectedTile
 
 
     def DetermineTileType(self, logicTile):
@@ -65,7 +82,7 @@ class Map:
         if(game.Events):
             for event in game.Events:
                 if event.type == pygame.KEYDOWN:
-                    self.MoveUnit(event.key)
+                    self.MoveUnit(event.key, game)
         nList = []
         for row in self.Tiles:
             nRow = []
@@ -91,27 +108,29 @@ class Map:
 
 
 
-    def MoveUnit(self, movement):
+    def MoveUnit(self, movement, game):
         tile = self.SelectedTile
         newTile = None
         # If the tile has units and the movement is one of the key.events that we want
         if tile is not None:
-            # Update map with new tile based on the key event we received
-            if(movement == pygame.K_UP):
-                self.Tiles[tile.Position.X][tile.Position.Y-1].Units = tile.Units
-                newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
-            if(movement == pygame.K_RIGHT):
-                self.Tiles[tile.Position.X+1][tile.Position.Y].Units = tile.Units
-                newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
-            if(movement == pygame.K_DOWN):
-                self.Tiles[tile.Position.X][tile.Position.Y+1].Units = tile.Units
-                newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
-            if(movement == pygame.K_LEFT):
-                self.Tiles[tile.Position.X-1][tile.Position.Y].Units = tile.Units
-                newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
+            if game.Logic.PlayingPlayer.Moves > 0:
+                # Update map with new tile based on the key event we received
+                if(movement == pygame.K_UP):
+                    self.Tiles[tile.Position.X][tile.Position.Y-1].Units = tile.Units
+                    newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
+                if(movement == pygame.K_RIGHT):
+                    self.Tiles[tile.Position.X+1][tile.Position.Y].Units = tile.Units
+                    newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                if(movement == pygame.K_DOWN):
+                    self.Tiles[tile.Position.X][tile.Position.Y+1].Units = tile.Units
+                    newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+                if(movement == pygame.K_LEFT):
+                    self.Tiles[tile.Position.X-1][tile.Position.Y].Units = tile.Units
+                    newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
 
-            newTile.Selected = True
-            self.SelectedTile = newTile
+                newTile.Selected = True
+                self.SelectedTile = newTile
+                game.Logic.PlayingPlayer.Moves -= 1
 
         if(newTile is not None):
             self.Tiles[tile.Position.X][tile.Position.Y].Units = []
