@@ -1,35 +1,39 @@
+import GameLogic.Map
 from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
 from Board.Buildings.Barrack import Barracks
+from Vector2 import Vector2
+
 
 class Tile:
 
-    def __init__(self, position, defaultMoney, enemyMoney, texture, size, units=None, rectangle=None, building=None):
+    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, building=None):
         self.Position = position
-        self.DefaultMoney = defaultMoney
-        self.EnemyMoney = enemyMoney
         self.Size = size
-        self.Texture = texture
+        self.Texture = texture if texture is not None else self._getTexture(size)
         self.Rectangle = rectangle
         if units is None:
-           self.Units = []
+            self.Units = []
         else:
             self.Units = units
         self.Building = building
+        self._logicTile = logicTile
 
+    @property
+    def LogicTile(self) -> GameLogic.Map.Tile:
+        return self._logicTile
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                if game.Logic.CanAddUnitBuildingToTile(game):
+                if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Units.append(Soldier(game.Logic.PlayingPlayer, self))
+                    game.Logic.PlayingPlayer.Money -= 100
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
-                 if game.Logic.CanAddUnitBuildingToTile(game):
+                if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
-                    print("place building")
 
-        return Tile(self.Position, self.DefaultMoney, self.EnemyMoney, self.Texture, self.Size, self.Units, self.Rectangle, self.Building)
-
+        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Building)
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
@@ -38,14 +42,51 @@ class Tile:
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
         if len(self.Units) > 0:
             for unit in self.Units:
-                unit.Draw(game)
+                unit.Draw(game, self)
         if self.Building is not None:
             self.Building.Draw(game)
-
 
     def IsHoverdByMouse(self):
         return self.Rectangle is not None and self.Rectangle.collidepoint(pygame.mouse.get_pos())
 
-
     def IsClickedByMouse(self, game):
         return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
+
+    def _getTexture(self, size: Vector2):
+        return None
+
+
+class DesertTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/DesertSeamless.png'), [size.X, size.Y])
+
+
+class GoldTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/GoldSeamless.png'), [size.X, size.Y])
+
+
+class ForestTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/ForestSeamless.png'), [size.X, size.Y])
+
+
+class IceTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/IceSeamless.png'), [size.X, size.Y])
+
+
+class SeaTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/SeaSeamless.png'), [size.X, size.Y])
+
+
+class SwampTile(Tile):
+
+    def _getTexture(self, size: Vector2):
+        return pygame.transform.scale(pygame.image.load('images/tiles/SwampSeamless.png'), [size.X, size.Y])
