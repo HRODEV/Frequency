@@ -3,7 +3,7 @@ from Vector2 import Vector2
 
 class Character:
 
-    def __init__(self, id=None, startingLocation=None):
+    def __init__(self):
         self._id = id
 
     @property
