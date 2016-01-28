@@ -1,17 +1,15 @@
 class Unit:
 
-    def __init__(self, player, tile, texture):
+    def __init__(self, player, tile, textures):
         self.Player = player
         self.Tile = tile
-        self.Texture
+        self.Textures = textures
 
 
     def Update(self, game):
         return self
 
 
-    def Draw(self, game):
-        tileSize = min(game.Settings.Resolution.X // game.Settings.GetMaxTiles().X,
-                       game.Settings.Resolution.Y // game.Settings.GetMaxTiles().Y)
-
-        game.Settings.GetScreen().blit(self.Texture[self.Player.Character], ((self.Tile.Position.X * tileSize) + game.Settings.GetMenuLeftSize().X, self.Tile.Position.Y * tileSize))
+    def Draw(self, game, tile):
+        tileSize = min(self.Tile.Size.X, self.Tile.Size.Y)
+        game.Settings.GetScreen().blit(self.Textures[self.Player.Character.Id], ((tile.Position.X * tileSize) + game.Settings.GetMenuLeftSize().X, tile.Position.Y * tileSize))

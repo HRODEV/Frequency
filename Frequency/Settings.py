@@ -13,9 +13,9 @@ class GameSettings:
                  newPlayers = 0,
                  mapSize = None,
                  menuLeftSize = None,
-                 selectedUnitBuilding = "Barracks"):
+                 selectedUnitBuilding = "Soldier"):
 
-        self.Resolution = resolution
+        self._resolution = resolution
         self.TileSize = tileSize
         self.newPlayer = newPlayers
         self.MapSize = mapSize
@@ -29,11 +29,15 @@ class GameSettings:
         self.SetMaxTiles(Vector2(18, 18))
         self.Players = newPlayers
 
+    @property
+    def Resolution(self) -> Vector2:
+        return self._resolution
+
     def SetResolution(self, newResolution: Vector2):
-        self.Resolution = newResolution
+        self._resolution = newResolution
         self.screen = pygame.display.set_mode(newResolution.Position)
 
-    def GetScreen(self):
+    def GetScreen(self) -> Surface:
         return self.screen
 
     def SetMaxTiles(self, maxTiles):
@@ -59,12 +63,6 @@ class GameSettings:
 
     def GetMenuLeftSize(self):
         return self.MenuLeftSize
-
-    def UpdatePlayers(self, newPlayers):
-        self.Players = newPlayers
-
-    def GetTotalPlayers(self):
-        return self.Players
 
     def SetSelectedUnitBuilding(self, selectedUnitBuilding):
         self.SelectedUnitBuilding = selectedUnitBuilding

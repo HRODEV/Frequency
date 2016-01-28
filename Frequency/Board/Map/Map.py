@@ -1,11 +1,6 @@
 import pygame
 
-from Board.Map.ForestTile import ForestTile
-from Board.Map.IceTile import IceTile
-from Board.Map.DesertTile import DesertTile
-from Board.Map.SwampTile import SwampTile
-from Board.Map.GoldTile import GoldTile
-from Board.Map.SeaTile import SeaTile
+from Board.Map.Tile import *
 from Vector2 import Vector2
 
 
@@ -27,29 +22,40 @@ class Map:
         for X in range(0, maxTiles.X):
             row = []
             for Y in range(0, maxTiles.Y):
-                TileType = self.DetermineTileType(X, Y)
-                row.append(TileType(Vector2(X, Y), maxTileSize))
+                logicTile = game.Logic.Map.GetTile(Vector2(X, Y))
+                TileType = self.DetermineTileType(logicTile)
+                row.append(TileType(Vector2(X, Y), maxTileSize, logicTile))
             tiles.append(row)
 
         return tiles
 
+    @property
+    def ActiveTile(self):
+        return  # TODO implement for the highlighted tile
 
-    def DetermineTileType(self, X, Y):
-        if X < 7 and Y < 7:
-            return ForestTile
-        if X > 10 and X < 18 and Y < 7:
-            return IceTile
-        if X < 7 and Y >10 and Y < 18:
+
+    def DetermineTileType(self, logicTile):
+        import GameLogic.Map
+        if type(logicTile) is GameLogic.Map.DesertTile:
             return DesertTile
-        if X > 10 and X < 18 and Y > 10:
-            return SwampTile
-        if X > 6 and X < 11 and Y > 6 and Y < 11:
+        elif type(logicTile) is GameLogic.Map.ForestTile:
+            return ForestTile
+        elif type(logicTile) is GameLogic.Map.GoldTile:
             return GoldTile
-        else:
+        elif type(logicTile) is GameLogic.Map.IceTile:
+            return IceTile
+        elif type(logicTile) is GameLogic.Map.SeaTile:
             return SeaTile
+        elif type(logicTile) is GameLogic.Map.SwampTile:
+            return SwampTile
+        else:
+            raise Exception("%s type is not sported" % str(type(logicTile)))
 
 
     def Update(self, game):
+        key = pygame.key.get_pressed()
+        if key[pygame.K_r]:
+            self.MoveUnit(self.Tiles[0][17])
         nList = []
         for row in self.Tiles:
             nRow = []
@@ -58,7 +64,6 @@ class Map:
                 nRow.append(newTile)
             nList.append(nRow)
         return Map(game, nList)
-
 
     def Draw(self, game):
         for row in self.Tiles:
