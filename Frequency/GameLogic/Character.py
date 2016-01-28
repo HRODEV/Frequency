@@ -3,18 +3,31 @@ from Vector2 import Vector2
 
 class Character:
 
-    def __init__(self, id=None, startingLocation=None, color=None):
-        self.Id = id
-        self.StartingLocation = startingLocation if startingLocation is not None else self.GetStartingLocation()
-        self.color = color
+    def __init__(self, id=None, startingLocation=None):
+        self._id = id
+
+    @property
+    def Id(self) -> int:
+        return 0
 
 
-    def GetStartingLocation(self):
-        if self.Id == 0:
-            self.StartingLocation = Vector2(0, 0)
-        elif self.Id == 1:
-            self.StartingLocation = Vector2(0, 18)
-        elif self.Id == 2:
-            self.StartingLocation = Vector2(18, 0)
-        else:
-            self.StartingLocation = Vector2(18, 18)
+class ForestCharacter(Character):
+    @property
+    def Id(self) -> int:
+        return 0
+
+class IceCharacter(Character):
+    @property
+    def Id(self) -> int:
+        return 1
+
+class DesertCharacter(Character):
+    @property
+    def Id(self) -> int:
+        return 2
+
+
+class SwampCharacter(Character):
+    @property
+    def Id(self) -> int:
+        return 3
