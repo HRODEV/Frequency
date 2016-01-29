@@ -4,7 +4,6 @@ from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
-from GameLogic.UnitFactory import BuyUnit
 
 
 class Tile:
@@ -44,18 +43,14 @@ class Tile:
         marginX = self.Position.X * self.Size.X + game.Settings.MenuLeftSize.X
         marginY = self.Position.Y * self.Size.Y
         if self.Selected:
-            testTexture = pygame.transform.scale(pygame.image.load('images/tiles/selected.png'), [self.Size.X, self.Size.Y])
+            testTexture = pygame.transform.scale(pygame.image.load('images/tiles/selected.png').convert_alpha(), [self.Size.X, self.Size.Y])
         else:
             testTexture = self.Texture
         self.Rectangle = screen.blit(testTexture, (marginX, marginY))
         if len(self.Units) > 0:
             # Fake data
             totalUnitsOnTile = 4
-            unitList = []
-            unitList.append(self.Units[0])
-            unitList.append(self.Units[0])
-            unitList.append(self.Units[0])
-            unitList.append(self.Units[0])
+            unitList = [self.Units[0], self.Units[0], self.Units[0], self.Units[0]]
 
             i = 0
             if totalUnitsOnTile > 1:
@@ -94,34 +89,34 @@ class Tile:
 class DesertTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/DesertSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/DesertSeamless.png').convert_alpha(), [size.X, size.Y])
 
 
 class GoldTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/GoldSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/GoldSeamless.png').convert_alpha(), [size.X, size.Y])
 
 
 class ForestTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/ForestSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/ForestSeamless.png').convert_alpha(), [size.X, size.Y])
 
 
 class IceTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/IceSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/IceSeamless.png').convert_alpha(), [size.X, size.Y])
 
 
 class SeaTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/SeaSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/SeaSeamless.png').convert_alpha(), [size.X, size.Y])
 
 
 class SwampTile(Tile):
 
     def _getTexture(self, size: Vector2):
-        return pygame.transform.scale(pygame.image.load('images/tiles/SwampSeamless.png'), [size.X, size.Y])
+        return pygame.transform.scale(pygame.image.load('images/tiles/SwampSeamless.png').convert_alpha(), [size.X, size.Y])

@@ -9,7 +9,9 @@ from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 
 class EnterGame(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/playButton.png'), hover: Surface=pygame.image.load('images/buttons/playButtonHover.png'), rect=None, newState=None):
+    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None, newState=None):
+        image = image if image is not None else pygame.image.load('images/buttons/playButton.png').convert_alpha()
+        hover = hover if hover is not None else pygame.image.load('images/buttons/playButtonHover.png').convert_alpha()
         super().__init__(offset, image, hover, rect)
         self._newState = newState
 

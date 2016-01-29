@@ -33,7 +33,7 @@ class ActionPanel:
         self.ArrowBtnUpLeft = None
 
         self.Map = None
-        self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
+        self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png').convert_alpha(), [150, 25])
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
