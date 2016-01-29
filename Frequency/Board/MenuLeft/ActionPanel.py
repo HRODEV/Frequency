@@ -6,15 +6,23 @@ from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUp
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUpRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDownRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDown
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDownLeft
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonLeft
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUpLeft
+
 
 class ActionPanel:
-    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None):
+    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None, arrowButtons=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
         self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
-
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
@@ -70,6 +78,16 @@ class UnitActionPanel(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
+
+        # Draw the Arrow Buttons
+        ArrowButtonUp(Vector2(0, -40)).Draw(game)
+        ArrowButtonUpRight(Vector2(40, -40)).Draw(game)
+        ArrowButtonRight(Vector2(40,0)).Draw(game)
+        ArrowButtonDownRight(Vector2(40, 40)).Draw(game)
+        ArrowButtonDown(Vector2(0, 40)).Draw(game)
+        ArrowButtonDownLeft(Vector2(-40, 40)).Draw(game)
+        ArrowButtonLeft(Vector2(-40, 0)).Draw(game)
+        ArrowButtonUpLeft(Vector2(-40, -40)).Draw(game)
 
 class BarrakActionPanel(ActionPanel):
 
