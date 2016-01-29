@@ -31,9 +31,6 @@ class GameLogic:
     def PlayingPlayer(self) -> Player:
         return self.Players[self._turn % self.TotalPlayers]
 
-    def Update(self, game):
-        return self
-
     _gamestarted = False
     def StartGame(self):
         if self._gamestarted:
