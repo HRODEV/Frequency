@@ -8,7 +8,7 @@ class ArrowItem:
     def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
         self.Offset = offset
         self.Image = image if image is not None else self._getTexture()
-        self.Hover = hover
+        self.Hover = hover if hover is not None else self._getHoverTexture()
         self.Rect = rect
 
     def Update(self, game):
@@ -34,6 +34,9 @@ class ArrowItem:
         return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
 
     def _getTexture(self):
+        return None
+
+    def _getHoverTexture(self):
         return None
 
 class ArrowButtonUp(ArrowItem):
