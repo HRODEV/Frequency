@@ -71,9 +71,9 @@ class Popup:
         # Draw background
         pygame.draw.rect(self.Screen, self.BackgroundColor, (0,0, self.Screen.get_width(), self.Screen.get_height()))
         # Load the image
-        btn = pygame.image.load('images/buttons/closeButton.png')
+        btn = pygame.image.load('images/buttons/closeButton.png').convert_alpha()
         # Load the hover
-        btnHover = pygame.image.load('images/buttons/closeButtonHover.png')
+        btnHover = pygame.image.load('images/buttons/closeButtonHover.png').convert_alpha()
         # Blit the close button
         if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):  
             self.CloseButton = self.Screen.blit(btnHover, (drawPosition['X'] + self.Screen.get_width()/1.3, textRect.centery-20))  
