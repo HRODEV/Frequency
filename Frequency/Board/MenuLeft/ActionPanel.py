@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 
 import Game
 from Board.Map.Tile import Tile
@@ -22,13 +22,44 @@ class ActionPanel:
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
+
+        self.ArrowBtnUp = None
+        self.ArrowBtnUpRight = None
+        self.ArrowBtnRight = None
+        self.ArrowBtnDownRight = None
+        self.ArrowBtnDown = None
+        self.ArrowBtnDownLeft = None
+        self.ArrowBtnLeft = None
+        self.ArrowBtnUpLeft = None
+
+        self.Map = None
         self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
     def Update(self, game: Game) -> 'ActionPanel':
+        # End turn
         if self.EndturnButtonIsClickedByMouse(game):
             game.Logic.EndTurn(game)
+
+        # Movement
+        if self.ArrowBtnUp.IsClickedByMouse(game):
+           self.Map.MoveUnit(1, game)
+        elif self.ArrowBtnUpRight.IsClickedByMouse(game):
+            self.Map.MoveUnit(2, game)
+        elif self.ArrowBtnRight.IsClickedByMouse(game):
+            self.Map.MoveUnit(3, game)
+        elif self.ArrowBtnDownRight.IsClickedByMouse(game):
+            self.Map.MoveUnit(4, game)
+        elif self.ArrowBtnDown.IsClickedByMouse(game):
+            self.Map.MoveUnit(5, game)
+        elif self.ArrowBtnDownLeft.IsClickedByMouse(game):
+            self.Map.MoveUnit(6, game)
+        elif self.ArrowBtnLeft.IsClickedByMouse(game):
+            self.Map.MoveUnit(7, game)
+        elif self.ArrowBtnUpLeft.IsClickedByMouse(game):
+            self.Map.MoveUnit(8, game)
+
         return ActionPanel(game, self.Tile, self.EndturnButtonRect)
 
     def Draw(self, game: Game):
@@ -41,6 +72,12 @@ class ActionPanel:
 
         # Draw end turn button
         self.EndturnButtonRect = game.Settings.GetScreen().blit(self.EndTurnButtonImage, (10, game.Settings.Resolution.Y-50))
+
+    def IsHoverdByMouse(btn):
+        return btn is not None and self.Rect.collidepoint(pygame.mouse.get_pos())
+
+    def IsClickedByMouse(btn, game):
+        return btn.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
 
     def EndturnButtonIsHoverdByMouse(self):
         return self.EndturnButtonRect is not None and self.EndturnButtonRect.collidepoint(pygame.mouse.get_pos())
@@ -66,7 +103,8 @@ class DefaultActionPanel(ActionPanel):
 
 class UnitActionPanel(ActionPanel):
 
-    def Update(self, game: Game):
+    def Update(self, game: Game, map):
+        self.Map = map
         nself = super().Update(game)
         UnitActionPanel(game, self.Tile, nself.EndturnButtonRect)
 
@@ -80,14 +118,22 @@ class UnitActionPanel(ActionPanel):
                                                    True, Colors.BLACK), (10, 55))
 
         # Draw the Arrow Buttons
-        ArrowButtonUp(Vector2(0, -40)).Draw(game)
-        ArrowButtonUpRight(Vector2(40, -40)).Draw(game)
-        ArrowButtonRight(Vector2(40,0)).Draw(game)
-        ArrowButtonDownRight(Vector2(40, 40)).Draw(game)
-        ArrowButtonDown(Vector2(0, 40)).Draw(game)
-        ArrowButtonDownLeft(Vector2(-40, 40)).Draw(game)
-        ArrowButtonLeft(Vector2(-40, 0)).Draw(game)
-        ArrowButtonUpLeft(Vector2(-40, -40)).Draw(game)
+        self.ArrowBtnUp = ArrowButtonUp(Vector2(0, -40))
+        self.ArrowBtnUp.Draw(game)
+        self.ArrowBtnUpRight = ArrowButtonUpRight(Vector2(40, -40))
+        self.ArrowBtnUpRight.Draw(game)
+        self.ArrowBtnRight = ArrowButtonRight(Vector2(40,0))
+        self.ArrowBtnRight.Draw(game)
+        self.ArrowBtnDownRight = ArrowButtonDownRight(Vector2(40, 40))
+        self.ArrowBtnDownRight.Draw(game)
+        self.ArrowBtnDown = ArrowButtonDown(Vector2(0, 40))
+        self.ArrowBtnDown.Draw(game)
+        self.ArrowBtnDownLeft = ArrowButtonDownLeft(Vector2(-40, 40))
+        self.ArrowBtnDownLeft.Draw(game)
+        self.ArrowBtnLeft = ArrowButtonLeft(Vector2(-40, 0))
+        self.ArrowBtnLeft.Draw(game)
+        self.ArrowBtnUpLeft = ArrowButtonUpLeft(Vector2(-40, -40))
+        self.ArrowBtnUpLeft.Draw(game)
 
 class BarrakActionPanel(ActionPanel):
 

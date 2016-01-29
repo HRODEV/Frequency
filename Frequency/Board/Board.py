@@ -1,4 +1,4 @@
-import pygame
+﻿import pygame
 
 import Game
 from Board.Map.Map import *
@@ -15,7 +15,7 @@ class Board:
 
 
     def Update(self, game: Game):
-        return Board(game, self.MenuLeft.Update(game), self.MenuRight.Update(game), self.Map.Update(game))
+        return Board(game, self.MenuLeft.Update(game, self.Map), self.MenuRight.Update(game), self.Map.Update(game))
 
 
     def Draw(self, game: Game):

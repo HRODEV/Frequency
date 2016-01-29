@@ -76,8 +76,8 @@ class Map:
                 yield tile
 
     def Update(self, game):
-        isClicked = next((True for tile in self.TilesIterator if tile.IsClickedByMouse(game)), False)
 
+        isClicked = next((True for tile in self.TilesIterator if tile.IsClickedByMouse(game)), False)
         if(game.Events):
             for event in game.Events:
                 if event.type == pygame.KEYDOWN:
@@ -96,6 +96,7 @@ class Map:
                     self.SelectedTile = newTile
                 nRow.append(newTile)
             nList.append(nRow)
+
         return Map(game, nList, self.SelectedTile)
 
     def Draw(self, game):
@@ -111,24 +112,46 @@ class Map:
         if tile is not None:
             if game.Logic.PlayingPlayer.Moves > 0:
                 # Update map with new tile based on the key event we received
-                if(movement == pygame.K_UP):
+                # Up
+                if(movement == 1):
                     if(tile.Position.Y - 1 >= 0):
                         newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
-                if(movement == pygame.K_RIGHT):
+                # Up Right
+                if(movement == 2):
+                    if(tile.Position.Y - 1 >= 0 and tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X):
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y-1]
+                # Right
+                if(movement == 3):
                     if(tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X):
-                            newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
-                if(movement == pygame.K_DOWN):
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                # Down Right
+                if(movement == 4):
+                    if(tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X and
+                       tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y+1]
+                # Down
+                if(movement == 5):
                     if(tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
-                            newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
-                if(movement == pygame.K_LEFT):
+                        newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+                # Down Left
+                if(movement == 6):
+                    if(tile.Position.X - 1 >= 0 and tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
+                        newTile = self.Tiles[tile.Position.X-1][tile.Position.Y+1]
+                # Left
+                if(movement == 7):
                     if(tile.Position.X - 1 >= 0):
                         newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
+                if(movement == 8):
+                    if(tile.Position.X -1 >= 0 and tile.Position.Y - 1 >= 0):
+                        newTile = self.Tiles[tile.Position.X-1][tile.Position.Y-1]
 
                 if(newTile is not None):
                     newTile.Units = tile.Units
                     newTile.Selected = True
                     self.SelectedTile = newTile
                     game.Logic.PlayingPlayer.Moves -= 1
+
+
 
         if(newTile is not None):
             self.Tiles[tile.Position.X][tile.Position.Y].Units = []
