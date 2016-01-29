@@ -7,13 +7,13 @@ from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
 from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUp
-from Board.MenuLeft.ArrowItems.ArrowUpRight import ArrowUpRight
-from Board.MenuLeft.ArrowItems.ArrowRight import ArrowRight
-from Board.MenuLeft.ArrowItems.ArrowDownRight import ArrowDownRight
-from Board.MenuLeft.ArrowItems.ArrowDown import ArrowDown
-from Board.MenuLeft.ArrowItems.ArrowDownLeft import ArrowDownLeft
-from Board.MenuLeft.ArrowItems.ArrowLeft import ArrowLeft
-from Board.MenuLeft.ArrowItems.ArrowUpLeft import ArrowUpLeft
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUpRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDownRight
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDown
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonDownLeft
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonLeft
+from Board.MenuLeft.ArrowItems.ArrowItem import ArrowButtonUpLeft
 
 
 class ActionPanel:
@@ -23,10 +23,6 @@ class ActionPanel:
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
         self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png'), [150, 25])
-        self.ArrowButtons = arrowButtons if arrowButtons is not None \
-            else [ArrowButtonUp(Vector2(0, -40), ArrowButtonUp._getTexture(), ArrowButtonUp._getHoverTexture(), None)]
-            #, ArrowUpRight(Vector2(40, -40)), ArrowRight(Vector2(40, 0)), ArrowDownRight(Vector2(40, 40)), ArrowDown(Vector2(0, 40)), ArrowDownLeft(Vector2(-40, 40)), ArrowLeft(Vector2(-40, 0)), ArrowUpLeft(Vector2(-40, -40))]
-
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
@@ -72,7 +68,7 @@ class UnitActionPanel(ActionPanel):
 
     def Update(self, game: Game):
         nself = super().Update(game)
-        UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.ArrowButtons)
+        UnitActionPanel(game, self.Tile, nself.EndturnButtonRect)
 
     def Draw(self, game : Game):
         super().Draw(game)
@@ -84,7 +80,14 @@ class UnitActionPanel(ActionPanel):
                                                    True, Colors.BLACK), (10, 55))
 
         # Draw the Arrow Buttons
-        self.ArrowButtonUpRect = game.Settings.GetScreen().blit(self.ArrowButtons, (10, 10))
+        ArrowButtonUp(Vector2(0, -40)).Draw(game)
+        ArrowButtonUpRight(Vector2(40, -40)).Draw(game)
+        ArrowButtonRight(Vector2(40,0)).Draw(game)
+        ArrowButtonDownRight(Vector2(40, 40)).Draw(game)
+        ArrowButtonDown(Vector2(0, 40)).Draw(game)
+        ArrowButtonDownLeft(Vector2(-40, 40)).Draw(game)
+        ArrowButtonLeft(Vector2(-40, 0)).Draw(game)
+        ArrowButtonUpLeft(Vector2(-40, -40)).Draw(game)
 
 class BarrakActionPanel(ActionPanel):
 
