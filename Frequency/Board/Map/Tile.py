@@ -1,10 +1,10 @@
-import GameLogic.Map
+﻿import GameLogic.Map
 import GameLogic.Unit
 from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
-from Frequency.GameLogic.UnitFactory import BuyUnit
+from GameLogic.UnitFactory import BuyUnit
 
 
 class Tile:
