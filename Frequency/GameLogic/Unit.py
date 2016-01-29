@@ -16,6 +16,9 @@ class Unit:
 
     @property
     def Tile(self): return self._tile
+    @Tile.setter
+    def Tile(self, value):
+        self._tile = value
     @property
     def Owner(self) -> Player: return self._owner
     @property
@@ -104,6 +107,45 @@ class UnitGroup(Unit):
     def RemoveUnit(self, unit: Unit):
         self._units = [_unit for _unit in self._units if _unit != unit]
 
+    def MoveTo(self, tile: 'Tile'):
+        # check turn
+        if not self.Owner.IsOnTurn:
+            raise Exception("player is not on turn")
+        # check if you move in the right area
+        from GameLogic.Map import SeaTile
+        if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
+            raise Exception("you are not aloud to move this unit more than one tile")
+        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
+            raise Exception("You need to fight to go to this tile")
+        # check for actions with the sea
+        elif type(tile) is SeaTile:
+            # check if there is a boat available
+            if tile.Unit is not None and type(tile.Unit) is Boat:
+                # check if it is possible to place this unit in the boat
+                boat = tile.Unit
+                if boat.Unit is not None:
+                    raise Exception("there is already a unit or group on the boat")
+                else:
+                    boat.Unit = self
+                    self.Tile.Unit = None
+                    self._tile = tile
+                    for unit in self.Units:
+                        unit._tile = tile
+        #no sea
+        else:
+            if tile.Unit is None:
+                self.Tile.Unit = None
+                tile.Unit = self
+                self._tile = tile
+                for unit in self.Units:
+                    unit._tile = tile
+            elif type(tile.Unit) is UnitGroup:
+                # TODO dealing with two UnitGroups
+                raise NotImplemented()
+
+        self._logic.PlayingPlayer.Moves -= 1
+
+
     @property
     def Units(self):
         """
@@ -123,9 +165,20 @@ class UnitGroup(Unit):
     def CountUnits(self):
         return len(self._units)
 
+    @property
+    def Tile(self):
+        return self._tile
+
+    @Tile.setter
+    def Tile(self, value):
+        self._tile = value
+        for unit in self._units:
+            unit.Tile = value
+
     def __add__(self, unit):
         self.AddUnit(unit)
         return self
+
 
 class Boat(Unit):
 
@@ -134,13 +187,27 @@ class Boat(Unit):
         super().__init__(tile, owner, logic)
 
     @property
-    def Tile(self): return self._tile
-    @property
-    def Owner(self) -> Player: return self._owner
-    @property
     def DefencePoints(self):
         return 6
 
-    def MoveTo(self, tile: Tile):
-        pass # look for a widther around the tile and only sea
+    def MoveTo(self, tile: 'Tile'):
+        # check turn
+        if not self.Owner.IsOnTurn:
+            raise Exception("player is not on turn")
+        # check if you move in the right area
+        from GameLogic.Map import SeaTile
+        if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
+            raise Exception("you are not aloud to move this unit more than one tile")
+        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
+            raise Exception("You need to fight to go to this tile")
+        # check for actions with the sea
+        elif type(tile) is SeaTile:
+            if tile.Unit is None:
+                self.Tile.Unit = None
+                tile.Unit = self
+                self.Unit.Tile = tile
+                self._tile = tile
+
+        self._logic.PlayingPlayer.Moves -= 1
+
 
