@@ -77,3 +77,6 @@ class GameLogic:
                 self.PlayingPlayer.Moves -= 1
 
             return unit
+
+    def CheckWinner(self):
+        return next((player for player in self.Players if player.Money >= 50000), None)
