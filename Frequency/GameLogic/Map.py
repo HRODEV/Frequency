@@ -27,10 +27,7 @@ class Tile:
 
     @Unit.setter
     def Unit(self, value: GameLogic.Unit.Unit):
-        if self._unit is None:
-            self._unit = value
-        else:
-            raise Exception("there is already a unit on the tile")
+        self._unit = value
 
     @property
     def Position(self) -> Vector2:

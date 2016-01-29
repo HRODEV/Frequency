@@ -53,8 +53,9 @@ def BuyUnit(gameLogic, unitType, tile, player: Player):
                 tile.Unit.AddUnit(unit)
                 return unit
         elif isinstance(tile.Unit, Unit):
+            existingUnit = tile.Unit
             group = UnitGroup(tile, player)
-            group.AddUnit(tile.Unit)
+            group.AddUnit(existingUnit)
             player.Money -= price
             unit = unitType(tile, player)
             group.AddUnit(unit)

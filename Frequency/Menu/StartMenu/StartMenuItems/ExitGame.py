@@ -8,7 +8,9 @@ from Vector2 import Vector2
 
 class ExitGame(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/exitButton.png'), hover: Surface=pygame.image.load('images/buttons/exitButtonHover.png'), rect=None):
+    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
+        image = image if image is not None else pygame.image.load('images/buttons/exitButton.png').convert_alpha()
+        hover = hover if hover is not None else pygame.image.load('images/buttons/exitButtonHover.png').convert_alpha()
         super().__init__(offset, image, hover, rect)
 
     def Update(self, game):
@@ -20,4 +22,3 @@ class ExitGame(StartMenuItem):
     def GetNewState(self):
         pygame.quit()
         sys.exit()
-        return None # will be the new state

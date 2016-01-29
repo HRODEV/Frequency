@@ -52,7 +52,7 @@ class UnitGroup(Unit):
 
     def AddUnit(self, unit: Unit):
         if type(unit) is UnitGroup or type(unit) is Boat:
-            raise Exception("A UnitGroup can only hold normal units, not UnitGroups")
+            raise Exception("A UnitGroup can only hold normal units, not UnitGroups or boats")
         elif len(self._units) > 2:
             raise Exception("A unitGroup can not hold more than 4 units")
         else:
