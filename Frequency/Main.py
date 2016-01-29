@@ -10,6 +10,11 @@ clock = pygame.time.Clock()
 def Main():
     pygame.display.init()
 
+    # Music
+    pygame.mixer.init()
+    pygame.mixer.music.load('Resources/menu.mp3')
+    pygame.mixer.music.play()
+    
     game = Game()
 
     while True:

@@ -1,3 +1,5 @@
+import pygame
+
 class Unit:
 
     def __init__(self, player, tile, textures):
@@ -10,6 +12,6 @@ class Unit:
         return self
 
 
-    def Draw(self, game, tile):
-        tileSize = min(self.Tile.Size.X, self.Tile.Size.Y)
-        game.Settings.GetScreen().blit(self.Textures[self.Player.Character.Id], ((tile.Position.X * tileSize) + game.Settings.GetMenuLeftSize().X, tile.Position.Y * tileSize))
+    def Draw(self, game, tile, size, position):
+        test = pygame.transform.scale(self.Textures[self.Player.Character.Id], [size, size])
+        game.Settings.GetScreen().blit(test, (position.X + game.Settings.GetMenuLeftSize().X, position.Y))
