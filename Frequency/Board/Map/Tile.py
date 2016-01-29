@@ -49,8 +49,35 @@ class Tile:
             testTexture = self.Texture
         self.Rectangle = screen.blit(testTexture, (marginX, marginY))
         if len(self.Units) > 0:
-            for unit in self.Units:
-                unit.Draw(game, self)
+            # Fake data
+            totalUnitsOnTile = 4
+            unitList = []
+            unitList.append(self.Units[0])
+            unitList.append(self.Units[0])
+            unitList.append(self.Units[0])
+            unitList.append(self.Units[0])
+
+            i = 0
+            if totalUnitsOnTile > 1:
+                size = min(self.Size.X // 2, self.Size.Y // 2)
+            else:
+                size = min(self.Size.X, self.Size.Y)
+
+            for unit in unitList:
+                if totalUnitsOnTile > 1:
+                    if i == 0:
+                        position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y)
+                    if i == 1:
+                        position = Vector2(self.Position.X * self.Size.X + self.Size.X / 2, self.Position.Y * self.Size.Y)
+                    if i == 2:
+                        position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y + self.Size.Y / 2)
+                    if i == 3:
+                        position = Vector2(self.Position.X * self.Size.X + self.Size.X / 2, self.Position.Y * self.Size.Y + self.Size.Y / 2)
+                else:
+                     position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y)
+
+                unit.Draw(game, self, size, position)
+                i += 1
         if self.Building is not None:
             self.Building.Draw(game)
 
