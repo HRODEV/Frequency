@@ -112,18 +112,39 @@ class Map:
         if tile is not None:
             if game.Logic.PlayingPlayer.Moves > 0:
                 # Update map with new tile based on the key event we received
+                # Up
                 if(movement == 1):
                     if(tile.Position.Y - 1 >= 0):
-                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                        newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
+                # Up Right
+                if(movement == 2):
+                    if(tile.Position.Y - 1 >= 0 and tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X):
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y-1]
+                # Right
                 if(movement == 3):
                     if(tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X):
-                            newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                # Down Right
+                if(movement == 4):
+                    if(tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X and
+                       tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
+                        newTile = self.Tiles[tile.Position.X+1][tile.Position.Y+1]
+                # Down
                 if(movement == 5):
                     if(tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
-                            newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+                        newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+                # Down Left
+                if(movement == 6):
+                    if(tile.Position.X - 1 >= 0 and tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
+                        newTile = self.Tiles[tile.Position.X-1][tile.Position.Y+1]
+                # Left
                 if(movement == 7):
                     if(tile.Position.X - 1 >= 0):
                         newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
+                if(movement == 8):
+                    if(tile.Position.X -1 >= 0 and tile.Position.Y - 1 >= 0):
+                        newTile = self.Tiles[tile.Position.X-1][tile.Position.Y-1]
+
                 if(newTile is not None):
                     newTile.Units = tile.Units
                     newTile.Selected = True
