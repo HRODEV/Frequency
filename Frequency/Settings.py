@@ -13,7 +13,8 @@ class GameSettings:
                  newPlayers = 0,
                  mapSize = None,
                  menuLeftSize = None,
-                 selectedUnitBuilding = "Soldier"):
+                 selectedUnitBuilding = "Soldier",
+                 fullscreen = None):
 
         self._resolution = resolution
         self.TileSize = tileSize
@@ -21,21 +22,29 @@ class GameSettings:
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
         self.SelectedUnitBuilding = selectedUnitBuilding
+        self.Fullscreen = fullscreen
         self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
             else pygame.display.set_mode([resolution.X, resolution.Y])
 
         self.SetMaxTiles(Vector2(18, 18))
-        self.Players = newPlayers
 
     @property
     def Resolution(self) -> Vector2:
         return self._resolution
 
-    def SetResolution(self, newResolution: Vector2):
+    def SetResolution(self, newResolution: Vector2, fullscreen=False):
         self._resolution = newResolution
-        self.screen = pygame.display.set_mode(newResolution.Position)
+        if fullscreen:
+            if self.Fullscreen:
+                self.screen = pygame.display.set_mode(newResolution.Position)
+                self.Fullscreen = False
+            else:
+                self.screen = pygame.display.set_mode(newResolution.Position, pygame.FULLSCREEN)
+                self.Fullscreen = True
+
+
 
     def GetScreen(self) -> Surface:
         return self.screen
