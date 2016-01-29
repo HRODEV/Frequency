@@ -104,6 +104,7 @@ class Map:
                 tile.Draw(game)
 
     def MoveUnit(self, movement, game):
+        mapSize = game.Settings.GetMaxTiles()
         tile = self.SelectedTile
         newTile = None
         # If the tile has units and the movement is one of the key.events that we want
@@ -111,21 +112,23 @@ class Map:
             if game.Logic.PlayingPlayer.Moves > 0:
                 # Update map with new tile based on the key event we received
                 if(movement == pygame.K_UP):
-                    self.Tiles[tile.Position.X][tile.Position.Y-1].Units = tile.Units
-                    newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
+                    if(tile.Position.Y - 1 >= 0):
+                        newTile = self.Tiles[tile.Position.X][tile.Position.Y-1]
                 if(movement == pygame.K_RIGHT):
-                    self.Tiles[tile.Position.X+1][tile.Position.Y].Units = tile.Units
-                    newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
+                    if(tile.Position.X + 1 >= 0 and tile.Position.X + 1 < mapSize.X):
+                            newTile = self.Tiles[tile.Position.X+1][tile.Position.Y]
                 if(movement == pygame.K_DOWN):
-                    self.Tiles[tile.Position.X][tile.Position.Y+1].Units = tile.Units
-                    newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
+                    if(tile.Position.Y + 1 >= 0 and tile.Position.Y + 1 < mapSize.Y):
+                            newTile = self.Tiles[tile.Position.X][tile.Position.Y+1]
                 if(movement == pygame.K_LEFT):
-                    self.Tiles[tile.Position.X-1][tile.Position.Y].Units = tile.Units
-                    newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
+                    if(tile.Position.X - 1 >= 0):
+                        newTile = self.Tiles[tile.Position.X-1][tile.Position.Y]
 
-                newTile.Selected = True
-                self.SelectedTile = newTile
-                game.Logic.PlayingPlayer.Moves -= 1
+                if(newTile is not None):
+                    newTile.Units = tile.Units
+                    newTile.Selected = True
+                    self.SelectedTile = newTile
+                    game.Logic.PlayingPlayer.Moves -= 1
 
         if(newTile is not None):
             self.Tiles[tile.Position.X][tile.Position.Y].Units = []
