@@ -1,10 +1,10 @@
 from GameLogic.Character import *
-from GameLogic.Map import SeaTile
 from GameLogic.MapHelpers import getAroundingTiles
-from GameLogic.Unit import *
+
 
 
 def getUnitPrice(unitType, character):
+    from GameLogic.Unit import Soldier, Robot, Tank, Boat
     if unitType is Soldier:
         if type(character) is IceCharacter:
             return 120
@@ -29,7 +29,7 @@ def getUnitPrice(unitType, character):
         raise Exception("This is not a valid unit type")
 
 
-def BuyUnit(gameLogic, unitType, tile, player: Player):
+def BuyUnit(gameLogic, unitType, tile, player):
     price = getUnitPrice(unitType, player.Character)
     if player.Money < price:
         return None
@@ -39,27 +39,32 @@ def BuyUnit(gameLogic, unitType, tile, player: Player):
              tile.Building.Owner == player), True):  # check if it is his own building
         return None
 
+    from GameLogic.Map import SeaTile
+    import GameLogic.Unit
     if type(tile) is not SeaTile:
         if tile.Unit is None:
             player.Money -= price
-            unit = unitType(tile, player)
+            unit = unitType(tile, player, gameLogic)
+            tile.Unit = unit
             return unit
-        elif type(tile.Unit) is UnitGroup:
+        elif type(tile.Unit) is GameLogic.Unit.UnitGroup:
             if tile.Unit.CountUnits > 3:
                 return None
             else:
                 player.Money -= price
-                unit = unitType(tile, player)
+                unit = unitType(tile, player, gameLogic)
                 tile.Unit.AddUnit(unit)
                 return unit
-        elif isinstance(tile.Unit, Unit):
-            group = UnitGroup(tile, player)
-            group.AddUnit(tile.Unit)
+        elif isinstance(tile.Unit, GameLogic.Unit.Unit):
+            existingUnit = tile.Unit
+            group = GameLogic.Unit.UnitGroup(tile, player, gameLogic)
+            group.AddUnit(existingUnit)
             player.Money -= price
-            unit = unitType(tile, player)
+            unit = unitType(tile, player, gameLogic)
             group.AddUnit(unit)
+            tile.Unit = group
             return unit
-    elif unitType is Boat:
+    elif unitType is GameLogic.Unit.Boat:
         if tile.Unit is None:
             player.Money -= price
             unit = unitType(tile, player)

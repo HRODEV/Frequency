@@ -1,4 +1,5 @@
-﻿from Menu.StartMenu.StartMenu import StartMenu
+﻿from Helpers import Colors
+from Menu.StartMenu.StartMenu import StartMenu
 from Settings import GameSettings
 from GameLogic.GameLogic import GameLogic
 
@@ -21,8 +22,8 @@ class Game(object):
 
     def Update(self, events):
         state = self.State.Update(self)
-        logic = self.Logic.Update(self) if self.Logic is not None else None
-        return Game(state, self.Settings, events, logic)
+        return Game(state, self.Settings, events, self.Logic)
 
     def Draw(self):
+        self.Settings.GetScreen().fill(Colors.RED)  # TODO remove if not needed is for debug
         self.State.Draw(self)

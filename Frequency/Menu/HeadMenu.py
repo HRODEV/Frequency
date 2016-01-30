@@ -7,10 +7,10 @@ class HeadMenu:
 
     def __init__(self, resolution, background=None, logo=None):
         self.Background = background if background is not None \
-            else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg'), [resolution.X, resolution.Y])
+            else pygame.transform.scale(pygame.image.load('images/gameBackground.jpg').convert(), [resolution.X, resolution.Y])
 
         self.Logo = logo if logo is not None \
-            else pygame.transform.scale(pygame.image.load('images/gameLogo.png'), (230, 230))
+            else pygame.transform.scale(pygame.image.load('images/gameLogo.png').convert_alpha(), (230, 230))
 
     def Update(self, game: Game):
         return self

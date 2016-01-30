@@ -1,6 +1,4 @@
-from Board.Map.Tile import SeaTile
 from GameLogic import UnitFactory
-from GameLogic.Map import Map
 from GameLogic.Player import Player
 
 
@@ -9,10 +7,11 @@ class GameLogic:
     def __init__(self, players, _turn=0):
         self.Players = players
         self._turn = _turn
+        from GameLogic.Map import Map
         self._map = Map(self)
 
     @property
-    def Map(self) -> Map:
+    def Map(self) -> 'Map':
         return self._map
 
     @property
@@ -30,9 +29,6 @@ class GameLogic:
     @property
     def PlayingPlayer(self) -> Player:
         return self.Players[self._turn % self.TotalPlayers]
-
-    def Update(self, game):
-        return self
 
     _gamestarted = False
     def StartGame(self):
@@ -59,6 +55,7 @@ class GameLogic:
 
     def CanAddUnitToTile(self, game, tile):
         # TODO rest of implementation
+        from GameLogic.Map import SeaTile
         if type(tile) is not SeaTile:
             if self.PlayingPlayer.Moves != 0 and self.PlayingPlayer.Money >= 100:
                 self.PlayingPlayer.Moves -= 1
@@ -80,3 +77,6 @@ class GameLogic:
                 self.PlayingPlayer.Moves -= 1
 
             return unit
+
+    def CheckWinner(self):
+        return next((player for player in self.Players if player.Money >= 50000), None)

@@ -1,8 +1,7 @@
-from GameLogic.Map import Tile, Map
 from Vector2 import Vector2
 
 
-def getAroundingTiles(tile: Tile, map: Map):
+def getAroundingTiles(tile: 'Tile', map: 'Map'):
     loc = tile.Position
     aroundingLocations = [(loc.X-1, loc.Y-1), (loc.X, loc.Y-1), (loc.X+1, loc.Y-1),
                           (loc.X-1, loc.Y),                     (loc.X+1, loc.Y),

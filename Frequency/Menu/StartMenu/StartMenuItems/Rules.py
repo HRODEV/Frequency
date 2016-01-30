@@ -10,8 +10,10 @@ from Rules.GameInstructions import GameInstructions
 
 class Rules(StartMenuItem):
 
-    def __init__(self, offset: Vector2, image: Surface=pygame.image.load('images/buttons/rulesButton.png'), hover: Surface=pygame.image.load('images/buttons/rulesButtonHover.png'),  rect=None):
-        super().__init__(offset, image, rect)
+    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
+        image = image if image is not None else pygame.image.load('images/buttons/rulesButton.png').convert_alpha()
+        hover = hover if hover is not None else pygame.image.load('images/buttons/rulesButtonHover.png').convert_alpha()
+        super().__init__(offset, image, hover, rect)
 
     def Update(self, game):
         self.Show(game)

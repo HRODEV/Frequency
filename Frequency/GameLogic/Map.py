@@ -12,7 +12,7 @@ class Tile:
         self._unit = None
 
     @property
-    def Building(self):  # TODO make buildings
+    def Building(self):
         return self._building
 
     @Building.setter
@@ -27,10 +27,7 @@ class Tile:
 
     @Unit.setter
     def Unit(self, value: GameLogic.Unit.Unit):
-        if self._unit is None:
-            self._unit = value
-        else:
-            raise Exception("there is already a unit on the tile")
+        self._unit = value
 
     @property
     def Position(self) -> Vector2:
