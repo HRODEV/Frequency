@@ -3,6 +3,7 @@
 import Game
 from GameLogic.Map import Tile
 from Board.MenuLeft.ArrowItem import *
+from GameLogic.Unit import Soldier
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
@@ -122,6 +123,14 @@ class BarrackActionPanel(ActionPanel):
 
     def Update(self, game: Game):
         nself = super().Update(game)
+
+        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        if clickedButton is not None:
+            game.Logic.BuyUnit(
+                Soldier,
+                game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position))
+            )
+
         return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 
     def Draw(self, game: Game):
