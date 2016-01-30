@@ -122,7 +122,7 @@ class BarrackActionPanel(ActionPanel):
 
     def Update(self, game: Game):
         nself = super().Update(game)
-        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect)
+        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 
     def Draw(self, game: Game):
         super().Draw(game)
