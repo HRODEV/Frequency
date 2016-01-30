@@ -1,30 +1,30 @@
-﻿import GameLogic.Map
+﻿import pygame
+
+import GameLogic.Map
 import GameLogic.Unit
 from Board.Buildings.Base import Base
 from Board.Buildings.Building import Building
 from Helpers.EventHelpers import EventExist
-from Board.Units.Soldier import *
+from Board.Unit import Soldier
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
 
 
 class Tile:
 
-    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, selected=False):
+    def __init__(self, position, size, logicTile, texture=None, rectangle=None, selected=False):
         self.Position = position
         self.Size = size
         self.Texture = texture if texture is not None else self._getTexture(size)
         self.Rectangle = rectangle
-        if units is None:
-            self.Units = []
-        else:
-            self.Units = units
+
         self._logicTile = logicTile
         self.Selected = selected
 
-        self._building = self._getPosibleBuilding()
+        self._unit = self._getPossibleUnit()
+        self._building = self._getPossibleBuilding()
 
-    def _getPosibleBuilding(self) -> Building:
+    def _getPossibleBuilding(self) -> Building:
         if self._logicTile.Building is not None:
             # check type of building
             from GameLogic.Barrack import BaseBarrack, Barrack
@@ -37,6 +37,24 @@ class Tile:
         else:
             return None
 
+    def _getPossibleUnit(self):
+        if self._logicTile.Unit is not None:
+            import GameLogic.Unit
+            lunit = self._logicTile.Unit
+            if type(lunit) is GameLogic.Unit.Soldier:
+                return Soldier(lunit.Owner, self, lunit, self.Size.X)
+            # TODO after implementing the rest of the graphical units
+            elif type(lunit) is GameLogic.Unit.Boat:
+                return None
+            elif type(lunit) is GameLogic.Unit.Robot:
+                return None
+            elif type(lunit) is GameLogic.Unit.Tank:
+                return None
+            elif type(lunit) is GameLogic.Unit.UnitGroup:
+                return None
+
+        else:
+            return None
 
 
     @property
@@ -46,15 +64,13 @@ class Tile:
     def Update(self, game):
         if self.IsClickedByMouse(game):
             if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                logicSoldier = game.Logic.BuyUnit(GameLogic.Unit.Soldier, self.LogicTile)
-                if logicSoldier is not None:
-                    self.Units.append(Soldier(game.Logic.PlayingPlayer, self, logicSoldier))
+                game.Logic.BuyUnit(GameLogic.Unit.Soldier, self.LogicTile)
             elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
                 if game.Logic.CanAddUnitBuildingToTile(game, self):
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
             self.Selected = True
 
-        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Selected)
+        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Rectangle, self.Selected)
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
@@ -65,33 +81,9 @@ class Tile:
         else:
             testTexture = self.Texture
         self.Rectangle = screen.blit(testTexture, (marginX, marginY))
-        if len(self.Units) > 0:
-            # Fake data
-            totalUnitsOnTile = 4
-            unitList = [self.Units[0], self.Units[0], self.Units[0], self.Units[0]]
-
-            i = 0
-            if totalUnitsOnTile > 1:
-                size = min(self.Size.X // 2, self.Size.Y // 2)
-            else:
-                size = min(self.Size.X, self.Size.Y)
-
-            for unit in unitList:
-                if totalUnitsOnTile > 1:
-                    if i == 0:
-                        position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y)
-                    if i == 1:
-                        position = Vector2(self.Position.X * self.Size.X + self.Size.X / 2, self.Position.Y * self.Size.Y)
-                    if i == 2:
-                        position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y + self.Size.Y / 2)
-                    if i == 3:
-                        position = Vector2(self.Position.X * self.Size.X + self.Size.X / 2, self.Position.Y * self.Size.Y + self.Size.Y / 2)
-                else:
-                     position = Vector2(self.Position.X * self.Size.X, self.Position.Y * self.Size.Y)
-
-                unit.Draw(game, self, size, position)
-                i += 1
-        if self._building is not None:
+        if self._unit is not None:
+            self._unit.Draw(game)
+        elif self._building is not None:
             self._building.Draw(game)
 
     def IsHoverdByMouse(self):

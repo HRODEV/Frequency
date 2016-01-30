@@ -9,6 +9,7 @@ class Unit:
 
     def __init__(self, tile, owner: Player, logic: GameLogic):
         self._tile = tile
+        tile.Unit = self
         self._owner = owner
         self._logic = logic
         owner.AddUnit(self)
