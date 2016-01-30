@@ -2,7 +2,7 @@
 from sys import exit
 
 from Game import Game
-import Helpers
+from Helpers.EventHelpers import EventExist
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -19,7 +19,7 @@ def Main():
 
     while True:
         events = pygame.event.get()
-        if Helpers.EventHelpers.EventExist(events, pygame.QUIT):
+        if EventExist(events, pygame.QUIT):
             pygame.quit()
             exit()
         game = game.Update(events)
