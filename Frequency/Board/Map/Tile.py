@@ -5,7 +5,7 @@ import GameLogic.Unit
 from Board.Buildings.Base import Base
 from Board.Buildings.Building import Building
 from Helpers.EventHelpers import EventExist
-from Board.Unit import Soldier
+from Board.Unit import Soldier, UnitGroup
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
 
@@ -42,7 +42,7 @@ class Tile:
             import GameLogic.Unit
             lunit = self._logicTile.Unit
             if type(lunit) is GameLogic.Unit.Soldier:
-                return Soldier(lunit.Owner, self, lunit, self.Size.X)
+                return Soldier(lunit.Owner, self, self.Size.X, lunit)
             # TODO after implementing the rest of the graphical units
             elif type(lunit) is GameLogic.Unit.Boat:
                 return None
@@ -51,7 +51,7 @@ class Tile:
             elif type(lunit) is GameLogic.Unit.Tank:
                 return None
             elif type(lunit) is GameLogic.Unit.UnitGroup:
-                return None
+                return UnitGroup(lunit.Owner, self, self.Size.X, lunit)
 
         else:
             return None

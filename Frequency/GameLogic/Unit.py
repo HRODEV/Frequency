@@ -58,7 +58,7 @@ class Unit:
                 if unitGroup.CountUnits < 4:
                     self.Tile.Unit = None
                     self._tile = tile
-                    unitGroup + self
+                    unitGroup.AddUnit(self)
                 else:
                     raise Exception("this unit group is full")
 
