@@ -12,7 +12,7 @@ class Tile:
         self._unit = None
 
     @property
-    def Building(self):  # TODO make buildings
+    def Building(self):
         return self._building
 
     @Building.setter

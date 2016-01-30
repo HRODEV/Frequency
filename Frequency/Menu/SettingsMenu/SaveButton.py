@@ -5,9 +5,9 @@ from Helpers.EventHelpers import EventExist
 
 
 class SaveButton:
-    def __init__(self, image: Surface = pygame.image.load('images/buttons/saveButton.png'), hover: Surface = pygame.image.load('images/buttons/saveButtonHover.png'), rect=None):
-        self.Image = image
-        self.Hover = hover
+    def __init__(self, image: Surface = None, hover: Surface=None, rect=None):
+        self.Image = image if image is not None else pygame.image.load('images/buttons/saveButton.png').convert_alpha()
+        self.Hover = hover if hover is not None else  pygame.image.load('images/buttons/saveButtonHover.png').convert_alpha()
         self.Rect = rect
 
     def Update(self, game):
