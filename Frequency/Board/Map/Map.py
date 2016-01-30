@@ -26,26 +26,10 @@ class Map:
             for Y in range(0, maxTiles.Y):
                 logicTile = game.Logic.Map.GetTile(Vector2(X, Y))
                 TileType = self.DetermineTileType(logicTile)
-                newTile = TileType(Vector2(X, Y), maxTileSize, logicTile)
-                newTile.Building = self.CreateBase(game, newTile, X, Y)
-                row.append(newTile)
+                row.append(TileType(Vector2(X, Y), maxTileSize, logicTile))
             tiles.append(row)
 
         return tiles
-
-    def CreateBase(self, game, tile,  X, Y):
-        if X == 0 and Y == 0:
-            return Base(game.Logic.Players[0], tile)
-        if X == 17 and Y == 0:
-            return Base(game.Logic.Players[1], tile)
-        if game.Logic.TotalPlayers >=3:
-            if X == 0 and Y == 17:
-                return Base(game.Logic.Players[2], tile)
-        if game.Logic.TotalPlayers >=4:
-            if X == 17 and Y == 17:
-                return Base(game.Logic.Players[3], tile)
-        return None
-
 
     @property
     def ActiveTile(self):

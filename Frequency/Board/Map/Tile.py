@@ -1,5 +1,7 @@
 ﻿import GameLogic.Map
 import GameLogic.Unit
+from Board.Buildings.Base import Base
+from Board.Buildings.Building import Building
 from Helpers.EventHelpers import EventExist
 from Board.Units.Soldier import *
 from Board.Buildings.Barrack import Barracks
@@ -8,7 +10,7 @@ from Vector2 import Vector2
 
 class Tile:
 
-    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, building=None, selected=False):
+    def __init__(self, position, size, logicTile, texture=None, units=None, rectangle=None, selected=False):
         self.Position = position
         self.Size = size
         self.Texture = texture if texture is not None else self._getTexture(size)
@@ -17,9 +19,25 @@ class Tile:
             self.Units = []
         else:
             self.Units = units
-        self.Building = building
         self._logicTile = logicTile
         self.Selected = selected
+
+        self._building = self._getPosibleBuilding()
+
+    def _getPosibleBuilding(self) -> Building:
+        if self._logicTile.Building is not None:
+            # check type of building
+            from GameLogic.Barrack import BaseBarrack, Barrack
+            if type(self._logicTile.Building) is BaseBarrack:
+                return Base(self._logicTile.Building.Owner, self)
+            elif type(self._logicTile.Building) is Barrack:
+                return Barracks(self._logicTile.Building.Owner, self)
+            else:
+                raise Exception("this type is not supported for a building")
+        else:
+            return None
+
+
 
     @property
     def LogicTile(self) -> GameLogic.Map.Tile:
@@ -36,7 +54,7 @@ class Tile:
                     self.Building = Barracks(game.Logic.PlayingPlayer, self)
             self.Selected = True
 
-        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Building, self.Selected)
+        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Units, self.Rectangle, self.Selected)
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
@@ -73,8 +91,8 @@ class Tile:
 
                 unit.Draw(game, self, size, position)
                 i += 1
-        if self.Building is not None:
-            self.Building.Draw(game)
+        if self._building is not None:
+            self._building.Draw(game)
 
     def IsHoverdByMouse(self):
         return self.Rectangle is not None and self.Rectangle.collidepoint(pygame.mouse.get_pos())

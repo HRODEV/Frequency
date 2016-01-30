@@ -73,6 +73,7 @@ class ActionPanel:
         # Draw end turn button
         self.EndturnButtonRect = game.Settings.GetScreen().blit(self.EndTurnButtonImage, (10, game.Settings.Resolution.Y-50))
 
+# TODO fix wrong code
     def IsHoverdByMouse(btn):
         return btn is not None and self.Rect.collidepoint(pygame.mouse.get_pos())
 
