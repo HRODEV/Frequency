@@ -73,6 +73,7 @@ class Map:
                 newTile = tile.Update(game)
                 if isClicked:
                     if newTile.IsClickedByMouse(game):
+                        newTile.Selected = True
                         self.SelectedTile = newTile
                         onSelectedTileChanged(newTile.LogicTile)
                     else:

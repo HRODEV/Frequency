@@ -62,14 +62,6 @@ class Tile:
         return self._logicTile
 
     def Update(self, game):
-        if self.IsClickedByMouse(game):
-            if game.Settings.GetSelectedUnitBuilding() == "Soldier":
-                game.Logic.BuyUnit(GameLogic.Unit.Soldier, self.LogicTile)
-            elif game.Settings.GetSelectedUnitBuilding() == "Barracks":
-                if game.Logic.CanAddUnitBuildingToTile(game, self):
-                    self.Building = Barracks(game.Logic.PlayingPlayer, self)
-            self.Selected = True
-
         return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Rectangle, self.Selected)
 
     def Draw(self, game):

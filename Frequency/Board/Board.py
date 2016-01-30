@@ -24,10 +24,10 @@ class Board:
             else:
                 self.ActionPanel = InfoActionTile(game, lTile)
 
-        map = self.Map.Update(game, onSelectedTileChanged)
+        new_map = self.Map.Update(game, onSelectedTileChanged)
         actionPanel = self.ActionPanel.Update(game)
 
-        return Board(game, actionPanel, self.MenuRight.Update(game), map)
+        return Board(game, actionPanel, self.MenuRight.Update(game), new_map)
 
     def Draw(self, game: Game):
         self.ActionPanel.Draw(game)
