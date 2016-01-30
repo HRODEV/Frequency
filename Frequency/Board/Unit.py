@@ -53,8 +53,6 @@ class UnitGroup(Unit):
             return None
         elif type(lunit) is GameLogic.Unit.Tank:
             return None
-        elif type(lunit) is GameLogic.Unit.UnitGroup:
-            return None
 
     def Draw(self, game):
         for i in range(0,len(self._Units)):

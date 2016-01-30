@@ -59,7 +59,7 @@ class Map:
             for tile in row:
                 yield tile
 
-    def Update(self, game):
+    def Update(self, game, onSelectedTileChanged):
 
         isClicked = next((True for tile in self.TilesIterator if tile.IsClickedByMouse(game)), False)
         if(game.Events):
@@ -74,6 +74,7 @@ class Map:
                 if isClicked:
                     if newTile.IsClickedByMouse(game):
                         self.SelectedTile = newTile
+                        onSelectedTileChanged(newTile.LogicTile)
                     else:
                         newTile.Selected = False
                 elif tile == self.SelectedTile:

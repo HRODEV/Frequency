@@ -9,14 +9,16 @@ from Vector2 import Vector2
 
 
 class ActionPanel:
-    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None):
-        self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None):
+        self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2,
+                            game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
 
         self.Map = None
-        self.EndTurnButtonImage = pygame.transform.scale(pygame.image.load('images/buttons/endturnButton.png').convert_alpha(), [150, 25])
+        self.EndTurnButtonImage = pygame.transform.scale(
+            pygame.image.load('images/buttons/endturnButton.png').convert_alpha(), [150, 25])
         # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
@@ -31,12 +33,14 @@ class ActionPanel:
         font = pygame.font.Font(None, 30)
         font.set_bold(True)
         # Draw the background
-        pygame.draw.rect(game.Settings.GetScreen(), Colors.WHITE, (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
+        pygame.draw.rect(game.Settings.GetScreen(), Colors.WHITE,
+                         (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
 
-        game.Settings.GetScreen().blit(font.render("Action panel", True, Colors.BLACK), (10,10))
+        game.Settings.GetScreen().blit(font.render("Action panel", True, Colors.BLACK), (10, 10))
 
         # Draw end turn button
-        self.EndturnButtonRect = game.Settings.GetScreen().blit(self.EndTurnButtonImage, (10, game.Settings.Resolution.Y-50))
+        self.EndturnButtonRect = game.Settings.GetScreen().blit(self.EndTurnButtonImage,
+                                                                (10, game.Settings.Resolution.Y - 50))
 
     def EndturnButtonIsHoverdByMouse(self):
         return self.EndturnButtonRect is not None and self.EndturnButtonRect.collidepoint(pygame.mouse.get_pos())
@@ -44,13 +48,13 @@ class ActionPanel:
     def EndturnButtonIsClickedByMouse(self, game):
         return self.EndturnButtonIsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
 
-class DefaultActionPanel(ActionPanel):
 
+class DefaultActionPanel(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
-        DefaultActionPanel(game, self.Tile, nself.EndturnButtonRect)
+        return DefaultActionPanel(game, self.Tile, nself.EndturnButtonRect)
 
-    def Draw(self, game : Game):
+    def Draw(self, game: Game):
         super().Draw(game)
 
         font = pygame.font.Font(None, 20)
@@ -61,11 +65,11 @@ class DefaultActionPanel(ActionPanel):
 
 
 class UnitActionPanel(ActionPanel):
-
-    def __init__(self, game: Game, tile: Tile=None, endturnButtonRect=None, buttons=None):
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None):
         super().__init__(game, tile, endturnButtonRect)
-        self.Buttons = buttons if buttons is not None\
-            else [ArrowButtonUp(Vector2(0, -40)), ArrowButtonUpRight(Vector2(40, -40)), ArrowButtonRight(Vector2(40,0)),
+        self.Buttons = buttons if buttons is not None \
+            else [ArrowButtonUp(Vector2(0, -40)), ArrowButtonUpRight(Vector2(40, -40)),
+                  ArrowButtonRight(Vector2(40, 0)),
                   ArrowButtonDownRight(Vector2(40, 40)), ArrowButtonDown(Vector2(0, 40)),
                   ArrowButtonDownLeft(Vector2(-40, 40)), ArrowButtonLeft(Vector2(-40, 0)),
                   ArrowButtonUpLeft(Vector2(-40, -40))]
@@ -73,7 +77,7 @@ class UnitActionPanel(ActionPanel):
     def Update(self, game: Game):
         self.Map = map
         nself = super().Update(game)
-        UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
+        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 
     def Draw(self, game: Game):
         super().Draw(game)
@@ -88,13 +92,13 @@ class UnitActionPanel(ActionPanel):
         for arrowButton in self.Buttons:
             arrowButton.Draw(game)
 
-class BarrakActionPanel(ActionPanel):
 
+class BarrackActionPanel(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
-        BarrakActionPanel(game, self.Tile, nself.EndturnButtonRect)
+        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect)
 
-    def Draw(self, game : Game):
+    def Draw(self, game: Game):
         super().Draw(game)
 
         font = pygame.font.Font(None, 20)
@@ -103,13 +107,13 @@ class BarrakActionPanel(ActionPanel):
         game.Settings.GetScreen().blit(font.render("Choose you actions with the Barrak",
                                                    True, Colors.BLACK), (10, 55))
 
-class InfoActionTile(ActionPanel):
 
+class InfoActionTile(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
-        InfoActionTile(game, self.Tile, nself.EndturnButtonRect)
+        return InfoActionTile(game, self.Tile, nself.EndturnButtonRect)
 
-    def Draw(self, game : Game):
+    def Draw(self, game: Game):
         super().Draw(game)
 
         font = pygame.font.Font(None, 20)
