@@ -9,11 +9,9 @@ class Unit:
 
     def __init__(self, tile, owner: Player, logic: GameLogic):
         self._tile = tile
-        tile.Unit = self
         self._owner = owner
         self._logic = logic
         owner.AddUnit(self)
-        tile.Unit = self
 
     @property
     def Tile(self): return self._tile
@@ -94,13 +92,15 @@ class Tank(Unit):
 class UnitGroup(Unit):
     """ a group of max 4 units
     """
-
-    _units = []
+    def __init__(self, tile, owner: Player, logic: GameLogic):
+        super().__init__(tile, owner, logic)
+        self._units = []
 
     def AddUnit(self, unit: Unit):
+        print(self)
         if type(unit) is UnitGroup or type(unit) is Boat:
             raise Exception("A UnitGroup can only hold normal units, not UnitGroups or boats")
-        elif len(self._units) > 2:
+        elif len(self._units) > 3:
             raise Exception("A unitGroup can not hold more than 4 units")
         else:
             self._units.append(unit)
@@ -175,10 +175,6 @@ class UnitGroup(Unit):
         self._tile = value
         for unit in self._units:
             unit.Tile = value
-
-    def __add__(self, unit):
-        self.AddUnit(unit)
-        return self
 
 
 class Boat(Unit):

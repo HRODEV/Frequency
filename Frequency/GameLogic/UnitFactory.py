@@ -40,13 +40,14 @@ def BuyUnit(gameLogic, unitType, tile, player):
         return None
 
     from GameLogic.Map import SeaTile
-    from GameLogic.Unit import UnitGroup, Unit, Boat
+    import GameLogic.Unit
     if type(tile) is not SeaTile:
         if tile.Unit is None:
             player.Money -= price
             unit = unitType(tile, player, gameLogic)
+            tile.Unit = unit
             return unit
-        elif type(tile.Unit) is UnitGroup:
+        elif type(tile.Unit) is GameLogic.Unit.UnitGroup:
             if tile.Unit.CountUnits > 3:
                 return None
             else:
@@ -54,15 +55,16 @@ def BuyUnit(gameLogic, unitType, tile, player):
                 unit = unitType(tile, player, gameLogic)
                 tile.Unit.AddUnit(unit)
                 return unit
-        elif isinstance(tile.Unit, Unit):
+        elif isinstance(tile.Unit, GameLogic.Unit.Unit):
             existingUnit = tile.Unit
-            group = UnitGroup(tile, player, gameLogic)
+            group = GameLogic.Unit.UnitGroup(tile, player, gameLogic)
             group.AddUnit(existingUnit)
             player.Money -= price
             unit = unitType(tile, player, gameLogic)
             group.AddUnit(unit)
+            tile.Unit = group
             return unit
-    elif unitType is Boat:
+    elif unitType is GameLogic.Unit.Boat:
         if tile.Unit is None:
             player.Money -= price
             unit = unitType(tile, player)

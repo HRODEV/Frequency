@@ -76,11 +76,9 @@ class Tile:
         screen = game.Settings.GetScreen()
         marginX = self.Position.X * self.Size.X + game.Settings.MenuLeftSize.X
         marginY = self.Position.Y * self.Size.Y
-        if self.Selected:
-            testTexture = pygame.transform.scale(pygame.image.load('images/tiles/selected.png').convert_alpha(), [self.Size.X, self.Size.Y])
-        else:
-            testTexture = self.Texture
-        self.Rectangle = screen.blit(testTexture, (marginX, marginY))
+        self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
+        if self.Selected:  # TODO draw a rectangle with pygame
+            screen.blit(pygame.transform.scale(pygame.image.load('images/tiles/selected.png').convert_alpha(), [self.Size.X, self.Size.Y]),(marginX, marginY))
         if self._unit is not None:
             self._unit.Draw(game)
         elif self._building is not None:
