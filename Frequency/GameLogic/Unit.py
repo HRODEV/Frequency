@@ -47,7 +47,7 @@ class Unit:
                     boat.Unit = self
                     self.Tile.Unit = None
                     self._tile = tile
-        #no sea
+        # no sea
         else:
             if tile.Unit is None:
                 self.Tile.Unit = None
@@ -61,6 +61,13 @@ class Unit:
                     unitGroup.AddUnit(self)
                 else:
                     raise Exception("this unit group is full")
+            elif isinstance(tile.Unit, Unit):
+                group = UnitGroup(tile, self.Owner, self._logic)
+                self.Tile.Unit = None
+                self.Tile = tile
+                group.AddUnit(self)
+                group.AddUnit(tile.Unit)
+                tile.Unit = group
 
         self._logic.PlayingPlayer.Moves -= 1
 
