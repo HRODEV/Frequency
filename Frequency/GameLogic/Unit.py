@@ -27,7 +27,7 @@ class Unit:
 
     def MoveTo(self, tile: Tile):
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
@@ -110,7 +110,7 @@ class UnitGroup(Unit):
 
     def MoveTo(self, tile: 'Tile'):
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
@@ -189,7 +189,7 @@ class Boat(Unit):
 
     def MoveTo(self, tile: 'Tile'):
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
