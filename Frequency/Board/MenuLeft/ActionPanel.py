@@ -27,6 +27,7 @@ class ActionPanel:
         # End turn
         if self.EndturnButtonIsClickedByMouse(game):
             game.Logic.EndTurn(game)
+            return DefaultActionPanel(game)
 
         return ActionPanel(game, self.Tile, self.EndturnButtonRect)
 
@@ -94,6 +95,9 @@ class UnitActionPanel(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
 
+        if type(nself) is DefaultActionPanel:
+            return nself
+
         clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
         if clickedButton is not None:
             self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
@@ -144,6 +148,9 @@ class BarrackActionPanel(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
 
+        if type(nself) is DefaultActionPanel:
+            return nself
+
         clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
         if clickedButton is not None:
             game.Logic.BuyUnit(
@@ -170,6 +177,10 @@ class BarrackActionPanel(ActionPanel):
 class InfoActionTile(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
+
+        if type(nself) is DefaultActionPanel:
+            return nself
+
         return InfoActionTile(game, self.Tile, nself.EndturnButtonRect)
 
     def Draw(self, game: Game):
