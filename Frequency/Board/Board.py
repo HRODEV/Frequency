@@ -4,6 +4,7 @@ import Game
 from Board.Map.Map import *
 from Board.MenuLeft.ActionPanel import *
 from Board.MenuRight.MenuRight import *
+from Menu.InGameMenu.InGameMenu import InGameMenu
 
 class Board:
     def __init__(self, game, actionPanel=None, menuright=None, map=None):
@@ -33,6 +34,12 @@ class Board:
             new_map.SetActiveTile(actionPanel.NewSelection)
             onSelectedTileChanged(game.Logic.Map.GetTile(actionPanel.NewSelection))
             actionPanel = self.ActionPanel
+
+
+        for event in game.Events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return InGameMenu(game.Settings.Resolution, self)
 
         return Board(game, actionPanel, self.MenuRight.Update(game), new_map)
 
