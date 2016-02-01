@@ -111,13 +111,13 @@ class SwampTile(Tile):
 class Map:
 
     def DetermineTileType(self, X, Y, logic: GameLogic):
-        if X < 7 and Y < 7:
+        if X < 7 and Y < 7 and X+Y < 11:
             tile = ForestTile(Vector2(X, Y))
-        elif 10 < X < 18 and Y < 7:
+        elif 10 < X < 18 and Y < 7 and (17-X) + Y < 11:
             tile = IceTile(Vector2(X, Y))
-        elif X < 7 and 10 < Y < 18:
+        elif X < 7 and 10 < Y < 18 and X + (17-Y) < 11:
             tile = DesertTile(Vector2(X, Y))
-        elif 10 < X < 18 and Y > 10:
+        elif 10 < X < 18 and Y > 10 and (17-X) + (17-Y) < 11:
             tile = SwampTile(Vector2(X, Y))
         elif 6 < X < 11 and 6 < Y < 11:
             tile = GoldTile(Vector2(X, Y))

@@ -1,8 +1,10 @@
 import pygame
 from pygame.surface import Surface
 
-import Vector2
+
 from Helpers.EventHelpers import EventExist
+from Vector2 import Vector2
+
 
 class ArrowItem:
     def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
@@ -39,6 +41,9 @@ class ArrowItem:
     def _getHoverTexture(self):
         return None
 
+    def GetDestinationPosition(self, pos:Vector2):
+        return pos
+
 class ArrowButtonUp(ArrowItem):
 
     def _getTexture(self):
@@ -46,6 +51,9 @@ class ArrowButtonUp(ArrowItem):
 
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightUp.png').convert_alpha()
+
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X, pos.Y-1)
 
 
 class ArrowButtonUpRight(ArrowItem):
@@ -56,6 +64,8 @@ class ArrowButtonUpRight(ArrowItem):
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightUpRight.png').convert_alpha()
 
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X+1, pos.Y-1)
 
 class ArrowButtonRight(ArrowItem):
 
@@ -64,6 +74,9 @@ class ArrowButtonRight(ArrowItem):
 
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightRight.png').convert_alpha()
+
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X+1, pos.Y)
 
 
 class ArrowButtonDownRight(ArrowItem):
@@ -74,6 +87,9 @@ class ArrowButtonDownRight(ArrowItem):
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightDownRight.png').convert_alpha()
 
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X+1, pos.Y+1)
+
 
 class ArrowButtonDown(ArrowItem):
 
@@ -82,6 +98,9 @@ class ArrowButtonDown(ArrowItem):
 
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightDown.png').convert_alpha()
+
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X, pos.Y+1)
 
 
 class ArrowButtonDownLeft(ArrowItem):
@@ -92,6 +111,9 @@ class ArrowButtonDownLeft(ArrowItem):
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightDownLeft.png').convert_alpha()
 
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X-1, pos.Y+1)
+
 
 class ArrowButtonLeft(ArrowItem):
 
@@ -101,6 +123,9 @@ class ArrowButtonLeft(ArrowItem):
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightLeft.png').convert_alpha()
 
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X-1, pos.Y)
+
 
 class ArrowButtonUpLeft(ArrowItem):
 
@@ -109,3 +134,6 @@ class ArrowButtonUpLeft(ArrowItem):
 
     def _getHoverTexture(self):
         return pygame.image.load('images/arrows/ArrowLightUpLeft.png').convert_alpha()
+
+    def GetDestinationPosition(self, pos: Vector2):
+        return Vector2(pos.X-1, pos.Y-1)

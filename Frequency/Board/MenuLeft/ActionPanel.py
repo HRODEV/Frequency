@@ -3,18 +3,20 @@
 import Game
 from GameLogic.Map import Tile
 from Board.MenuLeft.ArrowItem import *
+from GameLogic.Unit import Soldier
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
 
 class ActionPanel:
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None):
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, newSelection=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2,
                             game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
+        self.NewSelection = newSelection
 
         self.Map = None
         self.EndTurnButtonImage = pygame.transform.scale(
@@ -26,6 +28,7 @@ class ActionPanel:
         # End turn
         if self.EndturnButtonIsClickedByMouse(game):
             game.Logic.EndTurn(game)
+            return DefaultActionPanel(game)
 
         return ActionPanel(game, self.Tile, self.EndturnButtonRect)
 
@@ -65,18 +68,43 @@ class DefaultActionPanel(ActionPanel):
 
 
 class UnitActionPanel(ActionPanel):
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None):
-        super().__init__(game, tile, endturnButtonRect)
-        self.Buttons = buttons if buttons is not None \
-            else [ArrowButtonUp(Vector2(0, -40)), ArrowButtonUpRight(Vector2(40, -40)),
-                  ArrowButtonRight(Vector2(40, 0)),
-                  ArrowButtonDownRight(Vector2(40, 40)), ArrowButtonDown(Vector2(0, 40)),
-                  ArrowButtonDownLeft(Vector2(-40, 40)), ArrowButtonLeft(Vector2(-40, 0)),
-                  ArrowButtonUpLeft(Vector2(-40, -40))]
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None):
+        super().__init__(game, tile, endturnButtonRect, newSelection)
+        if buttons is not None:
+            self.Buttons = buttons
+        else:
+            import GameLogic.MapHelpers
+            self.Buttons = []
+            for pos in GameLogic.MapHelpers.getAroundingTiles(tile, game.Logic.Map):
+                if pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y:
+                    self.Buttons.append(ArrowButtonRight(Vector2(40, 0)))
+                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y+1:
+                    self.Buttons.append(ArrowButtonDownRight(Vector2(40, 40)))
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y+1:
+                    self.Buttons.append(ArrowButtonDown(Vector2(0, 40)))
+                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y+1:
+                    self.Buttons.append(ArrowButtonDownLeft(Vector2(-40, 40)))
+                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y:
+                    self.Buttons.append(ArrowButtonLeft(Vector2(-40, 0)))
+                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y-1:
+                    self.Buttons.append(ArrowButtonUpLeft(Vector2(-40, -40)))
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y-1:
+                    self.Buttons.append(ArrowButtonUp(Vector2(0, -40)))
+                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y-1:
+                    self.Buttons.append(ArrowButtonUpRight(Vector2(40, -40)))
 
     def Update(self, game: Game):
-        self.Map = map
         nself = super().Update(game)
+
+        if type(nself) is DefaultActionPanel:
+            return nself
+
+        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        if clickedButton is not None:
+            self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+            return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons,
+                                   clickedButton.GetDestinationPosition(self.Tile.Position))
+
         return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 
     def Draw(self, game: Game):
@@ -122,7 +150,18 @@ class BarrackActionPanel(ActionPanel):
 
     def Update(self, game: Game):
         nself = super().Update(game)
-        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect)
+
+        if type(nself) is DefaultActionPanel:
+            return nself
+
+        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        if clickedButton is not None:
+            game.Logic.BuyUnit(
+                Soldier,
+                game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position))
+            )
+
+        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 
     def Draw(self, game: Game):
         super().Draw(game)
@@ -141,6 +180,10 @@ class BarrackActionPanel(ActionPanel):
 class InfoActionTile(ActionPanel):
     def Update(self, game: Game):
         nself = super().Update(game)
+
+        if type(nself) is DefaultActionPanel:
+            return nself
+
         return InfoActionTile(game, self.Tile, nself.EndturnButtonRect)
 
     def Draw(self, game: Game):

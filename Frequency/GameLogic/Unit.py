@@ -26,8 +26,11 @@ class Unit:
     def DefencePoints(self) -> int: return 0
 
     def MoveTo(self, tile: Tile):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
@@ -47,7 +50,7 @@ class Unit:
                     boat.Unit = self
                     self.Tile.Unit = None
                     self._tile = tile
-        #no sea
+        # no sea
         else:
             if tile.Unit is None:
                 self.Tile.Unit = None
@@ -61,6 +64,13 @@ class Unit:
                     unitGroup.AddUnit(self)
                 else:
                     raise Exception("this unit group is full")
+            elif isinstance(tile.Unit, Unit):
+                group = UnitGroup(tile, self.Owner, self._logic)
+                self.Tile.Unit = None
+                self.Tile = tile
+                group.AddUnit(self)
+                group.AddUnit(tile.Unit)
+                tile.Unit = group
 
         self._logic.PlayingPlayer.Moves -= 1
 
@@ -109,8 +119,11 @@ class UnitGroup(Unit):
         self._units = [_unit for _unit in self._units if _unit != unit]
 
     def MoveTo(self, tile: 'Tile'):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
@@ -188,8 +201,11 @@ class Boat(Unit):
         return 6
 
     def MoveTo(self, tile: 'Tile'):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
-        if not self.Owner.IsOnTurn:
+        if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
         # check if you move in the right area
         from GameLogic.Map import SeaTile
