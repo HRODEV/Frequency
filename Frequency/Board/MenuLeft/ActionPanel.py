@@ -67,9 +67,36 @@ class DefaultActionPanel(ActionPanel):
                                                    True, Colors.BLACK), (10, 55))
 
 
+class SimpleTextButton:
+
+    def __init__(self, text, position):
+        self._text = text
+        self._position = position
+        self.clicked = False
+        self.rect = None
+
+    def Draw(self, screen):
+        font = pygame.font.Font(None, 20)
+        textColor = Colors.RED if self.clicked else Colors.BLACK
+
+        if self.IsHoverdByMouse():
+            self.rect = screen.blit(font.render(self._text, True, textColor, Colors.DIMGREY), self._position)
+        else:
+            self.rect = screen.blit(font.render(self._text, True, textColor), self._position)
+
+    def IsHoverdByMouse(self):
+        return self.rect is not None and self.rect.collidepoint(pygame.mouse.get_pos())
+
+    def IsClickedByMouse(self, game):
+        return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
+
+
 class UnitActionPanel(ActionPanel):
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None):
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None,
+                 _barackButton=None, _unitButton=None):
         super().__init__(game, tile, endturnButtonRect, newSelection)
+        self._barrackButton = _barackButton if _barackButton is not None else SimpleTextButton("Buy Barrack", (10, 100))
+        self._UnitButton = _unitButton if _unitButton is not None else SimpleTextButton("Move Unit", (10, 130))
         if buttons is not None:
             self.Buttons = buttons
         else:
@@ -99,13 +126,22 @@ class UnitActionPanel(ActionPanel):
         if type(nself) is DefaultActionPanel:
             return nself
 
-        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
-        if clickedButton is not None:
-            self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
-            return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons,
-                                   clickedButton.GetDestinationPosition(self.Tile.Position))
+        if self._barrackButton.IsClickedByMouse(game) or self._UnitButton.IsClickedByMouse(game):
+            if self._UnitButton.IsClickedByMouse(game):
+                self._UnitButton.clicked = True
+                self._barrackButton.clicked = False
+            else:
+                self._barrackButton.clicked = True
+                self._UnitButton.clicked = False
 
-        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
+        if self._UnitButton.clicked:
+            clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+            if clickedButton is not None:
+                self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons,
+                                       clickedButton.GetDestinationPosition(self.Tile.Position))
+
+        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton, self._UnitButton)
 
     def Draw(self, game: Game):
         super().Draw(game)
@@ -115,6 +151,10 @@ class UnitActionPanel(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
+
+        # choose between buy a barrack or move the unit
+        self._barrackButton.Draw(game.Settings.GetScreen())
+        self._UnitButton.Draw(game.Settings.GetScreen())
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
