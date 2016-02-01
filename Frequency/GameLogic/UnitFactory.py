@@ -69,5 +69,6 @@ def BuyUnit(gameLogic, unitType, tile, player):
     elif unitType is GameLogic.Unit.Boat:
         if tile.Unit is None:
             player.Money -= price
-            unit = unitType(tile, player)
+            unit = unitType(tile, player, gameLogic)
+            tile.Unit = unit
             return unit

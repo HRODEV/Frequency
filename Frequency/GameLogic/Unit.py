@@ -220,7 +220,7 @@ class Boat(Unit):
             if tile.Unit is None:
                 self.Tile.Unit = None
                 tile.Unit = self
-                self.Unit.Tile = tile
+                self.Tile = tile
                 self._tile = tile
 
         self._logic.PlayingPlayer.Moves -= 1
