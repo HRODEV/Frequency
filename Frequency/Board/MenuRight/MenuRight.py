@@ -10,7 +10,7 @@ class PlayerInfoLabel:
     def Draw(self, game: Game, positionInRow):
         font = pygame.font.SysFont("Arial", 18)
         position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
-        game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.WHITE), (position.X + 30, position.Y + (positionInRow * 50)))
+        game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.BLACK), (position.X + 30, position.Y + (positionInRow * 50)))
 
 class PlayerName(PlayerInfoLabel):
 
@@ -57,8 +57,10 @@ class MenuRight:
 
     def Draw(self, game : Game):
         pygame.draw.rect(game.Settings.GetScreen(),
-                         (0, 0, 255),
+                         (255, 255, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
+        font = pygame.font.Font(None, 20)
+        game.Settings.GetScreen().blit(font.render("Press escape to return to the ingame menu", True, Colors.BLACK), (self.Position.X+10, self.Position.Y+15))
 
         for i in range(0,len(self.PlayerInfoLabels)):
             self.PlayerInfoLabels[i].Draw(game, i)
