@@ -153,10 +153,10 @@ class BarrackActionPanel(ActionPanel):
             self.BuyUnits = buyUnits
         else:
             self.BuyUnits = []
-            self.BuyUnits.append(SoldierButton(Vector2(0, 100)))
-            self.BuyUnits.append(RobotButton(Vector2(1, 100)))
-            self.BuyUnits.append(TankButton(Vector2(2, 100)))
-            self.BuyUnits.append(BoatButton(Vector2(3, 100)))
+            self.BuyUnits.append(SoldierButton(Vector2(0, 100), game.Logic.PlayingPlayer.Character.Id))
+            self.BuyUnits.append(RobotButton(Vector2(1, 100), game.Logic.PlayingPlayer.Character.Id))
+            self.BuyUnits.append(TankButton(Vector2(2, 100), game.Logic.PlayingPlayer.Character.Id))
+            self.BuyUnits.append(BoatButton(Vector2(3, 100), game.Logic.PlayingPlayer.Character.Id))
 
     def Update(self, game: Game):
         nself = super().Update(game)

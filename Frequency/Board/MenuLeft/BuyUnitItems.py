@@ -7,11 +7,12 @@ from Vector2 import Vector2
 
 
 class BuyUnitItem:
-    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
+    def __init__(self, offset: Vector2, playingPlayer, image: Surface=None, hover: Surface=None, rect=None):
         self.Offset = offset
         self.Image = image if image is not None else self._getTexture()
         self.Hover = hover if hover is not None else self._getHoverTexture()
         self.Rect = rect
+        self.PlayingPlayer = playingPlayer
 
     def Update(self, game):
         return self
