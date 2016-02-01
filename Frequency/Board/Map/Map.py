@@ -35,6 +35,12 @@ class Map:
     def ActiveTile(self):
         return self.SelectedTile
 
+    def SetActiveTile(self, position: Vector2):
+        if position is None:
+            self.SelectedTile = None
+            for tile in self.TilesIterator:
+                tile.Selected = False
+
 
     def DetermineTileType(self, logicTile):
         import GameLogic.Map
