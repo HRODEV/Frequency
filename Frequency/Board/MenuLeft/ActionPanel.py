@@ -93,10 +93,10 @@ class SimpleTextButton:
 
 class UnitActionPanel(ActionPanel):
     def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None,
-                 _barackButton=None, _unitButton=None):
+                 _barackButton=None, _moveButton=None):
         super().__init__(game, tile, endturnButtonRect, newSelection)
         self._barrackButton = _barackButton if _barackButton is not None else SimpleTextButton("Buy Barrack", (10, 100))
-        self._UnitButton = _unitButton if _unitButton is not None else SimpleTextButton("Move Unit", (10, 130))
+        self._moveButton = _moveButton if _moveButton is not None else SimpleTextButton("Move Unit", (10, 130))
         if buttons is not None:
             self.Buttons = buttons
         else:
@@ -126,22 +126,27 @@ class UnitActionPanel(ActionPanel):
         if type(nself) is DefaultActionPanel:
             return nself
 
-        if self._barrackButton.IsClickedByMouse(game) or self._UnitButton.IsClickedByMouse(game):
-            if self._UnitButton.IsClickedByMouse(game):
-                self._UnitButton.clicked = True
+        if self._barrackButton.IsClickedByMouse(game) or self._moveButton.IsClickedByMouse(game):
+            if self._moveButton.IsClickedByMouse(game):
+                self._moveButton.clicked = True
                 self._barrackButton.clicked = False
             else:
                 self._barrackButton.clicked = True
-                self._UnitButton.clicked = False
+                self._moveButton.clicked = False
 
-        if self._UnitButton.clicked:
-            clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        if self._moveButton.clicked:
             if clickedButton is not None:
                 self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
-                return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons,
+                return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
                                        clickedButton.GetDestinationPosition(self.Tile.Position))
 
-        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton, self._UnitButton)
+        elif self._barrackButton:
+            if clickedButton is not None:
+                game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+
+        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton, self._moveButton)
 
     def Draw(self, game: Game):
         super().Draw(game)
@@ -154,7 +159,7 @@ class UnitActionPanel(ActionPanel):
 
         # choose between buy a barrack or move the unit
         self._barrackButton.Draw(game.Settings.GetScreen())
-        self._UnitButton.Draw(game.Settings.GetScreen())
+        self._moveButton.Draw(game.Settings.GetScreen())
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
