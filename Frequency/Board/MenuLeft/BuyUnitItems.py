@@ -1,17 +1,17 @@
 import pygame
 from pygame.surface import Surface
 
-
+from GameLogic.Unit import *
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
 
 class BuyUnitItem:
-    def __init__(self, offset: Vector2, id, image: Surface=None, hover: Surface=None, rect=None):
+    def __init__(self, offset: Vector2, id, image: Surface=None, rect=None):
         self.Offset = offset
         self.Image = image if image is not None else self._getTexture(id)
-        self.Hover = hover if hover is not None else self._getHoverTexture()
         self.Rect = rect
+        self.clicked = False
 
     def Update(self, game):
         return self
@@ -24,6 +24,11 @@ class BuyUnitItem:
         x = 10 + margin * self.Offset.X
         y = self.Offset.Y
 
+        if self.IsHoverdByMouse() or self.clicked:
+            game.Settings.GetScreen().blit(
+                pygame.transform.scale(pygame.image.load('images/tiles/selected.png').convert_alpha(), (40, 40)),
+                (x, y))
+
         self.Rect = game.Settings.GetScreen().blit(self.Image, (x, y))
 
     def IsHoverdByMouse(self):
@@ -32,11 +37,11 @@ class BuyUnitItem:
     def IsClickedByMouse(self, game):
         return self.IsHoverdByMouse() and EventExist(game.Events, pygame.MOUSEBUTTONUP)
 
-    def _getTexture(self):
+    def _getTexture(self, id):
         return None
 
-    def _getHoverTexture(self):
-        return None
+    def GetUnitType(self):
+        return Soldier
 
 
 class SoldierButton(BuyUnitItem):
@@ -51,6 +56,9 @@ class SoldierButton(BuyUnitItem):
         else:
             return pygame.transform.scale(pygame.image.load('images/units/soldierRed.png').convert_alpha(), (38, 38))
 
+    def GetUnitType(self):
+        return Soldier
+
 class RobotButton(BuyUnitItem):
 
     def _getTexture(self, id):
@@ -62,6 +70,10 @@ class RobotButton(BuyUnitItem):
             return pygame.transform.scale(pygame.image.load('images/units/robotYellow.png').convert_alpha(), (38, 38))
         else:
             return pygame.transform.scale(pygame.image.load('images/units/robotRed.png').convert_alpha(), (38, 38))
+
+    def GetUnitType(self):
+        return Robot
+
 
 class TankButton(BuyUnitItem):
 
@@ -75,6 +87,10 @@ class TankButton(BuyUnitItem):
         else:
             return pygame.transform.scale(pygame.image.load('images/units/tankRed.png').convert_alpha(), (38, 38))
 
+    def GetUnitType(self):
+        return Tank
+
+
 class BoatButton(BuyUnitItem):
 
     def _getTexture(self, id):
@@ -86,3 +102,6 @@ class BoatButton(BuyUnitItem):
             return pygame.transform.scale(pygame.image.load('images/units/shipYellow.png').convert_alpha(), (38, 38))
         else:
             return pygame.transform.scale(pygame.image.load('images/units/shipRed.png').convert_alpha(), (38, 38))
+
+    def GetUnitType(self):
+        return Boat

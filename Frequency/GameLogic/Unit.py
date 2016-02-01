@@ -214,14 +214,18 @@ class Boat(Unit):
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
             raise Exception("you are not aloud to move this unit more than one tile")
         elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
-            raise Exception("You need to fight to go to this tile")
+            return
         # check for actions with the sea
         elif type(tile) is SeaTile:
             if tile.Unit is None:
                 self.Tile.Unit = None
                 tile.Unit = self
-                self.Unit.Tile = tile
+                self.Tile = tile
                 self._tile = tile
+            else:
+                return
+        else:
+            return
 
         self._logic.PlayingPlayer.Moves -= 1
 

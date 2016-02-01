@@ -213,11 +213,20 @@ class BarrackActionPanel(ActionPanel):
         if type(nself) is DefaultActionPanel:
             return nself
 
-        clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
-        if clickedButton is not None:
+        clickedArrowButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
+        clickedUnitButton = next((btn for btn in self.BuyUnits if btn.IsClickedByMouse(game)), None)
+
+        if clickedUnitButton is not None:
+            for btn in self.BuyUnits:
+                btn.clicked = False
+            clickedUnitButton.clicked = True
+
+        clickedUnitButton = next((btn for btn in self.BuyUnits if btn.clicked), None)
+        if clickedUnitButton is not None and clickedArrowButton is not None:
+
             game.Logic.BuyUnit(
-                Soldier,
-                game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position))
+                clickedUnitButton.GetUnitType(),
+                game.Logic.Map.GetTile(clickedArrowButton.GetDestinationPosition(self.Tile.Position))
             )
 
         return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, self.BuyUnits)
