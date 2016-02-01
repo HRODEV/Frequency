@@ -55,7 +55,8 @@ class Unit:
         # no sea
         else:
             if tile.Unit is None:
-                self.Tile.Unit = None
+                if self.Tile.Unit == self:
+                    self.Tile.Unit = None
                 tile.Unit = self
                 self._tile = tile
             elif type(tile.Unit) is UnitGroup:
@@ -150,7 +151,8 @@ class UnitGroup(Unit):
         #no sea
         else:
             if tile.Unit is None:
-                self.Tile.Unit = None
+                if self.Tile.Unit == self:
+                    self.Tile.Unit = None
                 tile.Unit = self
                 self._tile = tile
                 for unit in self.Units:
@@ -222,6 +224,8 @@ class Boat(Unit):
                 tile.Unit = self
                 self.Tile = tile
                 self._tile = tile
+                if self.Unit is not None:
+                    self.Unit.Tile = tile
             else:
                 return
         else:
