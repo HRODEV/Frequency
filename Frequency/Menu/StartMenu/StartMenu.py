@@ -1,6 +1,7 @@
 ﻿import Game
 from Menu.HeadMenu import HeadMenu
 from Menu.StartMenu.StartMenuItems.ExitGame import ExitGame
+from Menu.StartMenu.StartMenuItems.LoadGame import LoadGame
 from Menu.StartMenu.StartMenuItems.Rules import Rules
 from Menu.StartMenu.StartMenuItems.Settings import Settings
 from Menu.StartMenu.StartMenuItems.StartGame import StartGame
@@ -13,7 +14,8 @@ class StartMenu(HeadMenu):
         super().__init__(resolution, background, logo)
 
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
-            else [StartGame(Vector2(0, 0)), Settings(Vector2(0, 70)), Rules(Vector2(0, 140)), ExitGame(Vector2(0, 210))]
+            else [StartGame(Vector2(0, 0)), Settings(Vector2(0, 70)), Rules(Vector2(0, 140)), ExitGame(Vector2(0, 210)),
+                  LoadGame(Vector2(0, 280))]
 
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]
