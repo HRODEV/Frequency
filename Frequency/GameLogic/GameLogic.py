@@ -1,3 +1,4 @@
+from GameLogic import BarrackFactory
 from GameLogic import UnitFactory
 from GameLogic.Player import Player
 
@@ -53,15 +54,6 @@ class GameLogic:
         self.PlayingPlayer.Moves = 4
         self.PlayingPlayer.Money += self.GetIncome()
 
-    def CanAddUnitToTile(self, game, tile):
-        # TODO rest of implementation
-        from GameLogic.Map import SeaTile
-        if type(tile) is not SeaTile:
-            if self.PlayingPlayer.Moves != 0 and self.PlayingPlayer.Money >= 100:
-                self.PlayingPlayer.Moves -= 1
-                return True
-        return False
-
     def GetIncome(self, player: Player=None):
         player = player if player is not None else self.PlayingPlayer
 
@@ -81,6 +73,10 @@ class GameLogic:
                 self.PlayingPlayer.Moves -= 1
 
             return unit
+
+    def BuyBarrack(self, tile):
+        if self.PlayingPlayer.Moves > 0:
+            BarrackFactory.BuyBarrack(self, tile, self.PlayingPlayer)
 
     def CheckWinner(self):
         return next((player for player in self.Players if player.Money >= 50000), None)
