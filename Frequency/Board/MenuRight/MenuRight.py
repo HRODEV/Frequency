@@ -1,4 +1,5 @@
 import Game
+from GameLogic.Unit import UnitGroup
 from Helpers import Colors
 from GameLogic.Player import *
 
@@ -45,7 +46,13 @@ class PlayerRemainingMoves(PlayerInfoLabel):
 class PlayerTotalUnits(PlayerInfoLabel):
 
     def GetValue(self, game:Game):
-        return 'Total units: ' + str(len(game.Logic.PlayingPlayer.Units))
+        units = game.Logic.PlayingPlayer.Units
+        totalUnits = 0
+
+        for unit in units:
+            if type(unit) is not UnitGroup:
+                totalUnits += 1
+        return 'Total units: ' + str(totalUnits)
 
 class MenuRight:
 
