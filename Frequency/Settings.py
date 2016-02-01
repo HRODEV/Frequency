@@ -14,7 +14,7 @@ class GameSettings:
                  mapSize = None,
                  menuLeftSize = None,
                  selectedUnitBuilding = "Soldier",
-                 fullscreen = None):
+                 fullscreen = False):
 
         self._resolution = resolution
         self.TileSize = tileSize
@@ -36,13 +36,16 @@ class GameSettings:
 
     def SetResolution(self, newResolution: Vector2, fullscreen=False):
         self._resolution = newResolution
-        if fullscreen:
-            if self.Fullscreen:
+
+        if fullscreen is True:
+            if self.Fullscreen is True:
                 self.screen = pygame.display.set_mode(newResolution.Position)
                 self.Fullscreen = False
             else:
                 self.screen = pygame.display.set_mode(newResolution.Position, pygame.FULLSCREEN)
                 self.Fullscreen = True
+        else:
+            self.screen = pygame.display.set_mode(newResolution.Position)
 
 
 
