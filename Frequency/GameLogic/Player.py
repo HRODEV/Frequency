@@ -25,11 +25,6 @@ class Player:
 
         self._units = []
 
-    _isOnTurn = False
-    @property
-    def IsOnTurn(self):
-        return self._isOnTurn
-
     @property
     def Units(self):
         return self._units
