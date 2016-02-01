@@ -42,7 +42,9 @@ def BuyUnit(gameLogic, unitType, tile, player):
     from GameLogic.Map import SeaTile
     import GameLogic.Unit
     if type(tile) is not SeaTile:
-        if tile.Unit is None:
+        if unitType is GameLogic.Unit.Boat:
+            return
+        elif tile.Unit is None:
             player.Money -= price
             unit = unitType(tile, player, gameLogic)
             tile.Unit = unit
