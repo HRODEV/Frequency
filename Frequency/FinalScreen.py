@@ -11,7 +11,6 @@ class FinalScreen(HeadMenu):
         super().__init__(resolution, background, logo)
 
         self.ExitButton = ExitGame(Vector2(0, 210))
-        self.ExitButtonHover = pygame.image.load('images/buttons/exitButtonHover.png').convert_alpha()
         self.Winner = winner
 
     def Update(self, game: Game):
