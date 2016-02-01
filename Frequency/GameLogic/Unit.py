@@ -35,9 +35,9 @@ class Unit:
         # check if you move in the right area
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
-            raise Exception("you are not aloud to move this unit more than one tile")
+            return
         elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
-            raise Exception("You need to fight to go to this tile")
+            return
         # check for actions with the sea
         elif type(tile) is SeaTile:
             # check if there is a boat available
@@ -45,11 +45,13 @@ class Unit:
                 # check if it is possible to place this unit in the boat
                 boat = tile.Unit
                 if boat.Unit is not None:
-                    raise Exception("there is already a unit or group on the boat")
+                    return
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
                     self._tile = tile
+            else:
+                return
         # no sea
         else:
             if tile.Unit is None:
@@ -63,7 +65,7 @@ class Unit:
                     self._tile = tile
                     unitGroup.AddUnit(self)
                 else:
-                    raise Exception("this unit group is full")
+                    return
             elif isinstance(tile.Unit, Unit):
                 group = UnitGroup(tile, self.Owner, self._logic)
                 self.Tile.Unit = None
@@ -138,7 +140,7 @@ class UnitGroup(Unit):
                 # check if it is possible to place this unit in the boat
                 boat = tile.Unit
                 if boat.Unit is not None:
-                    raise Exception("there is already a unit or group on the boat")
+                    return
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
