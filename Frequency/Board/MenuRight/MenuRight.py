@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+﻿import Game
+=======
 import Game
 from GameLogic.Unit import UnitGroup
+>>>>>>> development
 from Helpers import Colors
 from GameLogic.Player import *
 
@@ -72,7 +76,7 @@ class MenuRight:
                          (255, 255, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
         font = pygame.font.Font(None, 20)
-        game.Settings.GetScreen().blit(font.render("Press escape to return to the ingame menu", True, Colors.BLACK), (self.Position.X+10, self.Position.Y+15))
+        game.Settings.GetScreen().blit(font.render("Press ESC for the menu", True, Colors.BLACK), (self.Position.X+10, self.Position.Y+15))
 
         for i in range(0,len(self.PlayerInfoLabels)):
             self.PlayerInfoLabels[i].Draw(game, i)
