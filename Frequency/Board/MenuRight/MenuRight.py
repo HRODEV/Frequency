@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿import Game
-=======
 import Game
 from GameLogic.Unit import UnitGroup
->>>>>>> development
 from Helpers import Colors
 from GameLogic.Player import *
 
