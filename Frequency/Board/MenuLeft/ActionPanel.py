@@ -3,6 +3,7 @@
 import Game
 from GameLogic.Map import Tile
 from Board.MenuLeft.ArrowItem import *
+from Board.MenuLeft.BuyUnitItems import *
 from GameLogic.Unit import Soldier
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
@@ -123,7 +124,7 @@ class UnitActionPanel(ActionPanel):
 
 class BarrackActionPanel(ActionPanel):
 
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None):
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, buyUnits=None):
         super().__init__(game, tile, endturnButtonRect)
         if buttons is not None:
             self.Buttons = buttons
@@ -148,6 +149,15 @@ class BarrackActionPanel(ActionPanel):
                 elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y-1:
                     self.Buttons.append(ArrowButtonUpRight(Vector2(40, -40)))
 
+        if buyUnits is not None:
+            self.BuyUnits = buyUnits
+        else:
+            self.BuyUnits = []
+            self.BuyUnits.append(SoldierButton(Vector2(0, 100)))
+            self.BuyUnits.append(RobotButton(Vector2(1, 100)))
+            self.BuyUnits.append(TankButton(Vector2(2, 100)))
+            self.BuyUnits.append(BoatButton(Vector2(3, 100)))
+
     def Update(self, game: Game):
         nself = super().Update(game)
 
@@ -161,20 +171,24 @@ class BarrackActionPanel(ActionPanel):
                 game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position))
             )
 
-        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
+        return BarrackActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, self.BuyUnits)
 
     def Draw(self, game: Game):
         super().Draw(game)
 
         font = pygame.font.Font(None, 20)
-        game.Settings.GetScreen().blit(font.render("Barrak actions", True, Colors.BLACK), (10, 35))
+        game.Settings.GetScreen().blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
 
-        game.Settings.GetScreen().blit(font.render("Choose you actions with the Barrak",
+        game.Settings.GetScreen().blit(font.render("Choose you actions with the Barrack",
                                                    True, Colors.BLACK), (10, 55))
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
             arrowButton.Draw(game)
+
+        # Draw the Buy Unit Buttons
+        for unitBuyButton in self.BuyUnits:
+            unitBuyButton.Draw(game)
 
 
 class InfoActionTile(ActionPanel):
