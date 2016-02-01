@@ -69,8 +69,3 @@ def BuyUnit(gameLogic, unitType, tile, player):
             player.Money -= price
             unit = unitType(tile, player)
             return unit
-
-
-
-
-

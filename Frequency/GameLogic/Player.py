@@ -3,8 +3,8 @@ from GameLogic.Character import *
 
 
 class Player:
-
-    def __init__(self, name, character, money=500, moves=0):
+    # TODO reset default money to 500
+    def __init__(self, name, character, money=5000, moves=0):
         self.Name = name
         if type(character) is int:
             if character == 0:
