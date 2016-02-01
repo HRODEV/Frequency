@@ -14,11 +14,10 @@ class FinalScreen(HeadMenu):
         self.Winner = winner
 
     def Update(self, game: Game):
-        
         if(self.ExitButton.IsClickedByMouse(game)):
             self.ExitButton.GetNewState()
 
-        super().Update(game)
+        return super().Update(game)
 
     def Draw(self, game: Game):
         super().Draw(game)

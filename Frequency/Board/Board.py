@@ -1,6 +1,7 @@
 ﻿import pygame
 
 import Game
+from FinalScreen import FinalScreen
 from Board.Map.Map import *
 from Board.MenuLeft.ActionPanel import *
 from Board.MenuRight.MenuRight import *
@@ -13,6 +14,9 @@ class Board:
         self.MenuRight = menuright if menuright is not None else MenuRight(game)
 
     def Update(self, game: Game):
+
+        if(game.Logic.CheckWinner()):
+            return FinalScreen(game.Settings.Resolution, None, None, game.Logic.CheckWinner().Name)
 
         def onSelectedTileChanged(lTile):
             if lTile is None:
