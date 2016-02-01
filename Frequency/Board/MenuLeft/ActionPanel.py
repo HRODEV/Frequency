@@ -141,7 +141,7 @@ class UnitActionPanel(ActionPanel):
                 return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
                                        clickedButton.GetDestinationPosition(self.Tile.Position))
 
-        elif self._barrackButton:
+        elif self._barrackButton.clicked:
             if clickedButton is not None:
                 game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
                 return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
