@@ -94,10 +94,16 @@ class SimpleTextButton:
 
 class UnitActionPanel(ActionPanel):
     def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None,
-                 _barackButton=None, _moveButton=None):
+                 _barackButton=None, _moveButton=None, _moveUnitFromBoatButton=None):
         super().__init__(game, tile, endturnButtonRect, newSelection)
         self._barrackButton = _barackButton if _barackButton is not None else SimpleTextButton("Buy Barrack", (10, 100))
-        self._moveButton = _moveButton if _moveButton is not None else SimpleTextButton("Move Unit", (10, 130))
+        if _moveButton is not None:
+            self._moveButton = _moveButton
+        else:
+            self._moveButton = SimpleTextButton("Move Unit", (10, 130))
+            self._moveButton.clicked = True
+        self._moveUnitFromBoatButton = _moveUnitFromBoatButton if _moveUnitFromBoatButton is not None \
+            else SimpleTextButton("move Unit to land", (10, 160))
         if buttons is not None:
             self.Buttons = buttons
         else:
@@ -127,12 +133,20 @@ class UnitActionPanel(ActionPanel):
         if type(nself) is DefaultActionPanel:
             return nself
 
-        if self._barrackButton.IsClickedByMouse(game) or self._moveButton.IsClickedByMouse(game):
+        if self._barrackButton.IsClickedByMouse(game) or self._moveButton.IsClickedByMouse(game) \
+                or self._moveUnitFromBoatButton.IsClickedByMouse(game):
+
             if self._moveButton.IsClickedByMouse(game):
                 self._moveButton.clicked = True
                 self._barrackButton.clicked = False
-            else:
+                self._moveUnitFromBoatButton.clicked = False
+            elif self._barrackButton.IsClickedByMouse(game):
                 self._barrackButton.clicked = True
+                self._moveButton.clicked = False
+                self._moveUnitFromBoatButton.clicked = False
+            else:
+                self._moveUnitFromBoatButton.clicked = True
+                self._barrackButton.clicked = False
                 self._moveButton.clicked = False
 
         clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
@@ -146,8 +160,16 @@ class UnitActionPanel(ActionPanel):
             if clickedButton is not None:
                 game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
                 return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+        else:
+            if clickedButton is not None:
+                print(self.Tile.Unit.Unit)
+                self.Tile.Unit.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
+                                       clickedButton.GetDestinationPosition(self.Tile.Position))
 
-        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton, self._moveButton)
+
+        return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton,
+                               self._moveButton, self._moveUnitFromBoatButton)
 
     def Draw(self, game: Game):
         super().Draw(game)
@@ -156,15 +178,17 @@ class UnitActionPanel(ActionPanel):
         font = pygame.font.Font(None, 20)
         game.Settings.GetScreen().blit(font.render("Unit actions", True, Colors.BLACK), (10, 35))
 
-        game.Settings.GetScreen().blit(font.render("Choose you actions with the unit",
+        screen.blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
 
-        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 170))
-        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 190))
+        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 210))
 
         # choose between buy a barrack or move the unit
-        self._barrackButton.Draw(game.Settings.GetScreen())
-        self._moveButton.Draw(game.Settings.GetScreen())
+        self._barrackButton.Draw(screen)
+        self._moveButton.Draw(screen)
+        if type(self.Tile.Unit) is Boat:
+            self._moveUnitFromBoatButton.Draw(screen)
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
