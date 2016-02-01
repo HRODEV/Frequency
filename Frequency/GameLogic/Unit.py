@@ -36,10 +36,14 @@ class Unit:
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
             return
-        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
-            return
+        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:  # fight
+            if self.AttackPoints > tile.Unit.DefencePoints:
+                tile.Unit.Die()
+            else:
+                return
+
         # check for actions with the sea
-        elif type(tile) is SeaTile:
+        if type(tile) is SeaTile:
             # check if there is a boat available
             if tile.Unit is not None and type(tile.Unit) is Boat:
                 # check if it is possible to place this unit in the boat
@@ -76,6 +80,10 @@ class Unit:
                 tile.Unit = group
 
         self._logic.PlayingPlayer.Moves -= 1
+
+    def Die(self):
+        self.Owner._units = [unit for unit in self.Owner._units if unit != self]
+        self.Tile.Unit = None
 
 
 class Soldier(Unit):
@@ -127,7 +135,10 @@ class UnitGroup(Unit):
             return
         # check turn
         if self.Owner != self._logic.PlayingPlayer:
-            raise Exception("player is not on turn")
+            if self.AttackPoints > tile.Unit.DefencePoints:
+                tile.Unit.Die()
+            else:
+                return
         # check if you move in the right area
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
@@ -192,6 +203,12 @@ class UnitGroup(Unit):
         self._tile = value
         for unit in self._units:
             unit.Tile = value
+
+    def Die(self):
+        super().Die()
+        for unit in self._units:
+            unit.Die()
+
 
 
 class Boat(Unit):
