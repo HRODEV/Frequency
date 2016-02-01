@@ -12,7 +12,7 @@ from Vector2 import Vector2
 
 class Tile:
 
-    def __init__(self, position, size, logicTile, texture=None, rectangle=None, selected=False):
+    def __init__(self, position, size, logicTile, texture=None, rectangle=None, selected=False, unit=None):
         self.Position = position
         self.Size = size
         self.Texture = texture if texture is not None else self._getTexture(size)
@@ -21,7 +21,8 @@ class Tile:
         self._logicTile = logicTile
         self.Selected = selected
 
-        self._unit = self._getPossibleUnit()
+        self._unit = unit if unit is not None and unit.LogicUnit == self.LogicTile.Unit \
+            else self._getPossibleUnit()
         self._building = self._getPossibleBuilding()
 
     def _getPossibleBuilding(self) -> Building:
@@ -60,7 +61,8 @@ class Tile:
         return self._logicTile
 
     def Update(self, game):
-        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Rectangle, self.Selected)
+        return type(self)(self.Position, self.Size, self.LogicTile, self.Texture, self.Rectangle,
+                          self.Selected, self._unit)
 
     def Draw(self, game):
         screen = game.Settings.GetScreen()
@@ -69,9 +71,7 @@ class Tile:
         self.Rectangle = screen.blit(self.Texture, (marginX, marginY))
         if self.Selected:  # TODO draw a rectangle with pygame
             screen.blit(pygame.transform.scale(pygame.image.load('images/tiles/selected.png').convert_alpha(), [self.Size.X, self.Size.Y]),(marginX, marginY))
-        if self._unit is not None:
-            self._unit.Draw(game)
-        elif self._building is not None:
+        if self._building is not None:
             self._building.Draw(game)
 
     def IsHoverdByMouse(self):

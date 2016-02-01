@@ -9,14 +9,20 @@ class Unit:
 
     def __init__(self, tile, owner: Player, logic: GameLogic):
         self._tile = tile
+        self._tileFrom = tile
         self._owner = owner
         self._logic = logic
         owner.AddUnit(self)
 
     @property
+    def TileFrom(self):
+        return self._tileFrom
+
+    @property
     def Tile(self): return self._tile
     @Tile.setter
     def Tile(self, value):
+        self._tileFrom = self._tile
         self._tile = value
     @property
     def Owner(self) -> Player: return self._owner
@@ -53,7 +59,7 @@ class Unit:
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
-                    self._tile = tile
+                    self.Tile = tile
             else:
                 return
         # no sea
@@ -62,12 +68,12 @@ class Unit:
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
                 tile.Unit = self
-                self._tile = tile
+                self.Tile = tile
             elif type(tile.Unit) is UnitGroup:
                 unitGroup = tile.Unit
                 if unitGroup.CountUnits < 4:
                     self.Tile.Unit = None
-                    self._tile = tile
+                    self.Tile = tile
                     unitGroup.AddUnit(self)
                 else:
                     return
@@ -156,7 +162,7 @@ class UnitGroup(Unit):
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
-                    self._tile = tile
+                    self.Tile = tile
                     for unit in self.Units:
                         unit._tile = tile
         #no sea
@@ -165,9 +171,9 @@ class UnitGroup(Unit):
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
                 tile.Unit = self
-                self._tile = tile
+                self.Tile = tile
                 for unit in self.Units:
-                    unit._tile = tile
+                    unit.Tile = tile
             elif type(tile.Unit) is UnitGroup:
                 # TODO dealing with two UnitGroups
                 raise NotImplemented()
@@ -200,6 +206,7 @@ class UnitGroup(Unit):
 
     @Tile.setter
     def Tile(self, value):
+        self._tileFrom = self._tile
         self._tile = value
         for unit in self._units:
             unit.Tile = value
