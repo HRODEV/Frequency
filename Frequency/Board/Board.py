@@ -6,7 +6,6 @@ from Board.MenuLeft.ActionPanel import *
 from Board.MenuRight.MenuRight import *
 from Menu.InGameMenu.InGameMenu import InGameMenu
 
-
 class Board:
     def __init__(self, game, actionPanel=None, menuright=None, map=None):
         self.Map = map if map is not None else Map(game)

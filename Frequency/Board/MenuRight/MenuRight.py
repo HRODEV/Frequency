@@ -42,6 +42,11 @@ class PlayerRemainingMoves(PlayerInfoLabel):
     def GetValue(self, game:Game):
         return 'Remaining moves: ' + str(game.Logic.PlayingPlayer.Moves) # TODO: Needs logic
 
+class PlayerTotalUnits(PlayerInfoLabel):
+
+    def GetValue(self, game:Game):
+        return 'Total units: ' + str(len(game.Logic.PlayingPlayer.Units))
+
 class MenuRight:
 
     def __init__(self, game, size=None, position=None, playerInfoLabels = None):
@@ -50,7 +55,7 @@ class MenuRight:
         self.Position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 0)
 
         self.PlayerInfoLabels = playerInfoLabels if playerInfoLabels is not None \
-            else [PlayerName(), PlayerMoney(), PlayerLands(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
+            else [PlayerName(), PlayerMoney(), PlayerTotalUnits(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
 
     def Update(self, game: Game):
         return MenuRight(game, self.Size, self.Position)

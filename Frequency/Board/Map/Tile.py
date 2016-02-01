@@ -5,7 +5,7 @@ import GameLogic.Unit
 from Board.Buildings.Base import Base
 from Board.Buildings.Building import Building
 from Helpers.EventHelpers import EventExist
-from Board.Unit import Soldier, UnitGroup
+from Board.Unit import Soldier, Robot, Tank, Boat, UnitGroup
 from Board.Buildings.Barrack import Barracks
 from Vector2 import Vector2
 
@@ -40,19 +40,17 @@ class Tile:
     def _getPossibleUnit(self):
         if self._logicTile.Unit is not None:
             import GameLogic.Unit
-            lunit = self._logicTile.Unit
-            if type(lunit) is GameLogic.Unit.Soldier:
-                return Soldier(lunit.Owner, self, self.Size.X, lunit)
-            # TODO after implementing the rest of the graphical units
-            elif type(lunit) is GameLogic.Unit.Boat:
-                return None
-            elif type(lunit) is GameLogic.Unit.Robot:
-                return None
-            elif type(lunit) is GameLogic.Unit.Tank:
-                return None
-            elif type(lunit) is GameLogic.Unit.UnitGroup:
-                return UnitGroup(lunit.Owner, self, self.Size.X, lunit)
-
+            logical_unit = self._logicTile.Unit
+            if type(logical_unit) is GameLogic.Unit.Soldier:
+                return Soldier(logical_unit.Owner, self, self.Size.X, logical_unit)
+            elif type(logical_unit) is GameLogic.Unit.Boat:
+                return Boat(logical_unit.Owner, self, self.Size.X, logical_unit)
+            elif type(logical_unit) is GameLogic.Unit.Robot:
+                return Robot(logical_unit.Owner, self, self.Size.X, logical_unit)
+            elif type(logical_unit) is GameLogic.Unit.Tank:
+                return Tank(logical_unit.Owner, self, self.Size.X, logical_unit)
+            elif type(logical_unit) is GameLogic.Unit.UnitGroup:
+                return UnitGroup(logical_unit.Owner, self, self.Size.X, logical_unit)
         else:
             return None
 

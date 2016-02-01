@@ -13,7 +13,6 @@ class GameSettings:
                  newPlayers = 0,
                  mapSize = None,
                  menuLeftSize = None,
-                 selectedUnitBuilding = "Soldier",
                  fullscreen = False):
 
         self._resolution = resolution
@@ -21,7 +20,6 @@ class GameSettings:
         self.newPlayer = newPlayers
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
-        self.SelectedUnitBuilding = selectedUnitBuilding
         self.Fullscreen = fullscreen
         self.Font = pygame.font.SysFont("Arial", 72)
 
@@ -75,9 +73,3 @@ class GameSettings:
 
     def GetMenuLeftSize(self):
         return self.MenuLeftSize
-
-    def SetSelectedUnitBuilding(self, selectedUnitBuilding):
-        self.SelectedUnitBuilding = selectedUnitBuilding
-
-    def GetSelectedUnitBuilding(self):
-        return self.SelectedUnitBuilding
