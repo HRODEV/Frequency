@@ -171,11 +171,11 @@ class UnitGroup(Unit):
 
     @property
     def AttackPoints(self):
-        return reduce((lambda aPoints, unit: aPoints + unit.AttackPoints), self._units)
+        return sum([unit.AttackPoints for unit in self._units])
 
     @property
     def DefencePoints(self):
-        return reduce((lambda aPoints, unit: aPoints + unit.DefencePoints), self._units)
+        return sum([unit.DefencePoints for unit in self._units])
 
     @property
     def CountUnits(self):

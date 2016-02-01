@@ -151,11 +151,15 @@ class UnitActionPanel(ActionPanel):
     def Draw(self, game: Game):
         super().Draw(game)
 
+        screen = game.Settings.GetScreen()
         font = pygame.font.Font(None, 20)
         game.Settings.GetScreen().blit(font.render("Unit actions", True, Colors.BLACK), (10, 35))
 
         game.Settings.GetScreen().blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
+
+        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 170))
+        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
 
         # choose between buy a barrack or move the unit
         self._barrackButton.Draw(game.Settings.GetScreen())
