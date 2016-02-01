@@ -10,8 +10,7 @@ class PlayerInfoLabel:
     def Draw(self, game: Game, positionInRow):
         font = pygame.font.SysFont("Arial", 18)
         position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
-        game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.WHITE), (position.X + 30, position.Y + (positionInRow * 50)))
-
+        game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.BLACK), (position.X + 30, position.Y + (positionInRow * 50)))
 class PlayerName(PlayerInfoLabel):
 
     def GetValue(self, game:Game):
@@ -42,6 +41,11 @@ class PlayerRemainingMoves(PlayerInfoLabel):
     def GetValue(self, game:Game):
         return 'Remaining moves: ' + str(game.Logic.PlayingPlayer.Moves) # TODO: Needs logic
 
+class PlayerTotalUnits(PlayerInfoLabel):
+
+    def GetValue(self, game:Game):
+        return 'Total units: ' + str(len(game.Logic.PlayingPlayer.Units))
+
 class MenuRight:
 
     def __init__(self, game, size=None, position=None, playerInfoLabels = None):
@@ -50,14 +54,14 @@ class MenuRight:
         self.Position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 0)
 
         self.PlayerInfoLabels = playerInfoLabels if playerInfoLabels is not None \
-            else [PlayerName(), PlayerMoney(), PlayerLands(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
+            else [PlayerName(), PlayerMoney(), PlayerTotalUnits(), PlayerNextTurnIncome(), PlayerRemainingMoves()]
 
     def Update(self, game: Game):
         return MenuRight(game, self.Size, self.Position)
 
     def Draw(self, game : Game):
         pygame.draw.rect(game.Settings.GetScreen(),
-                         (0, 0, 255),
+                         (255, 255, 255),
                          (self.Position.X, self.Position.Y, self.Size.X, self.Size.Y))
 
         for i in range(0,len(self.PlayerInfoLabels)):

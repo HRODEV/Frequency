@@ -69,6 +69,10 @@ class GameLogic:
 
         return sum([tile.GetMoney(player) for tile in tilesWithUnit])
 
+    def GetTotalUnits(self, player: Player=None):
+        player = player if player is not None else self.PlayingPlayer
+        return len(player.Units)
+
     def BuyUnit(self, unitType, tile):
         if self.PlayingPlayer.Moves > 0:
             unit = UnitFactory.BuyUnit(self, unitType, tile, self.PlayingPlayer)

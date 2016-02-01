@@ -5,7 +5,6 @@ from Board.Map.Map import *
 from Board.MenuLeft.ActionPanel import *
 from Board.MenuRight.MenuRight import *
 
-
 class Board:
     def __init__(self, game, actionPanel=None, menuright=None, map=None):
         self.Map = map if map is not None else Map(game)
