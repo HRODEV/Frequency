@@ -26,6 +26,9 @@ class Unit:
     def DefencePoints(self) -> int: return 0
 
     def MoveTo(self, tile: Tile):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
         if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
@@ -116,6 +119,9 @@ class UnitGroup(Unit):
         self._units = [_unit for _unit in self._units if _unit != unit]
 
     def MoveTo(self, tile: 'Tile'):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
         if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
@@ -195,6 +201,9 @@ class Boat(Unit):
         return 6
 
     def MoveTo(self, tile: 'Tile'):
+        # check moves
+        if self.Owner.Moves < 1:
+            return
         # check turn
         if self.Owner != self._logic.PlayingPlayer:
             raise Exception("player is not on turn")
