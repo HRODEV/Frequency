@@ -10,12 +10,13 @@ from Vector2 import Vector2
 
 
 class ActionPanel:
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None):
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, newSelection=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2,
                             game.Settings.Resolution.Y)
         self.Position = Vector2(0, 0)
         self.Tile = tile
         self.EndturnButtonRect = endturnButtonRect
+        self.NewSelection = newSelection
 
         self.Map = None
         self.EndTurnButtonImage = pygame.transform.scale(
@@ -67,8 +68,8 @@ class DefaultActionPanel(ActionPanel):
 
 
 class UnitActionPanel(ActionPanel):
-    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None):
-        super().__init__(game, tile, endturnButtonRect)
+    def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, newSelection=None):
+        super().__init__(game, tile, endturnButtonRect, newSelection)
         if buttons is not None:
             self.Buttons = buttons
         else:
@@ -101,6 +102,8 @@ class UnitActionPanel(ActionPanel):
         clickedButton = next((btn for btn in self.Buttons if btn.IsClickedByMouse(game)), None)
         if clickedButton is not None:
             self.Tile.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+            return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons,
+                                   clickedButton.GetDestinationPosition(self.Tile.Position))
 
         return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons)
 

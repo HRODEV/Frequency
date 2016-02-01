@@ -30,6 +30,10 @@ class Board:
         # check to change selected tile
         if type(actionPanel) is DefaultActionPanel:
             new_map.SetActiveTile(None)
+        elif actionPanel.NewSelection is not None:
+            new_map.SetActiveTile(actionPanel.NewSelection)
+            onSelectedTileChanged(game.Logic.Map.GetTile(actionPanel.NewSelection))
+            actionPanel = self.ActionPanel
 
         return Board(game, actionPanel, self.MenuRight.Update(game), new_map)
 
