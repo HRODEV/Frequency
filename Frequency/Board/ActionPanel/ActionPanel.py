@@ -183,8 +183,8 @@ class UnitActionPanel(ActionPanel):
         screen.blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
 
-        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 190))
-        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 210))
+        screen.blit(font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+        screen.blit(font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))
 
         # choose between buy a barrack or move the unit
         self._barrackButton.Draw(screen)
@@ -311,5 +311,9 @@ class InfoActionTile(ActionPanel):
         game.Settings.GetScreen().blit(font.render("Here you can find info about the tile",
                                                    True, Colors.BLACK), (10, 55))
 
-        if not self.Tile.Building == None:
+        if self.Tile.Building != None:
             game.Settings.GetScreen().blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
+
+        if self.Tile.Unit != None:
+            game.Settings.GetScreen().blit(font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+            game.Settings.GetScreen().blit(font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))
