@@ -277,16 +277,16 @@ class BarrackActionPanel(ActionPanel):
 
         # Draw the price of the units
         #Soldier
-        screen.blit(font.render('€'+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (15, 150))
         #Robot
-        screen.blit(font.render('€'+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (73, 150))
         #Tank
-        screen.blit(font.render('€'+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (131, 150))
         #Boat
-        screen.blit(font.render('F'+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (189, 150))
 
 
