@@ -163,8 +163,7 @@ class UnitGroup(Unit):
                     boat.Unit = self
                     self.Tile.Unit = None
                     self.Tile = tile
-                    for unit in self.Units:
-                        unit._tile = tile
+
         #no sea
         else:
             if tile.Unit is None:
@@ -172,11 +171,15 @@ class UnitGroup(Unit):
                     self.Tile.Unit = None
                 tile.Unit = self
                 self.Tile = tile
-                for unit in self.Units:
-                    unit.Tile = tile
+            elif type(tile.Unit) is not UnitGroup and self.CountUnits<4:
+                self.AddUnit(tile.Unit)
+                if self.Tile.Unit == self:
+                    self.Tile.Unit = None
+                tile.Unit = self
+                self.Tile = tile
+
             elif type(tile.Unit) is UnitGroup:
-                # TODO dealing with two UnitGroups
-                raise NotImplemented()
+                return
 
         self._logic.PlayingPlayer.Moves -= 1
 
