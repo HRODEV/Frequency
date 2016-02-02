@@ -5,12 +5,29 @@ from GameLogic.Player import *
 
 class PlayerInfoLabel:
 
+    def PlayerIndicator(self, game: Game, current_player = None, color = None):
+
+        current_player = game.Logic.PlayingPlayer.Name
+
+        if current_player == 'Player0':
+            color = Colors.PLAYER_GREEN
+        elif current_player == 'Player1':
+            color = Colors.PLAYER_BLUE
+        elif current_player == 'Player2':
+            color = Colors.PLAYER_YELLOW
+        elif current_player == 'Player3':
+            color = Colors.PLAYER_RED
+        return color
+
     def GetValue(self, game:Game):
         return ""
 
     def Draw(self, game: Game, positionInRow):
+        color = self.PlayerIndicator(game)
         font = pygame.font.SysFont("Arial", 18)
         position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
+        pygame.draw.rect(game.Settings.GetScreen(), color, pygame.Rect(position.X, position.Y + 400, 100, 50))
+        game.Settings.GetScreen().blit(font.render(game.Logic.PlayingPlayer.Name, True, Colors.WHITE), (position.X, position.Y + 400))
         game.Settings.GetScreen().blit(font.render(self.GetValue(game), True, Colors.BLACK), (position.X + 30, position.Y + (positionInRow * 50)))
 
 class PlayerName(PlayerInfoLabel):
@@ -57,7 +74,6 @@ class PlayerTotalUnits(PlayerInfoLabel):
 class MenuRight:
 
     def __init__(self, game, size=None, position=None, playerInfoLabels = None):
-        #self.Options = ["Buy units", "Your money", "Lands", "Turn income", "Next turn income", "Remaining moves"]
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2, game.Settings.Resolution.Y)
         self.Position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 0)
 
