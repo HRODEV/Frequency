@@ -1,5 +1,6 @@
 # Custom ingnores
 .idea/
+Frequency/savegames/
 Frequency/test.py
 
 # Byte-compiled / optimized / DLL files

@@ -16,9 +16,14 @@ class LoadGameMenu(HeadMenu):
         super().__init__(resolution, background, logo)
 
         if savenames is None:
+            self.SaveNames = []
             for (dirpath, dirnames, filenames) in walk("savegames"):
-                    self.SaveNames = filenames
+                    FileNames = filenames
                     break
+            if len(FileNames):
+                for FileName in FileNames:
+                    newFileName = FileName.replace(".frgame", "")
+                    self.SaveNames.append(newFileName)
         else:
             self.SaveNames = savenames
         self.DropDown = dropDown if dropDown is not None else DropDown(self.SaveNames, Vector2(550, 430), "Select a savegame")
@@ -28,7 +33,7 @@ class LoadGameMenu(HeadMenu):
 
     def Update(self, game):
         if self.LoadButton.IsClickedByMouse(game):
-            with open("savegames/%s" % self.DropDown.Selected, "rb") as f:
+            with open("savegames/%s" % self.DropDown.Selected + ".frgame", "rb") as f:
                 game.Logic = pickle.load(f)
                 return Board(game)
         nself = super().Update(game)

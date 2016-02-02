@@ -17,8 +17,8 @@ class SaveGameButton(StartMenuItem):
 
     def Update(self, game):
         if self.IsClickedByMouse(game):
-            from Menu.StartMenu.StartMenu import StartMenu
-            self._newState = StartMenu(game.Settings.Resolution)
+            from Board.Board import Board
+            self._newState = Board(game)
             from datetime import datetime
             time = str(datetime.now().strftime('%Y-%m-%d-%H-%M'))
             with open("./savegames/%s.frgame" % time, "wb") as f:
