@@ -17,7 +17,7 @@ class InGameMenu(HeadMenu):
 
         self.StartMenuItems = startMenuItems if startMenuItems is not None \
             else [ResumeButton(Vector2(0, 0), self.OldState), Rules(Vector2(0, 70)),
-                  StartMenuButton(Vector2(0, 140)), ExitGame(Vector2(0, 210)), SaveGameButton(Vector2(0, 280))]
+                  StartMenuButton(Vector2(0, 140)), SaveGameButton(Vector2(0, 210)), ExitGame(Vector2(0, 280))]
 
     def Update(self, game: Game):
         newStartMenuItems = [smi.Update(game) for smi in self.StartMenuItems]

@@ -9,8 +9,8 @@ from Vector2 import Vector2
 class SaveGameButton(StartMenuItem):
 
     def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None, newState=None):
-        image = image if image is not None else pygame.image.load('images/buttons/startMenuButton.png').convert_alpha()
-        hover = hover if hover is not None else pygame.image.load('images/buttons/StartMenuButtonHover.png').convert_alpha()
+        image = image if image is not None else pygame.image.load('images/buttons/saveButton.png').convert_alpha()
+        hover = hover if hover is not None else pygame.image.load('images/buttons/saveButtonHover.png').convert_alpha()
         super().__init__(offset, image, hover, rect)
         self._newState = newState
 
