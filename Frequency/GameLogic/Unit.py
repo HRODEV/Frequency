@@ -157,8 +157,19 @@ class UnitGroup(Unit):
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
             raise Exception("you are not aloud to move this unit more than one tile")
-        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
-            raise Exception("You need to fight to go to this tile")
+        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:  # fight
+            if self.AttackPoints > tile.Unit.DefencePoints:
+                tile.Unit.Die()
+            else:
+                return
+        elif tile.Building is not None:
+            if tile.Building.Owner == self.Owner:
+                return None
+            else:
+                tile.Building.DefencePoints -= self.AttackPoints
+                self.Die()
+                if tile.Building.DefencePoints <= 0:
+                    tile.Building = None
         # check for actions with the sea
         elif type(tile) is SeaTile:
             # check if there is a boat available
