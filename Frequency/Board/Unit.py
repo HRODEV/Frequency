@@ -45,14 +45,32 @@ class Unit:
         self.Textures = textures
         self.Size = size
         self.LogicUnit = logicUnit
+        self.startTime = pygame.time.get_ticks()
 
     def Update(self, game):
         return self
 
     def Draw(self, game):
-        test = pygame.transform.scale(self.Textures[self.Player.Character.Id], [self.Size, self.Size])
-        game.Settings.GetScreen().blit(test, (self.Tile.Position.X * self.Size + game.Settings.GetMenuLeftSize().X,
-                                              self.Tile.Position.Y * self.Size))
+        texture = pygame.transform.scale(self.Textures[self.Player.Character.Id], [self.Size, self.Size])
+
+        deltaX = abs(self.LogicUnit.TileFrom.Position.X * self.Size - self.Tile.Position.X * self.Size)
+        deltaY = abs(self.LogicUnit.TileFrom.Position.Y * self.Size - self.Tile.Position.Y * self.Size)
+
+        if self.LogicUnit.TileFrom.Position.X > self.Tile.Position.X:
+            x = self.LogicUnit.TileFrom.Position.X * self.Size - ((pygame.time.get_ticks()-self.startTime)//20)
+        else:
+            x = self.LogicUnit.TileFrom.Position.X * self.Size + ((pygame.time.get_ticks()-self.startTime)//20)
+
+        if self.LogicUnit.TileFrom.Position.Y > self.Tile.Position.Y:
+            y = self.LogicUnit.TileFrom.Position.Y * self.Size - ((pygame.time.get_ticks()-self.startTime)//20)
+        else:
+            y = self.LogicUnit.TileFrom.Position.Y * self.Size + ((pygame.time.get_ticks()-self.startTime)//20)
+
+        x = x if deltaX > (pygame.time.get_ticks()-self.startTime)//20 else self.Tile.Position.X * self.Size
+        x = x + game.Settings.GetMenuLeftSize().X
+        y = y if deltaY > (pygame.time.get_ticks()-self.startTime)//20 else self.Tile.Position.Y * self.Size
+
+        game.Settings.GetScreen().blit(texture, (x, y))
 
 
 class Soldier(Unit):
@@ -101,7 +119,26 @@ class UnitGroup(Unit):
             return Tank(lunit.Owner, self, self.Size, lunit)
 
     def Draw(self, game):
-        for i in range(0,len(self._Units)):
+        if len(self._Units) < len(self.LogicUnit.Units):
+            self._Units = [self._getPossibleUnit(lunit) for lunit in self.LogicUnit.Units]
+
+        deltaX = abs(self.LogicUnit.TileFrom.Position.X * self.Size - self.Tile.Position.X * self.Size)
+        deltaY = abs(self.LogicUnit.TileFrom.Position.Y * self.Size - self.Tile.Position.Y * self.Size)
+
+        if self.LogicUnit.TileFrom.Position.X > self.Tile.Position.X:
+            x = self.LogicUnit.TileFrom.Position.X * self.Size - ((pygame.time.get_ticks()-self.startTime)//20)
+        else:
+            x = self.LogicUnit.TileFrom.Position.X * self.Size + ((pygame.time.get_ticks()-self.startTime)//20)
+
+        if self.LogicUnit.TileFrom.Position.Y > self.Tile.Position.Y:
+            y = self.LogicUnit.TileFrom.Position.Y * self.Size - ((pygame.time.get_ticks()-self.startTime)//20)
+        else:
+            y = self.LogicUnit.TileFrom.Position.Y * self.Size + ((pygame.time.get_ticks()-self.startTime)//20)
+
+        x = x if deltaX > (pygame.time.get_ticks()-self.startTime)//20 else self.Tile.Position.X * self.Size
+        x = x + game.Settings.GetMenuLeftSize().X
+        y = y if deltaY > (pygame.time.get_ticks()-self.startTime)//20 else self.Tile.Position.Y * self.Size
+
+        for i in range(0, len(self._Units)):
             unitTexture = pygame.transform.scale(self._Units[i].Textures[self.Player.Character.Id], [self.Size//2, self.Size//2])
-            game.Settings.GetScreen().blit(unitTexture, (self.Tile.Position.X * self.Size + game.Settings.GetMenuLeftSize().X + (self.Size//2) * (i//2),
-                                                self.Tile.Position.Y * self.Size + (self.Size//2) * (i%2)))
+            game.Settings.GetScreen().blit(unitTexture, (x + (self.Size//2) * (i//2), y + (self.Size//2) * (i%2)))
