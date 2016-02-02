@@ -5,6 +5,7 @@ from GameLogic.Map import Tile
 from Board.MenuLeft.ArrowItem import *
 from Board.MenuLeft.BuyUnitItems import *
 from GameLogic.Unit import Soldier
+from GameLogic.UnitFactory import getUnitPrice
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
@@ -258,10 +259,12 @@ class BarrackActionPanel(ActionPanel):
     def Draw(self, game: Game):
         super().Draw(game)
 
-        font = pygame.font.Font(None, 20)
-        game.Settings.GetScreen().blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
+        screen = game.Settings.GetScreen()
 
-        game.Settings.GetScreen().blit(font.render("Choose you actions with the Barrack",
+        font = pygame.font.Font(None, 20)
+        screen.blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
+
+        screen.blit(font.render("Choose you actions with the Barrack",
                                                    True, Colors.BLACK), (10, 55))
 
         # Draw the Arrow Buttons
@@ -271,6 +274,20 @@ class BarrackActionPanel(ActionPanel):
         # Draw the Buy Unit Buttons
         for unitBuyButton in self.BuyUnits:
             unitBuyButton.Draw(game)
+
+        # Draw the price of the units
+        #Soldier
+        screen.blit(font.render('€'+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (15, 150))
+        #Robot
+        screen.blit(font.render('€'+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (73, 150))
+        #Tank
+        screen.blit(font.render('€'+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (131, 150))
+        #Boat
+        screen.blit(font.render('F'+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (189, 150))
 
 
 class InfoActionTile(ActionPanel):
