@@ -47,6 +47,14 @@ class Unit:
                 tile.Unit.Die()
             else:
                 return
+        elif tile.Building is not None:
+            if tile.Building.Owner == self.Owner:
+                return None
+            else:
+                tile.Building.DefencePoints -= self.AttackPoints
+                self.Die()
+                if tile.Building.DefencePoints <= 0:
+                    tile.Building = None
 
         # check for actions with the sea
         if type(tile) is SeaTile:

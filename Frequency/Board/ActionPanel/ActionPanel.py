@@ -2,8 +2,8 @@
 
 import Game
 from GameLogic.Map import Tile
-from Board.MenuLeft.ArrowItem import *
-from Board.MenuLeft.BuyUnitItems import *
+from Board.ActionPanel.ArrowItem import *
+from Board.ActionPanel.BuyUnitItems import *
 from GameLogic.Unit import Soldier
 from GameLogic.UnitFactory import getUnitPrice
 from Helpers import Colors
@@ -163,8 +163,8 @@ class UnitActionPanel(ActionPanel):
                 return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
         else:
             if clickedButton is not None:
-                print(self.Tile.Unit.Unit)
                 self.Tile.Unit.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                self.Tile.Unit.Unit = None
                 return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
                                        clickedButton.GetDestinationPosition(self.Tile.Position))
 

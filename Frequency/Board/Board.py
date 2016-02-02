@@ -3,7 +3,7 @@
 import Game
 from FinalScreen import FinalScreen
 from Board.Map.Map import *
-from Board.MenuLeft.ActionPanel import *
+from Board.ActionPanel.ActionPanel import *
 from Board.MenuRight.MenuRight import *
 from Menu.InGameMenu.InGameMenu import InGameMenu
 
