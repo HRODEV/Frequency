@@ -25,5 +25,4 @@ class Game(object):
         return Game(state, self.Settings, events, self.Logic)
 
     def Draw(self):
-        self.Settings.GetScreen().fill(Colors.RED)  # TODO remove if not needed is for debug
         self.State.Draw(self)
