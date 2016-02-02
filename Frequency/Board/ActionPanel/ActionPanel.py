@@ -268,6 +268,8 @@ class BarrackActionPanel(ActionPanel):
         screen.blit(font.render("Choose you actions with the Barrack",
                                                    True, Colors.BLACK), (10, 55))
 
+        screen.blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
+
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
             arrowButton.Draw(game)
@@ -308,3 +310,6 @@ class InfoActionTile(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Here you can find info about the tile",
                                                    True, Colors.BLACK), (10, 55))
+
+        if not self.Tile.Building == None:
+            game.Settings.GetScreen().blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
