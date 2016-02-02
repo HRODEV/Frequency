@@ -91,6 +91,10 @@ class Map:
         return Map(game, nList, self.SelectedTile)
 
     def Draw(self, game):
-        for row in self.Tiles:
-            for tile in row:
-                tile.Draw(game)
+        for tile in self.TilesIterator:
+            tile.Draw(game)
+
+        # draw the units after al the tiles so you can move above the tiles
+        for tile in self.TilesIterator:
+            if tile._unit is not None:
+                tile._unit.Draw(game)

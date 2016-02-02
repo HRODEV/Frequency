@@ -9,14 +9,20 @@ class Unit:
 
     def __init__(self, tile, owner: Player, logic: GameLogic):
         self._tile = tile
+        self._tileFrom = tile
         self._owner = owner
         self._logic = logic
         owner.AddUnit(self)
 
     @property
+    def TileFrom(self):
+        return self._tileFrom
+
+    @property
     def Tile(self): return self._tile
     @Tile.setter
     def Tile(self, value):
+        self._tileFrom = self._tile
         self._tile = value
     @property
     def Owner(self) -> Player: return self._owner
@@ -41,6 +47,14 @@ class Unit:
                 tile.Unit.Die()
             else:
                 return
+        elif tile.Building is not None:
+            if tile.Building.Owner == self.Owner:
+                return None
+            else:
+                tile.Building.DefencePoints -= self.AttackPoints
+                self.Die()
+                if tile.Building.DefencePoints <= 0:
+                    tile.Building = None
 
         # check for actions with the sea
         if type(tile) is SeaTile:
@@ -53,7 +67,7 @@ class Unit:
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
-                    self._tile = tile
+                    self.Tile = tile
             else:
                 return
         # no sea
@@ -62,12 +76,12 @@ class Unit:
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
                 tile.Unit = self
-                self._tile = tile
+                self.Tile = tile
             elif type(tile.Unit) is UnitGroup:
                 unitGroup = tile.Unit
                 if unitGroup.CountUnits < 4:
                     self.Tile.Unit = None
-                    self._tile = tile
+                    self.Tile = tile
                     unitGroup.AddUnit(self)
                 else:
                     return
@@ -143,8 +157,19 @@ class UnitGroup(Unit):
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
             raise Exception("you are not aloud to move this unit more than one tile")
-        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:
-            raise Exception("You need to fight to go to this tile")
+        elif tile.Unit is not None and tile.Unit.Owner != self.Owner:  # fight
+            if self.AttackPoints > tile.Unit.DefencePoints:
+                tile.Unit.Die()
+            else:
+                return
+        elif tile.Building is not None:
+            if tile.Building.Owner == self.Owner:
+                return None
+            else:
+                tile.Building.DefencePoints -= self.AttackPoints
+                self.Die()
+                if tile.Building.DefencePoints <= 0:
+                    tile.Building = None
         # check for actions with the sea
         elif type(tile) is SeaTile:
             # check if there is a boat available
@@ -156,21 +181,24 @@ class UnitGroup(Unit):
                 else:
                     boat.Unit = self
                     self.Tile.Unit = None
-                    self._tile = tile
-                    for unit in self.Units:
-                        unit._tile = tile
+                    self.Tile = tile
+
         #no sea
         else:
             if tile.Unit is None:
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
                 tile.Unit = self
-                self._tile = tile
-                for unit in self.Units:
-                    unit._tile = tile
+                self.Tile = tile
+            elif type(tile.Unit) is not UnitGroup and self.CountUnits<4:
+                self.AddUnit(tile.Unit)
+                if self.Tile.Unit == self:
+                    self.Tile.Unit = None
+                tile.Unit = self
+                self.Tile = tile
+
             elif type(tile.Unit) is UnitGroup:
-                # TODO dealing with two UnitGroups
-                raise NotImplemented()
+                return
 
         self._logic.PlayingPlayer.Moves -= 1
 
@@ -200,6 +228,7 @@ class UnitGroup(Unit):
 
     @Tile.setter
     def Tile(self, value):
+        self._tileFrom = self._tile
         self._tile = value
         for unit in self._units:
             unit.Tile = value

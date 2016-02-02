@@ -17,7 +17,7 @@ class Tile:
 
     @Building.setter
     def Building(self, value):
-        if self._building is not None:
+        if value is not None and self._building is not None:
             raise Exception("there is already a building on this Tile")
         self._building = value
 
@@ -111,13 +111,13 @@ class SwampTile(Tile):
 class Map:
 
     def DetermineTileType(self, X, Y, logic: GameLogic):
-        if X < 7 and Y < 7 and X+Y < 11:
+        if X < 7 and Y < 7 and X+Y < 10:
             tile = ForestTile(Vector2(X, Y))
-        elif 10 < X < 18 and Y < 7 and (17-X) + Y < 11:
+        elif Y < 7 and 18 > X > 10 > (17-X) + Y:
             tile = IceTile(Vector2(X, Y))
-        elif X < 7 and 10 < Y < 18 and X + (17-Y) < 11:
+        elif X < 7 and 18 > Y > 10 > X + (17 - Y):
             tile = DesertTile(Vector2(X, Y))
-        elif 10 < X < 18 and Y > 10 and (17-X) + (17-Y) < 11:
+        elif 10 < X < 18 and Y > 10 > (17 - Y) + (17 - X):
             tile = SwampTile(Vector2(X, Y))
         elif 6 < X < 11 and 6 < Y < 11:
             tile = GoldTile(Vector2(X, Y))

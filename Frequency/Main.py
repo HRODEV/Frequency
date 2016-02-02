@@ -13,7 +13,7 @@ def Main():
     # Music
     pygame.mixer.init()
     pygame.mixer.music.load('Resources/menu.mp3')
-    # pygame.mixer.music.play()
+    pygame.mixer.music.play()
     
     game = Game()
 

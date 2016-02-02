@@ -3,7 +3,7 @@
 import Game
 from FinalScreen import FinalScreen
 from Board.Map.Map import *
-from Board.MenuLeft.ActionPanel import *
+from Board.ActionPanel.ActionPanel import *
 from Board.MenuRight.MenuRight import *
 from Menu.InGameMenu.InGameMenu import InGameMenu
 
@@ -48,6 +48,16 @@ class Board:
         return Board(game, actionPanel, self.MenuRight.Update(game), new_map)
 
     def Draw(self, game: Game):
+        # Turn background color in color of current player
+        if game.Logic.PlayingPlayer.Character.Id == 0:
+            game.Settings.GetScreen().fill(Colors.PLAYER_GREEN)
+        elif game.Logic.PlayingPlayer.Character.Id == 1:
+            game.Settings.GetScreen().fill(Colors.PLAYER_BLUE)
+        elif game.Logic.PlayingPlayer.Character.Id == 2:
+            game.Settings.GetScreen().fill(Colors.PLAYER_YELLOW)
+        else:
+            game.Settings.GetScreen().fill(Colors.PLAYER_RED)
+
         self.ActionPanel.Draw(game)
         self.MenuRight.Draw(game)
         self.Map.Draw(game)
