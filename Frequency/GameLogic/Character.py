@@ -1,6 +1,5 @@
 from Vector2 import Vector2
 
-
 class Character:
 
     def __init__(self):
@@ -9,7 +8,6 @@ class Character:
     @property
     def Id(self) -> int:
         return 0
-
 
 class ForestCharacter(Character):
     @property
@@ -25,7 +23,6 @@ class DesertCharacter(Character):
     @property
     def Id(self) -> int:
         return 2
-
 
 class SwampCharacter(Character):
     @property
