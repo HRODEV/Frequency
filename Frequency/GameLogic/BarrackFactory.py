@@ -23,3 +23,4 @@ def BuyBarrack(logic, tile, player):
             tile.Building = Barrack(tile, player)
             player.Money -= price
             player.Moves -= 1
+            return tile.Building

@@ -17,7 +17,7 @@ class Tile:
 
     @Building.setter
     def Building(self, value):
-        if self._building is not None:
+        if value is not None and self._building is not None:
             raise Exception("there is already a building on this Tile")
         self._building = value
 
