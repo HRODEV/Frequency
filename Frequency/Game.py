@@ -1,12 +1,12 @@
-﻿from Helpers import Colors
+﻿from GameLogic.GameLogic import GameLogic
 from Menu.StartMenu.StartMenu import StartMenu
 from Settings import GameSettings
-from GameLogic.GameLogic import GameLogic
+
 
 class Game(object):
     Events = None
 
-    def __init__(self, state=None, settings: GameSettings=None, events=None, gameLogic: GameLogic=None):
+    def __init__(self, state=None, settings: GameSettings = None, events=None, gameLogic: GameLogic = None):
         self.Settings = settings if settings is not None else GameSettings()
         self.State = state if state is not None else StartMenu(self.Settings.Resolution)
         self.Events = events

@@ -11,6 +11,7 @@ from Menu.StartMenu.StartMenuItems.StartMenuItem import StartMenuItem
 def emptyPlayerGeneratorN(n: int):
     return [Player("Player%i" % i, i) for i in range(0, n)]
 
+
 class NPlayersMenuItem(StartMenuItem):
     def __init__(self, offset: Vector2, image: Surface, hover: Surface, rect=None, newState=None):
         super().__init__(offset, image, hover, rect)
@@ -32,7 +33,6 @@ class NPlayersMenuItem(StartMenuItem):
 
 
 class FourPlayers(NPlayersMenuItem):
-
     def __init__(self, offset: Vector2, image: Surface = None, hover: Surface = None, rect=None, newState=None):
         image = image if image is not None else pygame.image.load('images/buttons/4pButton.png').convert_alpha()
         hover = hover if hover is not None else pygame.image.load('images/buttons/4pButtonHover.png').convert_alpha()
@@ -43,8 +43,7 @@ class FourPlayers(NPlayersMenuItem):
 
 
 class ThreePlayers(NPlayersMenuItem):
-
-    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None, newState=None):
+    def __init__(self, offset: Vector2, image: Surface = None, hover: Surface = None, rect=None, newState=None):
         image = image if image is not None else pygame.image.load('images/buttons/3pButton.png').convert_alpha()
         hover = hover if hover is not None else pygame.image.load('images/buttons/3pButtonHover.png').convert_alpha()
         super().__init__(offset, image, hover, rect, newState)
@@ -54,8 +53,7 @@ class ThreePlayers(NPlayersMenuItem):
 
 
 class TwoPlayers(NPlayersMenuItem):
-
-    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None, newState=None):
+    def __init__(self, offset: Vector2, image: Surface = None, hover: Surface = None, rect=None, newState=None):
         image = image if image is not None else pygame.image.load('images/buttons/2pButton.png').convert_alpha()
         hover = hover if hover is not None else pygame.image.load('images/buttons/2pButtonHover.png').convert_alpha()
         super().__init__(offset, image, hover, rect, newState)

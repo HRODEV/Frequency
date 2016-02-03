@@ -7,6 +7,7 @@ from Helpers.EventHelpers import EventExist
 pygame.init()
 clock = pygame.time.Clock()
 
+
 def Main():
     pygame.display.init()
 
@@ -14,7 +15,7 @@ def Main():
     pygame.mixer.init()
     pygame.mixer.music.load('Resources/menu.mp3')
     pygame.mixer.music.play()
-    
+
     game = Game()
 
     while True:
@@ -26,9 +27,8 @@ def Main():
         game.Draw()
 
         clock.tick()
-        pygame.display.set_caption('Frequency | FPS: %i' % int(clock.get_fps()+100))
+        pygame.display.set_caption('Frequency | FPS: %i' % int(clock.get_fps() + 100))
         pygame.display.flip()
-    
-    
+
 
 Main()

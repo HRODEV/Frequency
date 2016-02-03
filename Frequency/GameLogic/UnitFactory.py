@@ -2,7 +2,6 @@ from GameLogic.Character import *
 from GameLogic.MapHelpers import getAroundingTiles
 
 
-
 def getUnitPrice(unitType, character):
     from GameLogic.Unit import Soldier, Robot, Tank, Boat
     if unitType is Soldier:
@@ -35,8 +34,7 @@ def BuyUnit(gameLogic, unitType, tile, player):
         return None
     # check if there is a building
     if next((False for tile in getAroundingTiles(tile, gameLogic.Map) if
-             tile.Building is not None and
-             tile.Building.Owner == player), True):  # check if it is his own building
+             tile.Building is not None and tile.Building.Owner == player), True):  # check if it is his own building
         return None
 
     from GameLogic.Map import SeaTile

@@ -1,5 +1,4 @@
-﻿import pygame
-from GameLogic.Character import *
+﻿from GameLogic.Character import *
 
 
 class Player:

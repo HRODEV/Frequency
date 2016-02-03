@@ -17,6 +17,7 @@ def getBarackPrice(tile, character=None):
             return 500
         return 1500
 
+
 def BuyBarrack(logic, tile, player):
     price = getBarackPrice(tile, player.Character)
     if price is None:
@@ -26,7 +27,8 @@ def BuyBarrack(logic, tile, player):
         return
     # check if tile is empty
     if tile.Unit is None and tile.Building is None:
-        if next((True for t in MapHelpers.getAroundingTiles(tile, logic.Map) if t.Unit is not None and t.Unit.Owner == player), False):
+        if next((True for t in MapHelpers.getAroundingTiles(tile, logic.Map) if
+                 t.Unit is not None and t.Unit.Owner == player), False):
             tile.Building = Barrack(tile, player)
             player.Money -= price
             player.Moves -= 1

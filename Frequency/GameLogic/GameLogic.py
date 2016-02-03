@@ -4,7 +4,6 @@ from GameLogic.Player import Player
 
 
 class GameLogic:
-
     def __init__(self, players, _turn=0):
         self.Players = players
         self._turn = _turn
@@ -12,7 +11,7 @@ class GameLogic:
         self._map = Map(self)
 
     @property
-    def Map(self) -> 'Map':
+    def Map(self):
         return self._map
 
     @property
@@ -32,6 +31,7 @@ class GameLogic:
         return self.Players[self._turn % self.TotalPlayers]
 
     _gamestarted = False
+
     def StartGame(self):
         if self._gamestarted:
             raise Exception("game already started")
@@ -48,19 +48,18 @@ class GameLogic:
         else:
             raise Exception("game already started")
 
-    def EndTurn(self, game):
+    def EndTurn(self):
         self.PlayingPlayer.Moves = 0
         self._turn += 1
         self.PlayingPlayer.Moves = 4
         self.PlayingPlayer.Money += self.GetIncome()
 
-    def GetIncome(self, player: Player=None):
+    def GetIncome(self, player: Player = None):
         player = player if player is not None else self.PlayingPlayer
 
         tilesWithUnit = list(set([unit.Tile for unit in player.Units]))
 
         return sum([tile.GetMoney(player) for tile in tilesWithUnit])
-
 
     def BuyUnit(self, unitType, tile):
         if self.PlayingPlayer.Moves > 0:

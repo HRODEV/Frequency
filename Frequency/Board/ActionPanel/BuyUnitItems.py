@@ -7,7 +7,7 @@ from Vector2 import Vector2
 
 
 class BuyUnitItem:
-    def __init__(self, offset: Vector2, id, image: Surface=None, rect=None):
+    def __init__(self, offset: Vector2, id, image: Surface = None, rect=None):
         self.Offset = offset
         self.Image = image if image is not None else self._getTexture(id)
         self.Rect = rect
@@ -43,8 +43,8 @@ class BuyUnitItem:
     def GetUnitType(self):
         return Soldier
 
-class SoldierButton(BuyUnitItem):
 
+class SoldierButton(BuyUnitItem):
     def _getTexture(self, id):
         if id == 0:
             return pygame.transform.scale(pygame.image.load('images/units/soldierGreen.png').convert_alpha(), (38, 38))
@@ -58,8 +58,8 @@ class SoldierButton(BuyUnitItem):
     def GetUnitType(self):
         return Soldier
 
-class RobotButton(BuyUnitItem):
 
+class RobotButton(BuyUnitItem):
     def _getTexture(self, id):
         if id == 0:
             return pygame.transform.scale(pygame.image.load('images/units/robotGreen.png').convert_alpha(), (38, 38))
@@ -75,7 +75,6 @@ class RobotButton(BuyUnitItem):
 
 
 class TankButton(BuyUnitItem):
-
     def _getTexture(self, id):
         if id == 0:
             return pygame.transform.scale(pygame.image.load('images/units/tankGreen.png').convert_alpha(), (38, 38))
@@ -91,7 +90,6 @@ class TankButton(BuyUnitItem):
 
 
 class BoatButton(BuyUnitItem):
-
     def _getTexture(self, id):
         if id == 0:
             return pygame.transform.scale(pygame.image.load('images/units/shipGreen.png').convert_alpha(), (38, 38))

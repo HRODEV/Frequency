@@ -11,7 +11,6 @@ from Vector2 import Vector2
 
 
 class InGameMenu(HeadMenu):
-
     def __init__(self, resolution: Vector2, oldState, background=None, logo=None, startMenuItems=None):
         super().__init__(resolution, background, logo)
         self.OldState = oldState

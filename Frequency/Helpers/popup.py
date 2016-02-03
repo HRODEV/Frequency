@@ -1,17 +1,17 @@
 ﻿import pygame
 
-class Popup:
 
-    def __init__(self, screen, 
-                content='',
-                width=1000,
-                height=640,
-                x=0,
-                y=0,
-                backgroundColor=(0,0,0),
-                textColor=(255,255,255),
-                fontsize=24,
-                ):
+class Popup:
+    def __init__(self, screen,
+                 content='',
+                 width=1000,
+                 height=640,
+                 x=0,
+                 y=0,
+                 backgroundColor=(0, 0, 0),
+                 textColor=(255, 255, 255),
+                 fontSize=24,
+                 ):
 
         self.Screen = screen
         self.X = x
@@ -21,10 +21,9 @@ class Popup:
         self.Content = content
         self.BackgroundColor = backgroundColor
         self.TextColor = textColor
-        self.Fontsize = fontsize
+        self.Fontsize = fontSize
         self.CloseButton = None
         self.text = None
-
 
     def Update(self, events):
         # Handle all the events
@@ -33,20 +32,19 @@ class Popup:
                 mousePosition = pygame.mouse.get_pos()
                 if self.CloseButton.collidepoint(mousePosition):
                     return None
-                else :
+                else:
                     return self
         return self
 
-
     def Draw(self, file):
-        
+
         # Standard Value
         calcMargin = 25
 
-        if(self.Screen.get_height() < 1080):
+        if self.Screen.get_height() < 1080:
             self.Fontsize = 20
             calcMargin = 20
-        
+
         # Create a font
         textFont = pygame.font.Font(None, self.Fontsize)
 
@@ -65,21 +63,22 @@ class Popup:
         drawPosition = self.DrawPosition()
 
         # Center the rectangle
-        textRect.centerx = self.Width//5
-        textRect.centery = self.Height//20
+        textRect.centerx = self.Width // 5
+        textRect.centery = self.Height // 20
 
         # Draw background
-        pygame.draw.rect(self.Screen, self.BackgroundColor, (0,0, self.Screen.get_width(), self.Screen.get_height()))
+        pygame.draw.rect(self.Screen, self.BackgroundColor, (0, 0, self.Screen.get_width(), self.Screen.get_height()))
         # Load the image
         btn = pygame.image.load('images/buttons/closeButton.png').convert_alpha()
         # Load the hover
         btnHover = pygame.image.load('images/buttons/closeButtonHover.png').convert_alpha()
         # Blit the close button
-        if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):  
-            self.CloseButton = self.Screen.blit(btnHover, (drawPosition['X'] + self.Screen.get_width()/1.3, textRect.centery-20))  
-        else:  
-            self.CloseButton = self.Screen.blit(btn, (drawPosition['X'] + self.Screen.get_width()/1.3, textRect.centery-20))  
-
+        if self.CloseButton is not None and self.CloseButton.collidepoint(pygame.mouse.get_pos()):
+            self.CloseButton = self.Screen.blit(btnHover, (
+                drawPosition['X'] + self.Screen.get_width() / 1.3, textRect.centery - 20))
+        else:
+            self.CloseButton = self.Screen.blit(btn, (
+                drawPosition['X'] + self.Screen.get_width() / 1.3, textRect.centery - 20))
 
         # Place the text on the screen
         for index in self.Content:
@@ -93,15 +92,14 @@ class Popup:
 
         pygame.display.update()
 
-
     def DrawPosition(self):
         # Define local variables
         centerX = self.Screen.get_rect().centerx
         centerY = self.Screen.get_rect().centery
 
         # Calculate the X and Y position
-        positionX = centerX - (self.Width//2) if self.X == 0 else self.X
-        positionY = centerY - (self.Height//2) if self.Y == 0 else self.Y
+        positionX = centerX - (self.Width // 2) if self.X == 0 else self.X
+        positionY = centerY - (self.Height // 2) if self.Y == 0 else self.Y
 
         # Return the position as a list
         return {'X': positionX, 'Y': positionY}

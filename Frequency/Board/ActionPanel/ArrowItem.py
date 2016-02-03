@@ -1,13 +1,12 @@
 import pygame
 from pygame.surface import Surface
 
-
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
 
 class ArrowItem:
-    def __init__(self, offset: Vector2, image: Surface=None, hover: Surface=None, rect=None):
+    def __init__(self, offset: Vector2, image: Surface = None, hover: Surface = None, rect=None):
         self.Offset = offset
         self.Image = image if image is not None else self._getTexture()
         self.Hover = hover if hover is not None else self._getHoverTexture()
@@ -41,11 +40,11 @@ class ArrowItem:
     def _getHoverTexture(self):
         return None
 
-    def GetDestinationPosition(self, pos:Vector2):
+    def GetDestinationPosition(self, pos: Vector2):
         return pos
 
-class ArrowButtonUp(ArrowItem):
 
+class ArrowButtonUp(ArrowItem):
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkUp.png').convert_alpha()
 
@@ -53,11 +52,10 @@ class ArrowButtonUp(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightUp.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X, pos.Y-1)
+        return Vector2(pos.X, pos.Y - 1)
 
 
 class ArrowButtonUpRight(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkUpRight.png').convert_alpha()
 
@@ -65,10 +63,10 @@ class ArrowButtonUpRight(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightUpRight.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X+1, pos.Y-1)
+        return Vector2(pos.X + 1, pos.Y - 1)
+
 
 class ArrowButtonRight(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkRight.png').convert_alpha()
 
@@ -76,11 +74,10 @@ class ArrowButtonRight(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightRight.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X+1, pos.Y)
+        return Vector2(pos.X + 1, pos.Y)
 
 
 class ArrowButtonDownRight(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkDownRight.png').convert_alpha()
 
@@ -88,11 +85,10 @@ class ArrowButtonDownRight(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightDownRight.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X+1, pos.Y+1)
+        return Vector2(pos.X + 1, pos.Y + 1)
 
 
 class ArrowButtonDown(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkDown.png').convert_alpha()
 
@@ -100,11 +96,10 @@ class ArrowButtonDown(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightDown.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X, pos.Y+1)
+        return Vector2(pos.X, pos.Y + 1)
 
 
 class ArrowButtonDownLeft(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkDownLeft.png').convert_alpha()
 
@@ -112,11 +107,10 @@ class ArrowButtonDownLeft(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightDownLeft.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X-1, pos.Y+1)
+        return Vector2(pos.X - 1, pos.Y + 1)
 
 
 class ArrowButtonLeft(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkLeft.png').convert_alpha()
 
@@ -124,11 +118,10 @@ class ArrowButtonLeft(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightLeft.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X-1, pos.Y)
+        return Vector2(pos.X - 1, pos.Y)
 
 
 class ArrowButtonUpLeft(ArrowItem):
-
     def _getTexture(self):
         return pygame.image.load('images/arrows/ArrowDarkUpLeft.png').convert_alpha()
 
@@ -136,4 +129,4 @@ class ArrowButtonUpLeft(ArrowItem):
         return pygame.image.load('images/arrows/ArrowLightUpLeft.png').convert_alpha()
 
     def GetDestinationPosition(self, pos: Vector2):
-        return Vector2(pos.X-1, pos.Y-1)
+        return Vector2(pos.X - 1, pos.Y - 1)

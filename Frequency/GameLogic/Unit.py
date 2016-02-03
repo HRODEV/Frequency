@@ -1,12 +1,9 @@
-﻿from functools import reduce
-
-from GameLogic import MapHelpers
+﻿from GameLogic import MapHelpers
 from GameLogic import Player
 from GameLogic.GameLogic import GameLogic
 
 
 class Unit:
-
     def __init__(self, tile, owner: Player, logic: GameLogic):
         self._tile = tile
         self._tileFrom = tile
@@ -19,17 +16,25 @@ class Unit:
         return self._tileFrom
 
     @property
-    def Tile(self): return self._tile
+    def Tile(self):
+        return self._tile
+
     @Tile.setter
     def Tile(self, value):
         self._tileFrom = self._tile
         self._tile = value
+
     @property
-    def Owner(self) -> Player: return self._owner
+    def Owner(self) -> Player:
+        return self._owner
+
     @property
-    def AttackPoints(self) -> int: return 0
+    def AttackPoints(self) -> int:
+        return 0
+
     @property
-    def DefencePoints(self) -> int: return 0
+    def DefencePoints(self) -> int:
+        return 0
 
     def MoveTo(self, tile: Tile):
         # check moves
@@ -101,25 +106,25 @@ class Unit:
 
 
 class Soldier(Unit):
-
     @property
     def AttackPoints(self): return 1
+
     @property
     def DefencePoints(self): return 1
 
 
 class Robot(Unit):
-
     @property
     def AttackPoints(self): return 2
+
     @property
     def DefencePoints(self): return 2
 
 
 class Tank(Unit):
-
     @property
     def AttackPoints(self): return 3
+
     @property
     def DefencePoints(self): return 3
 
@@ -127,6 +132,7 @@ class Tank(Unit):
 class UnitGroup(Unit):
     """ a group of max 4 units
     """
+
     def __init__(self, tile, owner: Player, logic: GameLogic):
         super().__init__(tile, owner, logic)
         self._units = []
@@ -142,7 +148,7 @@ class UnitGroup(Unit):
     def RemoveUnit(self, unit: Unit):
         self._units = [_unit for _unit in self._units if _unit != unit]
 
-    def MoveTo(self, tile: 'Tile'):
+    def MoveTo(self, tile):
         # check moves
         if self.Owner.Moves < 1:
             return
@@ -185,14 +191,14 @@ class UnitGroup(Unit):
                     self.Tile.Unit = None
                     self.Tile = tile
 
-        #no sea
+        # no sea
         else:
             if tile.Unit is None:
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
                 tile.Unit = self
                 self.Tile = tile
-            elif type(tile.Unit) is not UnitGroup and self.CountUnits<4:
+            elif type(tile.Unit) is not UnitGroup and self.CountUnits < 4:
                 self.AddUnit(tile.Unit)
                 if self.Tile.Unit == self:
                     self.Tile.Unit = None
@@ -203,7 +209,6 @@ class UnitGroup(Unit):
                 return
 
         self._logic.PlayingPlayer.Moves -= 1
-
 
     @property
     def Units(self):
@@ -241,9 +246,7 @@ class UnitGroup(Unit):
             unit.Die()
 
 
-
 class Boat(Unit):
-
     def __init__(self, tile, owner, logic):
         self.Unit = None
         super().__init__(tile, owner, logic)
@@ -252,7 +255,7 @@ class Boat(Unit):
     def DefencePoints(self):
         return 6
 
-    def MoveTo(self, tile: 'Tile'):
+    def MoveTo(self, tile):
         # check moves
         if self.Owner.Moves < 1:
             return
@@ -280,5 +283,3 @@ class Boat(Unit):
             return
 
         self._logic.PlayingPlayer.Moves -= 1
-
-

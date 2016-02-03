@@ -5,9 +5,11 @@ from Helpers.EventHelpers import EventExist
 
 
 class SoundButton:
-    def __init__(self, image: Surface = None, hover: Surface=None, rect=None):
-        self.Image = image if image is not None else pygame.image.load('images/buttons/toggleSoundButton.png').convert_alpha()
-        self.Hover = hover if hover is not None else  pygame.image.load('images/buttons/toggleSoundButtonHover.png').convert_alpha()
+    def __init__(self, image: Surface = None, hover: Surface = None, rect=None):
+        self.Image = image if image is not None else pygame.image.load(
+            'images/buttons/toggleSoundButton.png').convert_alpha()
+        self.Hover = hover if hover is not None else pygame.image.load(
+            'images/buttons/toggleSoundButtonHover.png').convert_alpha()
         self.Rect = rect
 
     def Update(self, game):

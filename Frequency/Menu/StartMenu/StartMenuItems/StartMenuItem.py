@@ -4,8 +4,9 @@ from pygame.surface import Surface
 import Vector2
 from Helpers.EventHelpers import EventExist
 
+
 class StartMenuItem:
-    def __init__(self, offset: Vector2, image: Surface, hover: Surface=None, rect=None):
+    def __init__(self, offset: Vector2, image: Surface, hover: Surface = None, rect=None):
         self.Image = image
         self.Hover = hover
         self.Offset = offset
@@ -35,4 +36,3 @@ class StartMenuItem:
 
     def GetNewState(self):
         return None
-
