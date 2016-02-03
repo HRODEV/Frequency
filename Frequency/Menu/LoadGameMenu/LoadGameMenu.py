@@ -1,6 +1,6 @@
 import pygame
 import pickle
-from os import walk
+from os import walk, path
 
 from Board.Board import Board
 from Helpers import Colors
@@ -33,9 +33,11 @@ class LoadGameMenu(HeadMenu):
 
     def Update(self, game):
         if self.LoadButton.IsClickedByMouse(game):
-            with open("savegames/%s" % self.DropDown.Selected + ".frgame", "rb") as f:
-                game.Logic = pickle.load(f)
-                return Board(game)
+            file = "savegames/%s" % self.DropDown.Selected + ".frgame"
+            if path.isfile(file):
+                with open(file, "rb") as f:
+                    game.Logic = pickle.load(f)
+                    return Board(game)
         nself = super().Update(game)
         newDropDown = self.DropDown.Update(game)
         saveButton = self.LoadButton.Update(game)
