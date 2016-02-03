@@ -1,4 +1,4 @@
-from functools import reduce
+﻿from functools import reduce
 
 from GameLogic import MapHelpers
 from GameLogic import Player
@@ -156,9 +156,12 @@ class UnitGroup(Unit):
         # check if you move in the right area
         from GameLogic.Map import SeaTile
         if tile not in MapHelpers.getAroundingTiles(self.Tile, self._logic.Map):
-            raise Exception("you are not aloud to move this unit more than one tile")
+            raise Exception("You are not allowed to move this unit more than one tile")
         elif tile.Unit is not None and tile.Unit.Owner != self.Owner:  # fight
-            if self.AttackPoints > tile.Unit.DefencePoints:
+            if self.AttackPoints == tile.Unit.DefencePoints:
+                tile.Unit.Die()
+                self.Die()
+            elif self.AttackPoints > tile.Unit.DefencePoints:
                 tile.Unit.Die()
             else:
                 return
