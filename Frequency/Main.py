@@ -30,5 +30,4 @@ def Main():
         pygame.display.set_caption('Frequency | FPS: %i' % int(clock.get_fps() + 100))
         pygame.display.flip()
 
-
 Main()

@@ -2,6 +2,7 @@
 
 
 class Player:
+
     def __init__(self, name, character, money=500, moves=0):
         self.Name = name
         if type(character) is int:

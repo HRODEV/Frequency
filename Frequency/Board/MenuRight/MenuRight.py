@@ -7,7 +7,6 @@ from Vector2 import Vector2
 
 
 class PlayerInfoLabel:
-
     def PlayerIndicator(self, game: Game):
 
         ID = game.Logic.PlayingPlayer.Character.Id
@@ -26,7 +25,7 @@ class PlayerInfoLabel:
 
     def Draw(self, game: Game, positionInRow):
         color = self.PlayerIndicator(game)
-        font = pygame.font.SysFont("Arial", 24)
+        font = pygame.font.SysFont("Arial", 22)
         position = Vector2(
             (game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
         pygame.draw.rect(game.Settings.GetScreen(), color, pygame.Rect(position.X, position.Y + 400, 400, 50))
