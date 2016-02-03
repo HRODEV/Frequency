@@ -43,7 +43,6 @@ class BuyUnitItem:
     def GetUnitType(self):
         return Soldier
 
-
 class SoldierButton(BuyUnitItem):
 
     def _getTexture(self, id):

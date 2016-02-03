@@ -2,9 +2,10 @@
 
 import Game
 from GameLogic.Map import Tile
-from Board.MenuLeft.ArrowItem import *
-from Board.MenuLeft.BuyUnitItems import *
+from Board.ActionPanel.ArrowItem import *
+from Board.ActionPanel.BuyUnitItems import *
 from GameLogic.Unit import Soldier
+from GameLogic.UnitFactory import getUnitPrice
 from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
@@ -158,12 +159,13 @@ class UnitActionPanel(ActionPanel):
 
         elif self._barrackButton.clicked:
             if clickedButton is not None:
-                game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
-                return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                barrack = game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                if barrack is not None:
+                    return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
         else:
             if clickedButton is not None:
-                print(self.Tile.Unit.Unit)
                 self.Tile.Unit.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                self.Tile.Unit.Unit = None
                 return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
                                        clickedButton.GetDestinationPosition(self.Tile.Position))
 
@@ -181,8 +183,8 @@ class UnitActionPanel(ActionPanel):
         screen.blit(font.render("Choose you actions with the unit",
                                                    True, Colors.BLACK), (10, 55))
 
-        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 190))
-        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 210))
+        screen.blit(font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+        screen.blit(font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))
 
         # choose between buy a barrack or move the unit
         self._barrackButton.Draw(screen)
@@ -258,11 +260,15 @@ class BarrackActionPanel(ActionPanel):
     def Draw(self, game: Game):
         super().Draw(game)
 
-        font = pygame.font.Font(None, 20)
-        game.Settings.GetScreen().blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
+        screen = game.Settings.GetScreen()
 
-        game.Settings.GetScreen().blit(font.render("Choose you actions with the Barrack",
+        font = pygame.font.Font(None, 20)
+        screen.blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
+
+        screen.blit(font.render("Choose you actions with the Barrack",
                                                    True, Colors.BLACK), (10, 55))
+
+        screen.blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
@@ -271,6 +277,20 @@ class BarrackActionPanel(ActionPanel):
         # Draw the Buy Unit Buttons
         for unitBuyButton in self.BuyUnits:
             unitBuyButton.Draw(game)
+
+        # Draw the price of the units
+        #Soldier
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (15, 150))
+        #Robot
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (73, 150))
+        #Tank
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (131, 150))
+        #Boat
+        screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.BLACK), (189, 150))
 
 
 class InfoActionTile(ActionPanel):
@@ -290,3 +310,10 @@ class InfoActionTile(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Here you can find info about the tile",
                                                    True, Colors.BLACK), (10, 55))
+
+        if self.Tile.Building != None:
+            game.Settings.GetScreen().blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
+
+        if self.Tile.Unit != None:
+            game.Settings.GetScreen().blit(font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+            game.Settings.GetScreen().blit(font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))

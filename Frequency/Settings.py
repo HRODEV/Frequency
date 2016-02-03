@@ -13,7 +13,8 @@ class GameSettings:
                  newPlayers = 0,
                  mapSize = None,
                  menuLeftSize = None,
-                 fullscreen = False):
+                 fullscreen = False,
+                 sound = True):
 
         self._resolution = resolution
         self.TileSize = tileSize
@@ -21,6 +22,7 @@ class GameSettings:
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
         self.Fullscreen = fullscreen
+        self.Sound = sound
         self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
@@ -73,3 +75,14 @@ class GameSettings:
 
     def GetMenuLeftSize(self):
         return self.MenuLeftSize
+
+    def SetSound(self):
+        if self.Sound:
+            self.Sound = False
+            pygame.mixer.music.stop()
+        else:
+            self.Sound = True
+            pygame.mixer.music.play()
+
+    def GetSound(self):
+        return self.Sound
