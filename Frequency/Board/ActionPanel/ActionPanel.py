@@ -26,7 +26,7 @@ class ActionPanel:
     def Update(self, game: Game) -> 'ActionPanel':
         # End turn
         if self.EndturnButtonIsClickedByMouse(game):
-            game.Logic.EndTurn(game)
+            game.Logic.EndTurn()
             return DefaultActionPanel(game)
 
         return ActionPanel(game, self.Tile, self.EndturnButtonRect)
