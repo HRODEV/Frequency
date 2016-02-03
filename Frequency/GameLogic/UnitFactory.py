@@ -1,7 +1,6 @@
 from GameLogic.Character import *
 from GameLogic.MapHelpers import getAroundingTiles
-
-
+import Game
 
 def getUnitPrice(unitType, character):
     from GameLogic.Unit import Soldier, Robot, Tank, Boat

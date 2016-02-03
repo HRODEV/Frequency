@@ -24,7 +24,7 @@ class PlayerInfoLabel:
 
     def Draw(self, game: Game, positionInRow):
         color = self.PlayerIndicator(game)
-        font = pygame.font.SysFont("Arial", 24)
+        font = pygame.font.SysFont("Arial", 22)
         position = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
         pygame.draw.rect(game.Settings.GetScreen(), color, pygame.Rect(position.X, position.Y + 400, 400, 50))
         game.Settings.GetScreen().blit(font.render("Turn: " + str(game.Logic.PlayingPlayer.Name), True, Colors.WHITE), (position.X + 100, position.Y + 400))

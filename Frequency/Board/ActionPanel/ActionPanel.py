@@ -10,7 +10,6 @@ from Helpers import Colors
 from Helpers.EventHelpers import EventExist
 from Vector2 import Vector2
 
-
 class ActionPanel:
     def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, newSelection=None):
         self.Size = Vector2((game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2,
@@ -277,20 +276,41 @@ class BarrackActionPanel(ActionPanel):
         # Draw the Buy Unit Buttons
         for unitBuyButton in self.BuyUnits:
             unitBuyButton.Draw(game)
+        current_money = game.Logic.PlayingPlayer.Money
 
-        # Draw the price of the units
-        #Soldier
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+        # Draw the price of the units and check if the user can buy the unit
+
+        if current_money >= getUnitPrice(Soldier, self.Tile.Building.Owner.Character):
+            #Soldier
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (15, 150))
-        #Robot
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+        else:
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.RED), (15, 150))
+
+        if current_money >= getUnitPrice(Robot, self.Tile.Building.Owner.Character):
+            #Robot
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (73, 150))
-        #Tank
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+        else:
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.RED), (73, 150))
+
+        if current_money >= getUnitPrice(Tank, self.Tile.Building.Owner.Character):
+            #Tank
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (131, 150))
-        #Boat
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+        else:
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.RED), (131, 150))
+
+        if current_money >= getUnitPrice(Boat, self.Tile.Building.Owner.Character):
+            #Boat
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
                                                    True, Colors.BLACK), (189, 150))
+        else:
+            screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+                                                   True, Colors.RED), (189, 150))
 
 
 class InfoActionTile(ActionPanel):
