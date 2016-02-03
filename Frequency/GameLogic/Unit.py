@@ -132,7 +132,6 @@ class UnitGroup(Unit):
         self._units = []
 
     def AddUnit(self, unit: Unit):
-        print(self)
         if type(unit) is UnitGroup or type(unit) is Boat:
             raise Exception("A UnitGroup can only hold normal units, not UnitGroups or boats")
         elif len(self._units) > 3:

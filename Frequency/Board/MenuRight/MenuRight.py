@@ -40,16 +40,6 @@ class PlayerMoney(PlayerInfoLabel):
     def GetValue(self, game:Game):
         return 'Money: ' + str(game.Logic.PlayingPlayer.Money)
 
-class PlayerLands(PlayerInfoLabel):
-
-    def GetValue(self, game:Game):
-        return 'Units: ' # TODO: Needs logic
-
-class PlayerTurnIncome(PlayerInfoLabel):
-
-    def GetValue(self, game:Game):
-        return 'Income this turn: ' + str(0) # TODO: Needs logic
-
 class PlayerNextTurnIncome(PlayerInfoLabel):
 
     def GetValue(self, game: Game):
@@ -58,7 +48,7 @@ class PlayerNextTurnIncome(PlayerInfoLabel):
 class PlayerRemainingMoves(PlayerInfoLabel):
 
     def GetValue(self, game:Game):
-        return 'Remaining moves: ' + str(game.Logic.PlayingPlayer.Moves) # TODO: Needs logic
+        return 'Remaining moves: ' + str(game.Logic.PlayingPlayer.Moves)
 
 class PlayerTotalUnits(PlayerInfoLabel):
 

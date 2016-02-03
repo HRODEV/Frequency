@@ -21,10 +21,6 @@ class EnterGame(StartMenuItem):
             game.Logic.StartGame()
         return super().Update(game)
 
-    def CreatePlayers(self, game: Game):
-        # TODO change the names of the already existing players in the gamelogic
-        pass
-
     def Draw(self, game):
         StartMenuItem.Draw(self, game)
 
