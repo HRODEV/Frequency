@@ -162,7 +162,7 @@ class UnitGroup(Unit):
                 tile.Unit.Die()
             else:
                 return
-        elif tile.Building is not None:
+        if tile.Building is not None:
             if tile.Building.Owner == self.Owner:
                 return None
             else:
