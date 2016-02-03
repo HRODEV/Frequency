@@ -5,15 +5,14 @@ from Vector2 import Vector2
 
 
 class GameSettings:
-
-
     def __init__(self, resolution: Vector2 = Vector2(1280, 800),
                  screen: Surface = None,
-                 tileSize = None,
-                 newPlayers = 0,
-                 mapSize = None,
-                 menuLeftSize = None,
-                 fullscreen = False):
+                 tileSize=None,
+                 newPlayers=0,
+                 mapSize=None,
+                 menuLeftSize=None,
+                 fullscreen=False,
+                 sound=True):
 
         self._resolution = resolution
         self.TileSize = tileSize
@@ -21,6 +20,7 @@ class GameSettings:
         self.MapSize = mapSize
         self.MenuLeftSize = menuLeftSize
         self.Fullscreen = fullscreen
+        self.Sound = sound
         self.Font = pygame.font.SysFont("Arial", 72)
 
         self.screen = screen if screen is not None \
@@ -45,8 +45,6 @@ class GameSettings:
         else:
             self.screen = pygame.display.set_mode(newResolution.Position)
 
-
-
     def GetScreen(self) -> Surface:
         return self.screen
 
@@ -69,7 +67,18 @@ class GameSettings:
         self.Font = newFont
 
     def SetMenuLeftSize(self, menuSize):
-            self.MenuLeftSize = menuSize
+        self.MenuLeftSize = menuSize
 
     def GetMenuLeftSize(self):
         return self.MenuLeftSize
+
+    def SetSound(self):
+        if self.Sound:
+            self.Sound = False
+            pygame.mixer.music.stop()
+        else:
+            self.Sound = True
+            pygame.mixer.music.play()
+
+    def GetSound(self):
+        return self.Sound

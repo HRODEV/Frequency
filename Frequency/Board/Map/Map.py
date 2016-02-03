@@ -1,18 +1,12 @@
-﻿import pygame
-from functools import reduce
-
-from Board.Buildings.Base import Base
-from Board.Map.Tile import *
+﻿from Board.Map.Tile import *
 from Vector2 import Vector2
 
 
 class Map:
-
     def __init__(self, game, tiles=None, selectedTile=None):
         self.Resolution = game.Settings.Resolution
         self.Tiles = tiles if tiles is not None else self.GenerateTiles(game)
         self.SelectedTile = selectedTile
-
 
     def GenerateTiles(self, game):
         maxTiles = Vector2(18, 18)
@@ -37,13 +31,12 @@ class Map:
 
     def SetActiveTile(self, position: Vector2):
         for tile in self.TilesIterator:
-                tile.Selected = False
+            tile.Selected = False
         if position is None:
             self.SelectedTile = None
         else:
             self.SelectedTile = self.Tiles[position.X][position.Y]
             self.SelectedTile.Selected = True
-
 
     def DetermineTileType(self, logicTile):
         import GameLogic.Map
@@ -96,5 +89,5 @@ class Map:
 
         # draw the units after al the tiles so you can move above the tiles
         for tile in self.TilesIterator:
-            if tile._unit is not None:
-                tile._unit.Draw(game)
+            if tile.Unit is not None:
+                tile.Unit.Draw(game)

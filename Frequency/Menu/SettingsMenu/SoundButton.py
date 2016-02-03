@@ -4,11 +4,12 @@ from pygame.surface import Surface
 from Helpers.EventHelpers import EventExist
 
 
-class SaveButton:
+class SoundButton:
     def __init__(self, image: Surface = None, hover: Surface = None, rect=None):
-        self.Image = image if image is not None else pygame.image.load('images/buttons/saveButton.png').convert_alpha()
+        self.Image = image if image is not None else pygame.image.load(
+            'images/buttons/toggleSoundButton.png').convert_alpha()
         self.Hover = hover if hover is not None else pygame.image.load(
-            'images/buttons/saveButtonHover.png').convert_alpha()
+            'images/buttons/toggleSoundButtonHover.png').convert_alpha()
         self.Rect = rect
 
     def Update(self, game):
@@ -19,7 +20,7 @@ class SaveButton:
         screen_centerX = game.Settings.Resolution.X // 2
 
         x = screen_centerX - self.Image.get_rect().centerx
-        y = game.Settings.Resolution.Y - 300
+        y = game.Settings.Resolution.Y - 80
 
         if self.IsHoverdByMouse():
             self.Rect = game.Settings.GetScreen().blit(self.Hover, (x, y))

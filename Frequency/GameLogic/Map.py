@@ -1,6 +1,7 @@
 import GameLogic.Unit
 from GameLogic.Barrack import BaseBarrack
 from GameLogic.Character import *
+from Vector2 import Vector2
 
 
 class Tile:

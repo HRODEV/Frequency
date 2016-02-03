@@ -9,7 +9,6 @@ from Vector2 import Vector2
 
 
 class StartMenu(HeadMenu):
-
     def __init__(self, resolution: Vector2, background=None, logo=None, startMenuItems=None):
         super().__init__(resolution, background, logo)
 

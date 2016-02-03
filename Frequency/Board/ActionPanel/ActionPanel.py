@@ -1,9 +1,7 @@
-﻿import pygame
-
-import Game
-from GameLogic.Map import Tile
+﻿import Game
 from Board.ActionPanel.ArrowItem import *
 from Board.ActionPanel.BuyUnitItems import *
+from GameLogic.Map import Tile
 from GameLogic.Unit import Soldier
 from GameLogic.UnitFactory import getUnitPrice
 from Helpers import Colors
@@ -23,13 +21,12 @@ class ActionPanel:
         self.Map = None
         self.EndTurnButtonImage = pygame.transform.scale(
             pygame.image.load('images/buttons/endturnButton.png').convert_alpha(), [150, 25])
-        # TODO netter als je deze verantwoordelijkheid geeft bij het object die dit object beheert
         game.Settings.SetMenuLeftSize(self.Size)
 
     def Update(self, game: Game) -> 'ActionPanel':
         # End turn
         if self.EndturnButtonIsClickedByMouse(game):
-            game.Logic.EndTurn(game)
+            game.Logic.EndTurn()
             return DefaultActionPanel(game)
 
         return ActionPanel(game, self.Tile, self.EndturnButtonRect)
@@ -70,7 +67,6 @@ class DefaultActionPanel(ActionPanel):
 
 
 class SimpleTextButton:
-
     def __init__(self, text, position):
         self._text = text
         self._position = position
@@ -111,21 +107,21 @@ class UnitActionPanel(ActionPanel):
             import GameLogic.MapHelpers
             self.Buttons = []
             for pos in GameLogic.MapHelpers.getAroundingTiles(tile, game.Logic.Map):
-                if pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y:
+                if pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y:
                     self.Buttons.append(ArrowButtonRight(Vector2(40, 0)))
-                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDownRight(Vector2(40, 40)))
-                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDown(Vector2(0, 40)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDownLeft(Vector2(-40, 40)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y:
                     self.Buttons.append(ArrowButtonLeft(Vector2(-40, 0)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUpLeft(Vector2(-40, -40)))
-                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUp(Vector2(0, -40)))
-                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUpRight(Vector2(40, -40)))
 
     def Update(self, game: Game):
@@ -159,16 +155,18 @@ class UnitActionPanel(ActionPanel):
 
         elif self._barrackButton.clicked:
             if clickedButton is not None:
-                barrack = game.Logic.BuyBarrack(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                barrack = game.Logic.BuyBarrack(
+                    game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
                 if barrack is not None:
-                    return BarrackActionPanel(game, game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                    return BarrackActionPanel(game, game.Logic.Map.GetTile(
+                        clickedButton.GetDestinationPosition(self.Tile.Position)))
         else:
             if clickedButton is not None:
-                self.Tile.Unit.Unit.MoveTo(game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
+                self.Tile.Unit.Unit.MoveTo(
+                    game.Logic.Map.GetTile(clickedButton.GetDestinationPosition(self.Tile.Position)))
                 self.Tile.Unit.Unit = None
                 return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, None,
                                        clickedButton.GetDestinationPosition(self.Tile.Position))
-
 
         return UnitActionPanel(game, self.Tile, nself.EndturnButtonRect, self.Buttons, None, self._barrackButton,
                                self._moveButton, self._moveUnitFromBoatButton)
@@ -181,10 +179,10 @@ class UnitActionPanel(ActionPanel):
         game.Settings.GetScreen().blit(font.render("Unit actions", True, Colors.BLACK), (10, 35))
 
         screen.blit(font.render("Choose you actions with the unit",
-                                                   True, Colors.BLACK), (10, 55))
+                                True, Colors.BLACK), (10, 55))
 
-        screen.blit(font.render("defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 190))
-        screen.blit(font.render("attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 210))
+        screen.blit(font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+        screen.blit(font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))
 
         # choose between buy a barrack or move the unit
         self._barrackButton.Draw(screen)
@@ -198,7 +196,6 @@ class UnitActionPanel(ActionPanel):
 
 
 class BarrackActionPanel(ActionPanel):
-
     def __init__(self, game: Game, tile: Tile = None, endturnButtonRect=None, buttons=None, buyUnits=None):
         super().__init__(game, tile, endturnButtonRect)
         if buttons is not None:
@@ -207,21 +204,21 @@ class BarrackActionPanel(ActionPanel):
             import GameLogic.MapHelpers
             self.Buttons = []
             for pos in GameLogic.MapHelpers.getAroundingTiles(tile, game.Logic.Map):
-                if pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y:
+                if pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y:
                     self.Buttons.append(ArrowButtonRight(Vector2(40, 0)))
-                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDownRight(Vector2(40, 40)))
-                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDown(Vector2(0, 40)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y+1:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y + 1:
                     self.Buttons.append(ArrowButtonDownLeft(Vector2(-40, 40)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y:
                     self.Buttons.append(ArrowButtonLeft(Vector2(-40, 0)))
-                elif pos.Position.X == tile.Position.X-1 and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X - 1 and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUpLeft(Vector2(-40, -40)))
-                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUp(Vector2(0, -40)))
-                elif pos.Position.X == tile.Position.X+1 and pos.Position.Y == tile.Position.Y-1:
+                elif pos.Position.X == tile.Position.X + 1 and pos.Position.Y == tile.Position.Y - 1:
                     self.Buttons.append(ArrowButtonUpRight(Vector2(40, -40)))
 
         if buyUnits is not None:
@@ -249,7 +246,6 @@ class BarrackActionPanel(ActionPanel):
 
         clickedUnitButton = next((btn for btn in self.BuyUnits if btn.clicked), None)
         if clickedUnitButton is not None and clickedArrowButton is not None:
-
             game.Logic.BuyUnit(
                 clickedUnitButton.GetUnitType(),
                 game.Logic.Map.GetTile(clickedArrowButton.GetDestinationPosition(self.Tile.Position))
@@ -266,7 +262,9 @@ class BarrackActionPanel(ActionPanel):
         screen.blit(font.render("Barrack actions", True, Colors.BLACK), (10, 35))
 
         screen.blit(font.render("Choose you actions with the Barrack",
-                                                   True, Colors.BLACK), (10, 55))
+                                True, Colors.BLACK), (10, 55))
+
+        screen.blit(font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
 
         # Draw the Arrow Buttons
         for arrowButton in self.Buttons:
@@ -275,20 +273,40 @@ class BarrackActionPanel(ActionPanel):
         # Draw the Buy Unit Buttons
         for unitBuyButton in self.BuyUnits:
             unitBuyButton.Draw(game)
+        current_money = game.Logic.PlayingPlayer.Money
 
-        # Draw the price of the units
-        #Soldier
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
-                                                   True, Colors.BLACK), (15, 150))
-        #Robot
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
-                                                   True, Colors.BLACK), (73, 150))
-        #Tank
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
-                                                   True, Colors.BLACK), (131, 150))
-        #Boat
-        screen.blit(font.render('ƒ '+str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
-                                                   True, Colors.BLACK), (189, 150))
+        # Draw the price of the units and check if the user can buy the unit
+        if current_money >= getUnitPrice(Soldier, self.Tile.Building.Owner.Character):
+            # Soldier
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+                                    True, Colors.BLACK), (15, 150))
+        else:
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Soldier, self.Tile.Building.Owner.Character)),
+                                    True, Colors.RED), (15, 150))
+
+        if current_money >= getUnitPrice(Robot, self.Tile.Building.Owner.Character):
+            # Robot
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+                                    True, Colors.BLACK), (73, 150))
+        else:
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Robot, self.Tile.Building.Owner.Character)),
+                                    True, Colors.RED), (73, 150))
+
+        if current_money >= getUnitPrice(Tank, self.Tile.Building.Owner.Character):
+            # Tank
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+                                    True, Colors.BLACK), (131, 150))
+        else:
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Tank, self.Tile.Building.Owner.Character)),
+                                    True, Colors.RED), (131, 150))
+
+        if current_money >= getUnitPrice(Boat, self.Tile.Building.Owner.Character):
+            # Boat
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+                                    True, Colors.BLACK), (189, 150))
+        else:
+            screen.blit(font.render('ƒ ' + str(getUnitPrice(Boat, self.Tile.Building.Owner.Character)),
+                                    True, Colors.RED), (189, 150))
 
 
 class InfoActionTile(ActionPanel):
@@ -308,3 +326,13 @@ class InfoActionTile(ActionPanel):
 
         game.Settings.GetScreen().blit(font.render("Here you can find info about the tile",
                                                    True, Colors.BLACK), (10, 55))
+
+        if self.Tile.Building is not None:
+            game.Settings.GetScreen().blit(
+                font.render("Defence Points: %i" % self.Tile.Building.DefencePoints, True, Colors.BLACK), (10, 75))
+
+        if self.Tile.Unit is not None:
+            game.Settings.GetScreen().blit(
+                font.render("Attack points: %i" % self.Tile.Unit.AttackPoints, True, Colors.BLACK), (10, 190))
+            game.Settings.GetScreen().blit(
+                font.render("Defense points: %i" % self.Tile.Unit.DefencePoints, True, Colors.BLACK), (10, 210))
