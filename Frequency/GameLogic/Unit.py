@@ -60,6 +60,8 @@ class Unit:
                 self.Die()
                 if tile.Building.DefencePoints <= 0:
                     tile.Building = None
+                self.Owner.Moves -= 1
+                return
 
         # check for actions with the sea
         if type(tile) is SeaTile:
