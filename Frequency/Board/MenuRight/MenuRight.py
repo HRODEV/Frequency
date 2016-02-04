@@ -25,7 +25,7 @@ class PlayerInfoLabel:
 
     def Draw(self, game: Game, positionInRow):
         color = self.PlayerIndicator(game)
-        font = pygame.font.SysFont("Arial", 22)
+        font = pygame.font.SysFont("Arial", 20)
         position = Vector2(
             (game.Settings.Resolution.X - game.Settings.GetMapSize().X) // 2 + game.Settings.GetMapSize().X, 50)
         pygame.draw.rect(game.Settings.GetScreen(), color, pygame.Rect(position.X, position.Y + 400, 400, 50))

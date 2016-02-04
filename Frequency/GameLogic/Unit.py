@@ -85,7 +85,8 @@ class Unit:
             elif type(tile.Unit) is UnitGroup:
                 unitGroup = tile.Unit
                 if unitGroup.CountUnits < 4:
-                    self.Tile.Unit = None
+                    if self.Tile.Unit == self:
+                        self.Tile.Unit = None
                     self.Tile = tile
                     unitGroup.AddUnit(self)
                 else:
