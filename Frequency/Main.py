@@ -1,4 +1,6 @@
-﻿import pygame
+﻿import os
+
+import pygame
 from sys import exit
 
 from Game import Game
@@ -7,6 +9,9 @@ from Helpers.EventHelpers import EventExist
 pygame.init()
 clock = pygame.time.Clock()
 
+# make necessary directory
+if not os.path.exists("./savegames/"):
+    os.makedirs("./savegames/")
 
 def Main():
     pygame.display.init()
